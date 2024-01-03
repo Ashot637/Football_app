@@ -1,0 +1,83 @@
+{
+  "language": {
+    "en": "English",
+    "ru": "Russian",
+    "am": "Armenian",
+    "choose": "Choose the language"
+  },
+  "landing": {
+    "title": "Discover all about football",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. "
+  },
+  "form": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "remember_me": "Remember me",
+    "dont_have_account": "Don’t have an account?"
+  },
+  "verify": {
+    "verify_your_account": "Verify your account",
+    "verify_and_continue": "Verify & continue",
+    "enter_otp": "Enter the OTP sent to {{number}}",
+    "didnt_receive_otp": "Didn’t receive an OTP?",
+    "resend": "Resend"
+  },
+  "home": {
+    "choose_date": "Choose date",
+    "available_stadiums": "Available stadiums"
+  },
+  "date": {
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
+  "navigation": {
+    "home": "Home",
+    "stadiums": "Stadiums",
+    "my_activity": "My activity",
+    "profile": "Profile"
+  },
+  "game": {
+    "per_person": " per person",
+    "choose_group": "Choose the group",
+    "first_group": "1st group",
+    "second_group": "2nd group",
+    "personal_info": "Personal information",
+    "individual_game": "Individual game",
+    "with_guests": "With guest",
+    "booking_details": "Booking details",
+    "stadium_info": "Stadium information",
+    "uniform_color": "Uniform color",
+    "cancellation_policy": "Cancellation policy",
+    "cancellation_policy_info": "Cancel within 24 hours before the game for a refund, excluding advance payment. No refund within one hour of the game if paid in advance. Unpaid bookings cannot be canceled; payment required for confirmation",
+    "player_from_first_group": "Player from 1st group",
+    "player_from_second_group": "Player from 2nd group",
+    "info_uniforms": "You will receive the final information about the color of the uniform when all the participants have voted. You will receive a message within at least 24 hours of starting the match.",
+    "facilities": "Facilities",
+    "only_x_players_left": "Only {{count}} players left",
+    "guests": "Guests",
+    "book_now": "Book now"
+  },
+  "user": {
+    "name": "Name",
+    "phone": "Phone number",
+    "email": "Email",
+    "address": "Address",
+    "logout": "Log out"
+  },
+  "notifications": {
+    "title": "Notifications"
+  },
+  "success": {
+    "title": "Your booking has been successfully completed",
+    "your_booking_number": "Your booking confirmation number is:"
+  },
+  "common": {
+    "amd": "AMD",
+    "go_to_home": "Go to homepage",
+    "save": "Save",
+    "search": "Search...",
+    "total_price": "Total price",
+    "duration": "Duration",
+    "date": "Date"
+  }
+}

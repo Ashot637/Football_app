@@ -1,0 +1,83 @@
+{
+  "language": {
+    "en": "Անգլերեն",
+    "ru": "Ռուսերեն",
+    "am": "Հայերեն",
+    "choose": "Ընտրել լեզուն"
+  },
+  "landing": {
+    "title": "Իմացեք ամեն ինչ ֆուտբոլի մասին",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. "
+  },
+  "form": {
+    "login": "Մուտք",
+    "signup": "Գրանցվել",
+    "remember_me": "Հիշել ինձ",
+    "dont_have_account": "Չունե՞ք հաշիվ։"
+  },
+  "verify": {
+    "verify_your_account": "Հաստատեք ձեր հաշիվը",
+    "verify_and_continue": "Հաստատել և շարունակել",
+    "enter_otp": "Մուտքագրեք OTP ուղարկված {{number}} հեռախոսահամարով:",
+    "didnt_receive_otp": "Չե՞ք ստացել OTP",
+    "resend": "Կրկին ուղարկել"
+  },
+  "home": {
+    "choose_date": "Ընտրեք ամսաթիվը",
+    "available_stadiums": "Հասանելի մարզադաշտեր"
+  },
+  "date": {
+    "today": "Այսօր",
+    "tomorrow": "Վաղը"
+  },
+  "navigation": {
+    "home": "Գլխավոր",
+    "stadiums": "Մարզադաշտեր",
+    "my_activity": "Ակտիվությունը",
+    "profile": "Անձնական"
+  },
+  "game": {
+    "per_person": "/անձը",
+    "choose_group": "Ընտրեք խումբը",
+    "first_group": "1-ին խումբ",
+    "second_group": "2-րդ խումբ",
+    "personal_info": "Անձնական տվյալներ",
+    "individual_game": "Ահատական խաղ",
+    "with_guests": "Հրավիրել հյուր",
+    "booking_details": "Ամրագրման մանրամասներ",
+    "stadium_info": "Մարզադահլիճի մանրամասներ",
+    "uniform_color": "Համազգեստի գույն",
+    "cancellation_policy": "Չեղարկման քաղաքականություն",
+    "cancellation_policy_info": "Խաղի սկսվելուց 24 ժամ առաջ չեղարկվելու դեքում գումարի վերադարձ չի լինում։ Եթե չեղարկվում է խաղը սկսելուց ավելի շուտ քան 24 ժամը, ապա իրականացվում է գումարի 100% վերադարձ։ Չվճարված ամրագրումները չեն կարող չեղարկվել, մինչև չիրականացվի գումարի վճարում։",
+    "player_from_first_group": "1-ին խմբի խաղացողներ",
+    "player_from_second_group": "2-րդ խմբի խաղացողներ",
+    "info_uniforms": "Դուք կստանաք վերջնական տեղեկատվություն համազգեստի գույնի մասին, երբ բոլոր մասնակիցները քվեարկեն: Դուք հաղորդագրություն կստանաք խաղի մեկնարկից ոչ ուշ, քան 24 ժամ առաջ։",
+    "facilities": "Հարմարություններ",
+    "only_x_players_left": "Մնացել է ընդամենը {{count}} խաղացող",
+    "guests": "Հյուրեր",
+    "book_now": "Ամրագրել հիմա"
+  },
+  "user": {
+    "name": "Անուն",
+    "phone": "Հեռախոսի համար",
+    "email": "Էլ, հասցե",
+    "address": "Հասցե",
+    "logout": "Դուրս գալ"
+  },
+  "notifications": {
+    "title": "Ծանուցումներ"
+  },
+  "success": {
+    "title": "Ձեր ամրագրումը հաջողությամբ կատարված է",
+    "your_booking_number": "Ձեր ամրագրման հաստատման համարը՝"
+  },
+  "common": {
+    "amd": "AMD",
+    "go_to_home": "Գլխավոր",
+    "save": "Պահպանել",
+    "search": "Որոնել․․․",
+    "total_price": "Ընդհանուր",
+    "duration": "Տևողությունը",
+    "date": "Ամսաթիվ"
+  }
+}

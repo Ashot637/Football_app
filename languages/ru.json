@@ -1,0 +1,83 @@
+{
+  "language": {
+    "en": "Английский",
+    "ru": "Русский",
+    "am": "Армянский",
+    "choose": "Выберите язык"
+  },
+  "landing": {
+    "title": "Узнайте всё о футболе",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. "
+  },
+  "form": {
+    "login": "Войти",
+    "signup": "Зарегистрироваться",
+    "remember_me": "Запомнить меня",
+    "dont_have_account": "Нет аккаунта?"
+  },
+  "verify": {
+    "verify_your_account": "Подтвердите ваш аккаунт",
+    "verify_and_continue": "Подтвердить и продолжить",
+    "enter_otp": "Введите ОТП, отправленный на {{number}}",
+    "didnt_receive_otp": "Не получили ОТП?",
+    "resend": "Отправить снова"
+  },
+  "home": {
+    "choose_date": "Выберите дату",
+    "available_stadiums": "Доступные стадионы"
+  },
+  "date": {
+    "today": "Сегодня",
+    "tomorrow": "Завтра"
+  },
+  "navigation": {
+    "home": "Главная",
+    "stadiums": "Стадионы",
+    "my_activity": "Активность",
+    "profile": "Профиль"
+  },
+  "game": {
+    "per_person": "/чел",
+    "choose_group": "Выберите группу",
+    "first_group": "1-я группа",
+    "second_group": "2-я группа",
+    "personal_info": "Персональная информация",
+    "individual_game": "Индивидуальная игра",
+    "with_guests": "Командная игра",
+    "booking_details": "Детали бронирования",
+    "stadium_info": "Информация о стадионе",
+    "uniform_color": "Цвет формы",
+    "cancellation_policy": "Политика отмены",
+    "cancellation_policy_info": "Отмена за 24 часа до начала игры возврат, за исключением предварительная оплата. Возврат при предоплате средства в течение часа после игры невозможный. Неоплаченные бронирования невозможно отменить; необходимый оплата для подтверждения",
+    "player_from_first_group": "Игрок из 1-й группы",
+    "player_from_second_group": "Игрок из 2-й группы",
+    "info_uniforms": "Вы получите окончательную информацию о цвете формы, когда все участники проголосуют. Вы получите сообщение не позднее чем за 24 часа до начала матча.",
+    "facilities": "Удобства",
+    "only_x_players_left": "Осталось всего {{count}} игроков",
+    "guests": "Гости",
+    "book_now": "Забронировать сейчас"
+  },
+  "user": {
+    "name": "Имя",
+    "phone": "Номер телефона",
+    "email": "Эл. почта",
+    "address": "Адрес",
+    "logout": "Выйти"
+  },
+  "notifications": {
+    "title": "Уведомления"
+  },
+  "success": {
+    "title": "Ваше бронирование успешно завершено",
+    "your_booking_number": "Номер подтверждения вашего бронирования:"
+  },
+  "common": {
+    "amd": "AMD",
+    "go_to_home": "На главную",
+    "save": "Сохранить",
+    "search": "Поиск...",
+    "total_price": "Итоговая цена",
+    "duration": "Длительность",
+    "date": "Дата"
+  }
+}
