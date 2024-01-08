@@ -8,18 +8,21 @@ import UpcomingBookings from '../components/UpcomingBookings';
 
 import { COLORS } from '../helpers/colors';
 
+import { useTranslation } from 'react-i18next';
+
 const items = [
   {
-    title: 'Your activity',
+    title: 'activity.your_activity',
     Element: YourActivity,
   },
   {
-    title: 'Upcoming bookings',
+    title: 'activity.upcoming_bookings',
     Element: UpcomingBookings,
   },
 ];
 
 const MyActivityPage = () => {
+  const { t } = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const Component = items[selectedIndex].Element;
@@ -42,7 +45,7 @@ const MyActivityPage = () => {
                   <PrimaryText
                     weight={600}
                     style={[styles.itemText, selectedIndex === index && styles.itemTextActive]}>
-                    {item.title}
+                    {t(item.title)}
                   </PrimaryText>
                 </View>
               </TouchableOpacity>

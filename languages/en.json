@@ -13,7 +13,9 @@
     "login": "Log in",
     "signup": "Sign up",
     "remember_me": "Remember me",
-    "dont_have_account": "Don’t have an account?"
+    "dont_have_account": "Don’t have an account?",
+    "create_password": "Create a password",
+    "repeat_password": "Repeat a password"
   },
   "verify": {
     "verify_your_account": "Verify your account",
@@ -28,7 +30,30 @@
   },
   "date": {
     "today": "Today",
-    "tomorrow": "Tomorrow"
+    "tomorrow": "Tomorrow",
+    "week": {
+      "Monday": "Mon",
+      "Tuesday": "Tue",
+      "Wednesday": "Wed",
+      "Thursday": "Thu",
+      "Friday": "Fri",
+      "Saturday": "Sat",
+      "Sunday": "Sun"
+    },
+    "month": {
+      "January": "Jan",
+      "February": "Feb",
+      "March": "Mar",
+      "April": "Apr",
+      "May": "May",
+      "June": "Jun",
+      "July": "Jul",
+      "August": "Aug",
+      "September": "Sep",
+      "October": "Oct",
+      "November": "Nov",
+      "December": "Dec"
+    }
   },
   "navigation": {
     "home": "Home",
@@ -55,14 +80,25 @@
     "facilities": "Facilities",
     "only_x_players_left": "Only {{count}} players left",
     "guests": "Guests",
-    "book_now": "Book now"
+    "book_now": "Book now",
+    "maximum_guests_count": "You can have only 2 guests",
+    "add_new_guest": "Add new guest",
+    "already_booked": "Already booked",
+    "maximum_players": "Maximum players",
+    "your_booking_canceled": "Your booking has been canceled successfully"
   },
   "user": {
     "name": "Name",
     "phone": "Phone number",
+    "password": "Password",
     "email": "Email",
     "address": "Address",
     "logout": "Log out"
+  },
+  "activity": {
+    "your_activity": "Your activity",
+    "upcoming_bookings": "Upcoming bookings",
+    "individual_activity": "Your individual activity"
   },
   "notifications": {
     "title": "Notifications"
@@ -76,8 +112,10 @@
     "go_to_home": "Go to homepage",
     "save": "Save",
     "search": "Search...",
-    "total_price": "Total price",
+    "total_price": "Price",
     "duration": "Duration",
-    "date": "Date"
+    "date": "Date",
+    "add": "Add",
+    "cancel": "Cancel"
   }
 }

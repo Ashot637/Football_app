@@ -55,7 +55,7 @@ const PlayersList = ({ players, guests, maxPlayersCount, title }) => {
         </>
       )}
       <PrimaryText style={styles.playersLeft}>
-        {t('game.only_x_players_left', { count: maxPlayersCount - players.length })}
+        {t('game.only_x_players_left', { count: maxPlayersCount - players.length - guests.length })}
       </PrimaryText>
     </>
   );

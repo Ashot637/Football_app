@@ -13,7 +13,9 @@
     "login": "Մուտք",
     "signup": "Գրանցվել",
     "remember_me": "Հիշել ինձ",
-    "dont_have_account": "Չունե՞ք հաշիվ։"
+    "dont_have_account": "Չունե՞ք հաշիվ։",
+    "create_password": "Ստեղծել գաղտնաբառ",
+    "repeat_password": "Կրկնել գաղտնաբառը"
   },
   "verify": {
     "verify_your_account": "Հաստատեք ձեր հաշիվը",
@@ -28,7 +30,30 @@
   },
   "date": {
     "today": "Այսօր",
-    "tomorrow": "Վաղը"
+    "tomorrow": "Վաղը",
+    "week": {
+      "Sunday": "Կիր",
+      "Monday": "Երկ",
+      "Tuesday": "Երք",
+      "Wednesday": "Չոր",
+      "Thursday": "Հինգ",
+      "Friday": "Ուր",
+      "Saturday": "Շաբ"
+    },
+    "month": {
+      "January": "Հունվ",
+      "February": "Փետր",
+      "March": "Մարտ",
+      "April": "Ապր",
+      "May": "Մայ",
+      "June": "Հուն",
+      "July": "Հուլ",
+      "August": "Օգոստ",
+      "September": "Սեպ",
+      "October": "Հոկ",
+      "November": "Նոյ",
+      "December": "Դեկ"
+    }
   },
   "navigation": {
     "home": "Գլխավոր",
@@ -55,14 +80,25 @@
     "facilities": "Հարմարություններ",
     "only_x_players_left": "Մնացել է ընդամենը {{count}} խաղացող",
     "guests": "Հյուրեր",
-    "book_now": "Ամրագրել հիմա"
+    "book_now": "Ամրագրել հիմա",
+    "maximum_guests_count": "Առավելագույն հյուրերի քնկ՝ 2",
+    "add_new_guest": "Ավելացնել նոր խաղացող",
+    "already_booked": "Արդեն ամրագրված է",
+    "maximum_players": "Առավելագույն խաղացողներ",
+    "your_booking_canceled": "Ձեր ամրագրումը հաջողությամբ չեղարկված է"
   },
   "user": {
     "name": "Անուն",
     "phone": "Հեռախոսի համար",
     "email": "Էլ, հասցե",
+    "password": "Գաղտնաբառ",
     "address": "Հասցե",
     "logout": "Դուրս գալ"
+  },
+  "activity": {
+    "your_activity": "Ձեր ակտիվաությունը",
+    "upcoming_bookings": "Առաջիկա ամրագրումներ",
+    "individual_activity": "Ձեր անհատական ​​ակտիվությունը"
   },
   "notifications": {
     "title": "Ծանուցումներ"
@@ -72,12 +108,14 @@
     "your_booking_number": "Ձեր ամրագրման հաստատման համարը՝"
   },
   "common": {
-    "amd": "AMD",
+    "amd": "դրամ",
     "go_to_home": "Գլխավոր",
     "save": "Պահպանել",
     "search": "Որոնել․․․",
-    "total_price": "Ընդհանուր",
+    "total_price": "Գինը",
     "duration": "Տևողությունը",
-    "date": "Ամսաթիվ"
+    "date": "Ամսաթիվ",
+    "add": "Ավելացնել",
+    "cancel": "Չեղարկել"
   }
 }

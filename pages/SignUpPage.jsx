@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import {
   Image,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSignup, resetIsWaitingCode, selectAuth } from '../redux/authSlice/authSlice';
+import { fetchSignup, resetIsSignUpDataValid, selectAuth } from '../redux/authSlice/authSlice';
 
 import BackgroundImageLayout from '../components/BackgroundImageLayout';
 import PrimaryButton from '../components/PrimaryButton';
@@ -21,47 +23,62 @@ import phoneIcon from '../assets/images/call.png';
 import PrimaryText from '../components/PrimaryText';
 
 import { useTranslation } from 'react-i18next';
+import i18n from '../languages/i18n';
 
 const SignUpPage = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { isWaitingCode, errorMessage } = useSelector(selectAuth);
+  const { isSignUpDataValid, errorMessage } = useSelector(selectAuth);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
   useEffect(() => {
-    if (isWaitingCode) {
-      navigation.navigate('verify');
-      dispatch(resetIsWaitingCode());
+    if (isSignUpDataValid) {
+      navigation.navigate('create-password');
+      dispatch(resetIsSignUpDataValid());
     }
-  }, [isWaitingCode, navigation]);
+  }, [isSignUpDataValid, navigation]);
 
   const onSignup = () => {
-    dispatch(fetchSignup({ name, phone })).then(() => {
+    dispatch(fetchSignup({ name: name.trim(), phone: phone.trim() })).then(() => {
       setName('');
       setPhone('');
     });
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <BackgroundImageLayout>
-        <View style={styles.top}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image source={backIcon} width={24} height={24} />
-          </TouchableOpacity>
-          <PrimaryText style={styles.title} weight={600}>
-            {t('form.signup')}
-          </PrimaryText>
-          <View style={{ width: 42 }} />
-        </View>
-        <View style={styles.inputs}>
-          <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
-          <Input value={phone} setValue={setPhone} img={phoneIcon} placeholder={t('user.phone')} />
-        </View>
-        {errorMessage && <PrimaryText style={styles.error}>{errorMessage}</PrimaryText>}
-        <PrimaryButton title={t('form.signup')} onPress={() => onSignup()} />
-      </BackgroundImageLayout>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <BackgroundImageLayout>
+          <View style={styles.top}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image source={backIcon} width={24} height={24} />
+            </TouchableOpacity>
+            <PrimaryText
+              style={[styles.title, i18n.language === 'en' && styles.titleBig]}
+              weight={600}>
+              {t('form.signup')}
+            </PrimaryText>
+            <View style={{ width: 42 }} />
+          </View>
+          <View style={styles.inputs}>
+            <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
+            <Input
+              type="phone-pad"
+              value={phone}
+              setValue={setPhone}
+              img={phoneIcon}
+              placeholder={t('user.phone')}
+            />
+          </View>
+          {errorMessage && <PrimaryText style={styles.error}>{errorMessage}</PrimaryText>}
+          <PrimaryButton
+            title={t('form.signup')}
+            onPress={() => onSignup()}
+            disabled={phone.trim().length < 9 || !name.trim().length}
+          />
+        </BackgroundImageLayout>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
@@ -78,8 +95,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: 28,
+    fontSize: 21,
     fontWeight: '600',
+  },
+  titleBig: {
+    fontSize: 28,
   },
   inputs: {
     display: 'flex',

@@ -13,7 +13,9 @@
     "login": "Войти",
     "signup": "Зарегистрироваться",
     "remember_me": "Запомнить меня",
-    "dont_have_account": "Нет аккаунта?"
+    "dont_have_account": "Нет аккаунта?",
+    "create_password": "Создать пароль",
+    "repeat_password": "Повторите пароль"
   },
   "verify": {
     "verify_your_account": "Подтвердите ваш аккаунт",
@@ -28,7 +30,30 @@
   },
   "date": {
     "today": "Сегодня",
-    "tomorrow": "Завтра"
+    "tomorrow": "Завтра",
+    "week": {
+      "Sunday": "Вс",
+      "Monday": "Пн",
+      "Tuesday": "Вт",
+      "Wednesday": "Ср",
+      "Thursday": "Чт",
+      "Friday": "Пт",
+      "Saturday": "Сб"
+    },
+    "month": {
+      "January": "Янв",
+      "February": "Фев",
+      "March": "Мар",
+      "April": "Апр",
+      "May": "Май",
+      "June": "Июн",
+      "July": "Июл",
+      "August": "Авг",
+      "September": "Сен",
+      "October": "Окт",
+      "November": "Ноя",
+      "December": "Дек"
+    }
   },
   "navigation": {
     "home": "Главная",
@@ -55,14 +80,25 @@
     "facilities": "Удобства",
     "only_x_players_left": "Осталось всего {{count}} игроков",
     "guests": "Гости",
-    "book_now": "Забронировать сейчас"
+    "book_now": "Забронировать сейчас",
+    "maximum_guests_count": "У вас может быть только 2 гостя",
+    "add_new_guest": "Добавить нового гостя",
+    "already_booked": "Уже забронирован",
+    "maximum_players": "Макс. кол-во игроков",
+    "your_booking_canceled": "Ваше бронирование успешно отменено"
   },
   "user": {
     "name": "Имя",
     "phone": "Номер телефона",
+    "password": "Пароль",
     "email": "Эл. почта",
     "address": "Адрес",
     "logout": "Выйти"
+  },
+  "activity": {
+    "your_activity": "Ваша активность",
+    "upcoming_bookings": "Предстоящие бронирования",
+    "individual_activity": "Ваша индивидуальная активность"
   },
   "notifications": {
     "title": "Уведомления"
@@ -76,8 +112,10 @@
     "go_to_home": "На главную",
     "save": "Сохранить",
     "search": "Поиск...",
-    "total_price": "Итоговая цена",
+    "total_price": "Цена",
     "duration": "Длительность",
-    "date": "Дата"
+    "date": "Дата",
+    "add": "Добавить",
+    "cancel": "Отмена"
   }
 }

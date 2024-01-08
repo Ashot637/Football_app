@@ -37,7 +37,7 @@ const UpcomingBookings = () => {
   return (
     <View style={styles.container}>
       <PrimaryText weight={600} style={styles.title}>
-        Upcoming bookings
+        {t('activity.upcoming_bookings')}
       </PrimaryText>
       <View style={styles.blocks}>
         {!!games.length &&
@@ -59,8 +59,15 @@ const UpcomingBookings = () => {
                 </View>
                 <View style={styles.gameInfoContainer}>
                   <View style={styles.gameInfo}>
-                    <PrimaryText style={styles.gameInfoTopText}>{game.price} AMD</PrimaryText>
-                    <PrimaryText style={styles.gameInfoBottomText} weight={600}>
+                    <PrimaryText style={styles.gameInfoTopText}>
+                      {game.price} {t('common.amd')}
+                    </PrimaryText>
+                    <PrimaryText
+                      style={[
+                        styles.gameInfoBottomText,
+                        i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                      ]}
+                      weight={600}>
                       {t('common.total_price')}
                     </PrimaryText>
                   </View>
@@ -68,7 +75,12 @@ const UpcomingBookings = () => {
                     <PrimaryText style={styles.gameInfoTopText}>
                       {minutesDifference(game.startTime, game.endTime)}
                     </PrimaryText>
-                    <PrimaryText style={styles.gameInfoBottomText} weight={600}>
+                    <PrimaryText
+                      style={[
+                        styles.gameInfoBottomText,
+                        i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                      ]}
+                      weight={600}>
                       {t('common.duration')}
                     </PrimaryText>
                   </View>
@@ -76,7 +88,12 @@ const UpcomingBookings = () => {
                     <PrimaryText style={styles.gameInfoTopText}>
                       {format(game.startTime, 'dd.MM.yyyy')}
                     </PrimaryText>
-                    <PrimaryText style={styles.gameInfoBottomText} weight={600}>
+                    <PrimaryText
+                      style={[
+                        styles.gameInfoBottomText,
+                        i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                      ]}
+                      weight={600}>
                       {t('common.date')}
                     </PrimaryText>
                   </View>
@@ -91,7 +108,7 @@ const UpcomingBookings = () => {
                 <View style={{ alignItems: 'center' }}>
                   <TouchableOpacity onPress={() => onCancelBooking(game.id)}>
                     <PrimaryText style={styles.cancel} weight={600}>
-                      Cancel the game
+                      {t('common.cancel')}
                     </PrimaryText>
                   </TouchableOpacity>
                 </View>
@@ -121,6 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     rowGap: 10,
     borderRadius: 16,
+    overflow: 'hidden',
   },
   blockTitle: {
     color: COLORS.yellow,
@@ -141,6 +159,7 @@ const styles = StyleSheet.create({
   stadionInfoText: {
     fontSize: 16,
     color: COLORS.lightWhite,
+    flexShrink: 1,
   },
   gameInfoContainer: {
     borderTopWidth: 1,
@@ -160,9 +179,9 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderColor: '#fff',
-    paddingHorizontal: 13,
+    paddingHorizontal: 5,
     paddingVertical: 7,
-    flex: 2,
+    flex: 4,
   },
   gameInfoTopText: {
     color: '#fff',
@@ -172,6 +191,9 @@ const styles = StyleSheet.create({
     color: COLORS.lightWhite,
     fontSize: 16,
     textAlign: 'center',
+  },
+  gameInfoBottomTextSmall: {
+    fontSize: 14,
   },
   bookingNumber: {
     color: '#fff',

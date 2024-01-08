@@ -50,7 +50,14 @@ const ProfileItem = ({ icon, title, initialValue, value, setValue }) => {
           />
         </View>
       </View>
-      {isOpen && <Input img={icon} value={value} setValue={setValue} />}
+      {isOpen && (
+        <Input
+          img={icon}
+          value={value}
+          setValue={setValue}
+          type={title !== 'user.phone' ? 'default' : 'phone-pad'}
+        />
+      )}
     </TouchableOpacity>
   );
 };

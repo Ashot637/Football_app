@@ -12,6 +12,7 @@ import stadionIcon from '../assets/images/stadium.png';
 import locationIcon from '../assets/images/location.png';
 
 import { useTranslation } from 'react-i18next';
+import i18n from '../languages/i18n';
 
 const SuccessBookingPage = ({ route, navigation }) => {
   const { t } = useTranslation();
@@ -21,7 +22,9 @@ const SuccessBookingPage = ({ route, navigation }) => {
     <ImageBackground source={bgImg} style={styles.image}>
       <View style={styles.info}>
         <View>
-          <PrimaryText style={styles.title} weight={600}>
+          <PrimaryText
+            style={[styles.title, i18n.language === 'am' && styles.titleSmall]}
+            weight={600}>
             {t('success.title')}
           </PrimaryText>
           <View style={styles.stadionInfoView}>
@@ -36,8 +39,15 @@ const SuccessBookingPage = ({ route, navigation }) => {
           </View>
           <View style={styles.gameInfoContainer}>
             <View style={styles.gameInfo}>
-              <PrimaryText style={styles.gameInfoTopText}>{game.price} AMD</PrimaryText>
-              <PrimaryText style={styles.gameInfoBottomText} weight={600}>
+              <PrimaryText style={styles.gameInfoTopText}>
+                {game.price} {t('common.amd')}
+              </PrimaryText>
+              <PrimaryText
+                style={[
+                  styles.gameInfoBottomText,
+                  i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                ]}
+                weight={600}>
                 {t('common.total_price')}
               </PrimaryText>
             </View>
@@ -45,7 +55,12 @@ const SuccessBookingPage = ({ route, navigation }) => {
               <PrimaryText style={styles.gameInfoTopText}>
                 {minutesDifference(game.startTime, game.endTime)}
               </PrimaryText>
-              <PrimaryText style={styles.gameInfoBottomText} weight={600}>
+              <PrimaryText
+                style={[
+                  styles.gameInfoBottomText,
+                  i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                ]}
+                weight={600}>
                 {t('common.duration')}
               </PrimaryText>
             </View>
@@ -53,7 +68,12 @@ const SuccessBookingPage = ({ route, navigation }) => {
               <PrimaryText style={styles.gameInfoTopText}>
                 {format(game.startTime, 'dd.MM.yyyy')}
               </PrimaryText>
-              <PrimaryText style={styles.gameInfoBottomText} weight={600}>
+              <PrimaryText
+                style={[
+                  styles.gameInfoBottomText,
+                  i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                ]}
+                weight={600}>
                 {t('common.date')}
               </PrimaryText>
             </View>
@@ -92,6 +112,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 24,
   },
+  titleSmall: {
+    fontSize: 22,
+  },
   stadionInfoView: {
     marginBottom: 42,
     rowGap: 8,
@@ -122,9 +145,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderColor: '#fff',
-    paddingHorizontal: 13,
+    paddingHorizontal: 5,
     paddingVertical: 7,
-    flex: 2,
   },
   gameInfoTopText: {
     color: '#fff',
@@ -134,6 +156,9 @@ const styles = StyleSheet.create({
     color: COLORS.lightWhite,
     fontSize: 16,
     textAlign: 'center',
+  },
+  gameInfoBottomTextSmall: {
+    fontSize: 14,
   },
   subtitle: {
     color: '#fff',

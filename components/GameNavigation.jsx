@@ -35,7 +35,18 @@ const items = [
 const GameNavigation = ({ game }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const Component = items[activeIndex].Element;
+  const displayView = (index) => {
+    switch (index) {
+      case 0:
+        return <BookNow game={game} />;
+      case 1:
+        return <Uniforms game={game} />;
+      case 2:
+        return <Facilities game={game} />;
+      case 3:
+        return <GamePlayersList game={game} />;
+    }
+  };
 
   return (
     <>
@@ -50,7 +61,7 @@ const GameNavigation = ({ game }) => {
           );
         })}
       </View>
-      <Component game={game} />
+      {displayView(activeIndex)}
     </>
   );
 };

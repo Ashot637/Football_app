@@ -27,11 +27,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import backIcon from '../assets/images/back.png';
 
 import { useTranslation } from 'react-i18next';
+import i18n from '../languages/i18n';
 
 const VerifyAccount = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { isInvalidCode, phone } = useSelector(selectAuth);
+  const { isInvalidCode, phone, name, password } = useSelector(selectAuth);
   const [value, setValue] = useState('');
 
   const ref = useBlurOnFulfill({ value, cellCount: 4 });
@@ -41,7 +42,7 @@ const VerifyAccount = ({ navigation }) => {
   });
 
   const onVerify = () => {
-    dispatch(fetchCode({ code: value }));
+    dispatch(fetchCode({ code: value, name, phone, password }));
   };
 
   return (
@@ -51,7 +52,9 @@ const VerifyAccount = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image source={backIcon} width={24} height={24} />
           </TouchableOpacity>
-          <PrimaryText style={styles.title} weight={600}>
+          <PrimaryText
+            style={[styles.title, i18n.language === 'en' && styles.titleBig]}
+            weight={600}>
             {t('verify.verify_your_account')}
           </PrimaryText>
           <View style={{ width: 42 }} />
@@ -80,7 +83,6 @@ const VerifyAccount = ({ navigation }) => {
             )}
           />
         </View>
-        {isInvalidCode && <PrimaryText style={styles.error}>Invalid code</PrimaryText>}
         <View style={{ marginBottom: 24 }}>
           <PrimaryButton title={t('verify.verify_and_continue')} onPress={() => onVerify()} />
         </View>
@@ -110,8 +112,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 21,
     fontWeight: '600',
+  },
+  titleBig: {
+    fontSize: 24,
   },
   enterOTP: {
     fontWeight: '600',

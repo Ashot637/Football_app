@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { fetchAuthMe } from '../redux/authSlice/authSlice';
@@ -13,6 +13,7 @@ import Header from './Header';
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
 import SignUpPage from '../pages/SignUpPage';
+import CreatePasswordPage from '../pages/CreatePasswordPage';
 import VerifyAccount from '../pages/VerifyAccount';
 
 import HomePage from '../pages/HomePage';
@@ -63,6 +64,7 @@ const Navigation = () => {
         <Stack.Screen name="landing" component={LandingPage} />
         <Stack.Screen name="login" component={LoginPage} />
         <Stack.Screen name="signup" component={SignUpPage} />
+        <Stack.Screen name="create-password" component={CreatePasswordPage} />
         <Stack.Screen name="verify" component={VerifyAccount} />
         <Stack.Screen name="main" component={HomeStack} />
         <Stack.Screen name="success" component={SuccessBookingPage} />

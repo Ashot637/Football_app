@@ -2,16 +2,17 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import { setFromSearchIcon } from '../redux/searchSlice/searchSlice';
+import { setFrom } from '../redux/notificationSlice/notificationSlice';
 
-import { getFocusedRouteNameFromRoute, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { COLORS } from '../helpers/colors';
 
+import logoImg from '../assets/images/logo.png';
 import searchIcon from '../assets/images/search.png';
 import notificationIcon from '../assets/images/notification.png';
-import { setFrom } from '../redux/notificationSlice/notificationSlice';
 
 const Header = () => {
   const navigation = useNavigation();
@@ -33,8 +34,8 @@ const Header = () => {
   return (
     <LinearGradient colors={[COLORS.darkgrey, 'rgba(32, 44, 34, 0.92)']} style={styles.gradient}>
       <View style={styles.header}>
-        <TouchableOpacity>
-          <View style={styles.logo}></View>
+        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+          <Image source={logoImg} style={styles.logo} />
         </TouchableOpacity>
         <View style={styles.actions}>
           <TouchableOpacity onPress={onOpenSearch}>
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
     width: 48,
     aspectRatio: 1,
     borderRadius: 24,
-    backgroundColor: '#fff',
   },
   actions: {
     flexDirection: 'row',

@@ -113,7 +113,7 @@ const BookNow = ({ game }) => {
           ) : (
             <>
               <PrimaryText style={styles.guestsViewTitle} weight={600}>
-                You can have only 2 guests
+                {t('game.maximum_guests_count')}
               </PrimaryText>
               {guests.map((guest, index) => {
                 return (
@@ -127,7 +127,7 @@ const BookNow = ({ game }) => {
               })}
               {guests.length < 2 && (
                 <TouchableOpacity onPress={() => setIsOpenModal(true)}>
-                  <PrimaryText style={styles.guestsViewBtn}>Add new guest</PrimaryText>
+                  <PrimaryText style={styles.guestsViewBtn}>{t('game.add_new_guest')}</PrimaryText>
                 </TouchableOpacity>
               )}
             </>
@@ -191,7 +191,6 @@ const BookNow = ({ game }) => {
         <View style={styles.infoView}>
           <PrimaryText style={styles.infoText}>{game.stadion.title}</PrimaryText>
           <PrimaryText style={styles.infoText}>{game.stadion.address}</PrimaryText>
-          <PrimaryText style={styles.infoText}>TODO working hours</PrimaryText>
         </View>
       </View>
       <View style={styles.block}>
@@ -203,16 +202,23 @@ const BookNow = ({ game }) => {
       <PrimaryButton
         title={
           userAlreadyBooked
-            ? 'Already booked'
-            : game.playersCount === game.maxPlayersCount
-            ? 'Maximum players'
+            ? t('game.already_booked')
+            : game[selectedGroup === 1 ? 'playersCountFirstGroup' : 'playersCountSecondGroup'] ===
+              game.maxPlayersCount / 2
+            ? t('game.maximum_players')
             : t('game.book_now')
         }
         onPress={() => onSubmitBooking()}
         disabled={
           userAlreadyBooked ||
-          game.playersCount === game.maxPlayersCount ||
-          (!guests.length && !isIndividual)
+          game[selectedGroup === 1 ? 'playersCountFirstGroup' : 'playersCountSecondGroup'] ===
+            game.maxPlayersCount / 2 ||
+          (!guests.length && !isIndividual) ||
+          (!isIndividual &&
+            game.maxPlayersCount / 2 <
+              game[selectedGroup === 1 ? 'playersCountFirstGroup' : 'playersCountSecondGroup'] +
+                guests.length +
+                1)
         }
       />
       {isOpenModal && (

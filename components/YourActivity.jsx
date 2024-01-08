@@ -22,7 +22,7 @@ const YourActivity = () => {
   return (
     <View style={styles.container}>
       <PrimaryText weight={600} style={styles.title}>
-        Your individual activity
+        {t('activity.individual_activity')}
       </PrimaryText>
       <View style={styles.blocks}>
         {games?.map((game) => {

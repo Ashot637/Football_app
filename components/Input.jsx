@@ -2,14 +2,16 @@ import { Image, StyleSheet, TextInput, View } from 'react-native';
 
 import { COLORS } from '../helpers/colors';
 
-const Input = ({ img, placeholder, value, setValue }) => {
+const Input = ({ img, placeholder, value, setValue, type = 'default', secureTextEntry }) => {
   return (
     <View style={styles.inputView}>
       <Image source={img} height={24} width={24} />
       <TextInput
         value={value}
         onChangeText={setValue}
+        keyboardType={type}
         style={styles.input}
+        secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         placeholderTextColor={COLORS.grey}
         selectionColor={'#fff'}

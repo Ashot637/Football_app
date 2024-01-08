@@ -177,11 +177,13 @@ const ProfilePage = ({ navigation }) => {
           title={'Save'}
           onPress={() => onUpdateData()}
           disabled={
-            user['name'] === profileData['name'] &&
-            user['phone'] === profileData['phone'] &&
-            user['email'] === profileData['email'] &&
-            user['address'] === profileData['address'] &&
-            !selectedImg
+            (user['name'] === profileData['name'] &&
+              user['phone'] === profileData['phone'] &&
+              user['email'] === profileData['email'] &&
+              user['address'] === profileData['address'] &&
+              !selectedImg) ||
+            !profileData['name'].trim() ||
+            profileData['phone'].trim().length < 9
           }
         />
       </View>

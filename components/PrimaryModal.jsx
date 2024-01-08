@@ -36,7 +36,7 @@ const PrimaryModal = ({ state, dismiss, onSubmit }) => {
               <Image source={closeIcon} />
             </TouchableOpacity>
           </View>
-          <PrimaryText style={styles.title}>Add a new guest</PrimaryText>
+          <PrimaryText style={styles.title}>{t('game.add_new_guest')}</PrimaryText>
           <View style={styles.inputs}>
             <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
             <Input
@@ -50,20 +50,20 @@ const PrimaryModal = ({ state, dismiss, onSubmit }) => {
             <TouchableOpacity onPress={dismiss}>
               <View style={styles.cancelBtn}>
                 <PrimaryText style={styles.btnText} weight={600}>
-                  Cancel
+                  {t('common.cancel')}
                 </PrimaryText>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => onSubmit(name, phone)}
-              disabled={!name.trim().length || !phone.trim().length}>
+              disabled={!name.trim().length || phone.trim().length < 9}>
               <View
                 style={[
                   styles.submitbtn,
-                  (!name.trim().length || !phone.trim().length) && styles.disabled,
+                  (!name.trim().length || phone.trim().length < 9) && styles.disabled,
                 ]}>
                 <PrimaryText style={[styles.btnText, { color: COLORS.black }]} weight={600}>
-                  Add
+                  {t('common.add')}
                 </PrimaryText>
               </View>
             </TouchableOpacity>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   cancelBtn: {
-    width: 98,
+    width: 108,
     backgroundColor: COLORS.darkgrey,
     borderRadius: 15,
     paddingVertical: 9,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   submitbtn: {
-    width: 100,
+    width: 110,
     backgroundColor: COLORS.yellow,
     borderRadius: 15,
     paddingVertical: 10,

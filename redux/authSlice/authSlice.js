@@ -3,11 +3,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from '../../axios/axios';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { sessionStorage } from '../../helpers/sessionStorage';
 
 export const fetchSignup = createAsyncThunk('auth/fetchSignup', async (params, thunkAPI) => {
   try {
     const { data } = await axios.post('/auth/register', { ...params });
-    return data.phone;
+    return { phone: data.phone, name: data.name };
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
@@ -16,13 +17,20 @@ export const fetchSignup = createAsyncThunk('auth/fetchSignup', async (params, t
 export const fetchLogin = createAsyncThunk('auth/fetchLogin', async (params, thunkAPI) => {
   try {
     const { data } = await axios.post('/auth/login', { ...params });
-    return data.phone;
+    if (data.accessToken) {
+      if (thunkAPI.getState().auth.rememberMe) {
+        await AsyncStorage.setItem('accessToken', data.accessToken);
+      } else {
+        sessionStorage.token = data.accessToken;
+      }
+    }
+    return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 });
 
-export const fetchCode = createAsyncThunk('auth/fetchCode', async (params, { getState }) => {
+export const fetchCode = createAsyncThunk('auth/fetchCode', async (params) => {
   const { data } = await axios.post('/auth/verifyCode', { ...params });
   if (data.accessToken) {
     await AsyncStorage.setItem('accessToken', data.accessToken);
@@ -42,10 +50,13 @@ const initialState = {
   user: null,
   status: 'waiting',
   errorMessage: null,
+  isSignUpDataValid: false,
   isWaitingCode: false,
   isInvalidCode: false,
   rememberMe: true,
-  phone: '',
+  password: null,
+  phone: null,
+  name: null,
 };
 
 const authSlice = createSlice({
@@ -55,9 +66,7 @@ const authSlice = createSlice({
     logout: (state) => {
       AsyncStorage.removeItem('accessToken');
       state.user = null;
-    },
-    resetIsWaitingCode: (state) => {
-      state.isWaitingCode = false;
+      state.phone = null;
     },
     setUser: (state, action) => {
       state.user = action.payload;
@@ -65,27 +74,35 @@ const authSlice = createSlice({
     toggleRememberMe: (state) => {
       state.rememberMe = !state.rememberMe;
     },
+    setPassword: (state, action) => {
+      state.password = action.payload;
+      state.isWaitingCode = true;
+    },
+    resetIsSignUpDataValid: (state) => {
+      state.isSignUpDataValid = false;
+    },
+    resetIsWaitingCode: (state) => {
+      state.isWaitingCode = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSignup.fulfilled, (state, action) => {
       state.errorMessage = null;
-      state.isWaitingCode = true;
+      state.phone = action.payload.phone;
+      state.name = action.payload.name;
+      state.isSignUpDataValid = true;
       state.isInvalidCode = false;
-      state.phone = action.payload;
     });
     builder.addCase(fetchSignup.rejected, (state, action) => {
       state.errorMessage = action.payload;
-      state.isWaitingCode = false;
+      state.isSignUpDataValid = false;
     });
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
+      state.user = action.payload;
       state.errorMessage = null;
-      state.isWaitingCode = true;
-      state.isInvalidCode = false;
-      state.phone = action.payload;
     });
     builder.addCase(fetchLogin.rejected, (state, action) => {
       state.errorMessage = action.payload;
-      state.isWaitingCode = false;
     });
     builder.addCase(fetchCode.pending, (state) => {
       state.user = null;
@@ -119,4 +136,11 @@ export const selectAuth = (state) => state.auth;
 
 export default authSlice.reducer;
 
-export const { logout, resetIsWaitingCode, setUser, toggleRememberMe } = authSlice.actions;
+export const {
+  logout,
+  setUser,
+  toggleRememberMe,
+  setPassword,
+  resetIsSignUpDataValid,
+  resetIsWaitingCode,
+} = authSlice.actions;

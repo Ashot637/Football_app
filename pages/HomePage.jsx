@@ -24,35 +24,27 @@ import i18n from '../languages/i18n';
 
 const currentDate = new Date();
 
+const formatDate = (date) => ({
+  date,
+  weekDay: format(date, 'EEEE'),
+  month: format(date, 'MMMM'),
+  day: format(date, 'dd'),
+});
+
 const dates = [
   {
-    title: 'Today',
+    title: 'date.today',
     date: currentDate,
   },
   {
-    title: 'Tomorrow',
+    title: 'date.tomorrow',
     date: addDays(currentDate, 1),
   },
-  {
-    title: format(addDays(currentDate, 2), 'EEE dd MMM'),
-    date: addDays(currentDate, 2),
-  },
-  {
-    title: format(addDays(currentDate, 3), 'EEE dd MMM'),
-    date: addDays(currentDate, 3),
-  },
-  {
-    title: format(addDays(currentDate, 4), 'EEE dd MMM'),
-    date: addDays(currentDate, 4),
-  },
-  {
-    title: format(addDays(currentDate, 5), 'EEE dd MMM'),
-    date: addDays(currentDate, 5),
-  },
-  {
-    title: format(addDays(currentDate, 6), 'EEE dd MMM'),
-    date: addDays(currentDate, 6),
-  },
+  formatDate(addDays(currentDate, 2)),
+  formatDate(addDays(currentDate, 3)),
+  formatDate(addDays(currentDate, 4)),
+  formatDate(addDays(currentDate, 5)),
+  formatDate(addDays(currentDate, 6)),
 ];
 
 const HomePage = ({ route }) => {
@@ -94,7 +86,7 @@ const HomePage = ({ route }) => {
             {dates.map((item, index) => {
               return (
                 <TouchableOpacity
-                  key={item.title}
+                  key={index}
                   onPress={() =>
                     selectedDate === item.date ? setSelectedDate(null) : setSelectedDate(item.date)
                   }>
@@ -107,7 +99,13 @@ const HomePage = ({ route }) => {
                     <PrimaryText
                       style={[styles.dateText, selectedDate === item.date && styles.dateTextActive]}
                       weight={600}>
-                      {item.title}
+                      {item.title
+                        ? t(item.title)
+                        : t(`date.week.${item.weekDay}`) +
+                          ' ' +
+                          item.day +
+                          ' ' +
+                          t(`date.month.${item.month}`)}
                     </PrimaryText>
                   </View>
                 </TouchableOpacity>
