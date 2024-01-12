@@ -84,6 +84,9 @@ const authSlice = createSlice({
     resetIsWaitingCode: (state) => {
       state.isWaitingCode = false;
     },
+    resetErrorMessage: (state) => {
+      state.errorMessage = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSignup.fulfilled, (state, action) => {
@@ -143,4 +146,5 @@ export const {
   setPassword,
   resetIsSignUpDataValid,
   resetIsWaitingCode,
+  resetErrorMessage,
 } = authSlice.actions;

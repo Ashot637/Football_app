@@ -21,7 +21,7 @@ const SingleGame = ({ route }) => {
 
   useLayoutEffect(() => {
     onRefresh();
-  }, [id]);
+  }, [route]);
 
   const onRefresh = useCallback(() => {
     setIsLoading(true);

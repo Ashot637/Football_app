@@ -93,7 +93,10 @@
     "password": "Password",
     "email": "Email",
     "address": "Address",
-    "logout": "Log out"
+    "logout": "Log out",
+    "delete_account": "Delete account",
+    "delete_account_title": "Once you delete your account, there is no getting it back. Make sure you want to do this.",
+    "yes_delete": "Yes, delete"
   },
   "activity": {
     "your_activity": "Your activity",
@@ -106,6 +109,11 @@
   "success": {
     "title": "Your booking has been successfully completed",
     "your_booking_number": "Your booking confirmation number is:"
+  },
+  "errors": {
+    "PHONE_IN_USE": "Phone already in use",
+    "INVALID_PHONE_OR_PASWORD": "Invalid phone or password",
+    "INVALID_OTP": "Invalid OTP"
   },
   "common": {
     "amd": "AMD",

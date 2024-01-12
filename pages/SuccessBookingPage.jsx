@@ -29,11 +29,11 @@ const SuccessBookingPage = ({ route, navigation }) => {
           </PrimaryText>
           <View style={styles.stadionInfoView}>
             <View style={styles.stadionInfoRow}>
-              <Image source={stadionIcon} />
+              <Image source={stadionIcon} style={styles.icon} />
               <PrimaryText style={styles.stadionInfoText}>{game.stadion.title}</PrimaryText>
             </View>
             <View style={styles.stadionInfoRow}>
-              <Image source={locationIcon} />
+              <Image source={locationIcon} style={styles.icon} />
               <PrimaryText style={styles.stadionInfoText}>{game.stadion.address}</PrimaryText>
             </View>
           </View>
@@ -170,6 +170,10 @@ const styles = StyleSheet.create({
     color: COLORS.yellow,
     fontSize: 22,
     textAlign: 'center',
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 

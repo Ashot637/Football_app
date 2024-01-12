@@ -7,9 +7,8 @@
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/splash.webp",
+      "resizeMode": "cover"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -17,9 +16,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/logo.png"
+      },
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "package": "com.tesvan.football"
     },
     "web": {
       "favicon": "./assets/images/logo.png"
@@ -30,7 +30,21 @@
         {
           "photosPermission": "Uploading a user photo adds a personal touch to your profile, fostering a sense of  trust."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
       ]
-    ]
-  }
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1d37dcd5-7c3f-44fd-b0ed-fc6c6c87820c"
+      }
+    }
+  },
+  "usesCleartextTraffic": true
 }

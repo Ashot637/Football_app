@@ -71,7 +71,9 @@ const SignUpPage = ({ navigation }) => {
               placeholder={t('user.phone')}
             />
           </View>
-          {errorMessage && <PrimaryText style={styles.error}>{errorMessage}</PrimaryText>}
+          {errorMessage && (
+            <PrimaryText style={styles.error}>{t(`errors.${errorMessage}`)}</PrimaryText>
+          )}
           <PrimaryButton
             title={t('form.signup')}
             onPress={() => onSignup()}

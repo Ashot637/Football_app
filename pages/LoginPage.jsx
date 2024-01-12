@@ -82,7 +82,9 @@ const LoginPage = ({ navigation }) => {
             <PrimaryText style={styles.remember}>{t('form.remember_me')}</PrimaryText>
           </View>
         </TouchableOpacity>
-        {errorMessage && <PrimaryText style={styles.error}>{errorMessage}</PrimaryText>}
+        {errorMessage && (
+          <PrimaryText style={styles.error}>{t(`errors.${errorMessage}`)}</PrimaryText>
+        )}
         <View style={{ marginBottom: 24 }}>
           <PrimaryButton
             title={t('form.login')}
@@ -172,6 +174,7 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     textAlign: 'center',
+    marginHorizontal: 15,
     marginBottom: 10,
   },
 });

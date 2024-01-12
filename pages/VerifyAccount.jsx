@@ -28,6 +28,7 @@ import backIcon from '../assets/images/back.png';
 
 import { useTranslation } from 'react-i18next';
 import i18n from '../languages/i18n';
+import ResendCode from '../components/ResendCode';
 
 const VerifyAccount = ({ navigation }) => {
   const { t } = useTranslation();
@@ -83,6 +84,7 @@ const VerifyAccount = ({ navigation }) => {
             )}
           />
         </View>
+        {isInvalidCode && <PrimaryText style={styles.error}>{t('errors.INVALID_OTP')}</PrimaryText>}
         <View style={{ marginBottom: 24 }}>
           <PrimaryButton title={t('verify.verify_and_continue')} onPress={() => onVerify()} />
         </View>
@@ -90,11 +92,7 @@ const VerifyAccount = ({ navigation }) => {
           <PrimaryText style={styles.leftText} weight={600}>
             {t('verify.didnt_receive_otp')}
           </PrimaryText>
-          <TouchableOpacity onPress={() => {}}>
-            <PrimaryText style={styles.rightText} weight={600}>
-              {t('verify.resend')}
-            </PrimaryText>
-          </TouchableOpacity>
+          <ResendCode />
         </View>
       </BackgroundImageLayout>
     </KeyboardAvoidingView>
@@ -155,11 +153,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: COLORS.grey,
-  },
-  rightText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COLORS.lightblue,
   },
   error: {
     color: 'red',

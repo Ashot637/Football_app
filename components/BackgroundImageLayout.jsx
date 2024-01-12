@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../redux/authSlice/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetErrorMessage, selectAuth } from '../redux/authSlice/authSlice';
 
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
@@ -10,7 +10,8 @@ import { COLORS } from '../helpers/colors';
 
 import bgImg from '../assets/images/bg.jpg';
 
-const BackgroundImageLayout = ({ children, padding = 15 }) => {
+const BackgroundImageLayout = ({ children, padding = 15, route }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user } = useSelector(selectAuth);
   const isFocused = useIsFocused();
@@ -23,6 +24,10 @@ const BackgroundImageLayout = ({ children, padding = 15 }) => {
       });
     }
   }, [user, isFocused, navigation]);
+
+  useEffect(() => {
+    dispatch(resetErrorMessage());
+  }, [route]);
 
   return (
     <View>

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 48,
-    aspectRatio: 1,
+    height: 48,
     borderRadius: 24,
   },
   actions: {

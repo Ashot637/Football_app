@@ -23,13 +23,15 @@ import backIcon from '../assets/images/back.png';
 import passwordIcon from '../assets/images/password.png';
 import PrimaryText from '../components/PrimaryText';
 
+import axios from '../axios/axios';
+
 import { useTranslation } from 'react-i18next';
 import i18n from '../languages/i18n';
 
 const CreatePasswordPage = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { isWaitingCode, errorMessage } = useSelector(selectAuth);
+  const { isWaitingCode, errorMessage, phone } = useSelector(selectAuth);
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
@@ -42,6 +44,7 @@ const CreatePasswordPage = ({ navigation }) => {
 
   const onSignup = () => {
     dispatch(dispatchUserPassword(password));
+    axios.post('/auth/generateCode', { phone });
   };
 
   return (

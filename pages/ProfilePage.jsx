@@ -25,6 +25,7 @@ import locationYellowIcon from '../assets/images/location_yellow.png';
 import logoutIcon from '../assets/images/logout.png';
 
 import { useTranslation } from 'react-i18next';
+import DeleteAccount from '../components/DeleteAccount';
 
 const items = [
   {
@@ -60,10 +61,10 @@ const ProfilePage = ({ navigation }) => {
   const { user } = useSelector(selectAuth);
   const [selectedImg, setSelectedImg] = useState(null);
   const [profileData, dispatchData] = useReducer(reducer, {
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    address: user.address,
+    name: user?.name,
+    email: user?.email,
+    phone: user?.phone,
+    address: user?.address,
   });
 
   const handleValueChange = (title, value) => {
@@ -123,71 +124,76 @@ const ProfilePage = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.avatarView}>
-        <Image
-          source={
-            selectedImg?.uri
-              ? { uri: selectedImg.uri }
-              : user.img
-              ? { uri: BASE_URL + user.img }
-              : avatarImg
-          }
-          style={styles.avatar}
-          width={100}
-          height={100}
-        />
-        <TouchableOpacity onPress={pickImage}>
-          <View style={styles.editView}>
-            <Image source={editIcon} width={24} height={24} />
-          </View>
-        </TouchableOpacity>
-        {selectedImg && (
-          <View style={styles.removeView}>
-            <TouchableOpacity onPress={onRemoveSelectedImg}>
-              <Image source={closeIcon} width={24} height={24} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-      <View style={styles.items}>
-        {items.map(({ title, icon }, index) => {
-          return (
-            <ProfileItem
-              key={index}
-              title={`user.${title}`}
-              icon={icon}
-              value={profileData[title]}
-              initialValue={user[title]}
-              setValue={(value) => handleValueChange(title, value)}
+      {user && (
+        <>
+          <View style={styles.avatarView}>
+            <Image
+              source={
+                selectedImg?.uri
+                  ? { uri: selectedImg.uri }
+                  : user.img
+                  ? { uri: BASE_URL + user.img }
+                  : avatarImg
+              }
+              style={styles.avatar}
+              width={100}
+              height={100}
             />
-          );
-        })}
-        <LanguageSelect />
-        <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => onLogout()}>
-          <View style={styles.item}>
-            <View style={styles.icon}>
-              <Image source={logoutIcon} width={24} height={24} />
-            </View>
-            <PrimaryText style={styles.logout} weight={600}>
-              {t('user.logout')}
-            </PrimaryText>
+            <TouchableOpacity onPress={pickImage}>
+              <View style={styles.editView}>
+                <Image source={editIcon} style={styles.icon} />
+              </View>
+            </TouchableOpacity>
+            {selectedImg && (
+              <View style={styles.removeView}>
+                <TouchableOpacity onPress={onRemoveSelectedImg}>
+                  <Image source={closeIcon} style={styles.icon} />
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
-        </TouchableOpacity>
-        <PrimaryButton
-          title={'Save'}
-          onPress={() => onUpdateData()}
-          disabled={
-            (user['name'] === profileData['name'] &&
-              user['phone'] === profileData['phone'] &&
-              user['email'] === profileData['email'] &&
-              user['address'] === profileData['address'] &&
-              !selectedImg) ||
-            !profileData['name'].trim() ||
-            profileData['phone'].trim().length < 9
-          }
-        />
-      </View>
-      <View style={{ height: 50 }} />
+          <View style={styles.items}>
+            {items.map(({ title, icon }, index) => {
+              return (
+                <ProfileItem
+                  key={index}
+                  title={`user.${title}`}
+                  icon={icon}
+                  value={profileData[title]}
+                  initialValue={user[title]}
+                  setValue={(value) => handleValueChange(title, value)}
+                />
+              );
+            })}
+            <LanguageSelect />
+            <DeleteAccount />
+            <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => onLogout()}>
+              <View style={styles.item}>
+                <View style={styles.icon}>
+                  <Image source={logoutIcon} style={styles.icon24} />
+                </View>
+                <PrimaryText style={styles.logout} weight={600}>
+                  {t('user.logout')}
+                </PrimaryText>
+              </View>
+            </TouchableOpacity>
+            <PrimaryButton
+              title={'Save'}
+              onPress={() => onUpdateData()}
+              disabled={
+                (user['name'] === profileData['name'] &&
+                  user['phone'] === profileData['phone'] &&
+                  user['email'] === profileData['email'] &&
+                  user['address'] === profileData['address'] &&
+                  !selectedImg) ||
+                !profileData['name'].trim() ||
+                profileData['phone'].trim().length < 9
+              }
+            />
+          </View>
+          <View style={{ height: 50 }} />
+        </>
+      )}
     </ScrollView>
   );
 };
@@ -247,6 +253,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkgrey,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  icon24: {
+    width: 24,
+    height: 24,
   },
   logout: {
     color: '#fff',

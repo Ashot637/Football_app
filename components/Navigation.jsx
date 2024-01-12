@@ -25,6 +25,7 @@ import SearchBar from './SearchBar';
 import Notifications from '../pages/Notifications';
 import SuccessBookingPage from '../pages/SuccessBookingPage';
 import CancelBookingPage from '../pages/CancelBookingPage';
+import Chat from './Chat/Chat';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

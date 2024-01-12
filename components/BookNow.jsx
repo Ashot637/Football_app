@@ -38,7 +38,7 @@ const BookNow = ({ game }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [guests, setGuests] = useState([]);
 
-  const userAlreadyBooked = game.users.findIndex((gameUser) => gameUser.id === user.id) > -1;
+  const userAlreadyBooked = game.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
 
   const onSubmitBooking = () => {
     axios
@@ -106,9 +106,9 @@ const BookNow = ({ game }) => {
         <View style={styles.infoView}>
           {isIndividual ? (
             <>
-              <PrimaryText style={styles.infoText}>{user.name}</PrimaryText>
-              <PrimaryText style={styles.infoText}>{user.phone}</PrimaryText>
-              <PrimaryText style={styles.infoText}>{user.email}</PrimaryText>
+              <PrimaryText style={styles.infoText}>{user?.name}</PrimaryText>
+              <PrimaryText style={styles.infoText}>{user?.phone}</PrimaryText>
+              <PrimaryText style={styles.infoText}>{user?.email}</PrimaryText>
             </>
           ) : (
             <>

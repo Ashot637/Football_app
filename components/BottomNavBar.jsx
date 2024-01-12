@@ -10,6 +10,7 @@ import { selectNotification } from '../redux/notificationSlice/notificationSlice
 
 import homeIcon from '../assets/images/home.png';
 import stadiumIcon from '../assets/images/stadium.png';
+import shopIcon from '../assets/images/shop.png';
 import chartIcon from '../assets/images/chart.png';
 import profileIcon from '../assets/images/profile_bottom.png';
 
@@ -25,6 +26,11 @@ const items = [
     title: 'stadiums',
     routes: ['stadiums'],
     icon: stadiumIcon,
+  },
+  {
+    title: 'store',
+    route: ['store'],
+    icon: shopIcon,
   },
   {
     title: 'my_activity',
@@ -55,9 +61,15 @@ const BottomNavBar = () => {
   return (
     <View style={styles.nav}>
       {items.map((item) => {
+        if (item.title === 'store') {
+          return (
+            <Image source={item.icon} key={item.title} style={[styles.icon]} resizeMode="contain" />
+          );
+        }
         return (
           <TouchableOpacity
-            key={item.routes[0]}
+            // style={{ flex: 1 }}
+            key={item.title}
             onPress={() => navigation.navigate(item.routes[0])}>
             <View style={styles.item}>
               {item.routes.includes(activeRoute) ? (
@@ -66,7 +78,7 @@ const BottomNavBar = () => {
                   <View style={styles.dot}></View>
                 </>
               ) : (
-                <Image source={item.icon} height={24} width={24} />
+                <Image source={item.icon} style={styles.icon} />
               )}
             </View>
           </TouchableOpacity>
@@ -92,12 +104,17 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.yellow,
+    fontSize: 13,
   },
   dot: {
     width: 5,
     aspectRatio: 1,
     borderRadius: 2.5,
     backgroundColor: COLORS.yellow,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 

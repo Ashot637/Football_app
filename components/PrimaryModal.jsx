@@ -40,6 +40,7 @@ const PrimaryModal = ({ state, dismiss, onSubmit }) => {
           <View style={styles.inputs}>
             <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
             <Input
+              type="phone-pad"
               value={phone}
               setValue={setPhone}
               img={phoneIcon}

@@ -49,11 +49,11 @@ const UpcomingBookings = () => {
                 </PrimaryText>
                 <View style={styles.stadionInfoView}>
                   <View style={styles.stadionInfoRow}>
-                    <Image source={stadionIcon} />
+                    <Image source={stadionIcon} style={styles.icon} />
                     <PrimaryText style={styles.stadionInfoText}>{game.stadion.title}</PrimaryText>
                   </View>
                   <View style={styles.stadionInfoRow}>
-                    <Image source={locationIcon} />
+                    <Image source={locationIcon} style={styles.icon} />
                     <PrimaryText style={styles.stadionInfoText}>{game.stadion.address}</PrimaryText>
                   </View>
                 </View>
@@ -214,6 +214,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.lightWhite,
     textAlign: 'center',
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 

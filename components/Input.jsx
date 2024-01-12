@@ -5,7 +5,7 @@ import { COLORS } from '../helpers/colors';
 const Input = ({ img, placeholder, value, setValue, type = 'default', secureTextEntry }) => {
   return (
     <View style={styles.inputView}>
-      <Image source={img} height={24} width={24} />
+      <Image source={img} style={styles.icon} />
       <TextInput
         value={value}
         onChangeText={setValue}
@@ -38,6 +38,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '600',
     height: '100%',
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 
