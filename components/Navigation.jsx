@@ -53,30 +53,32 @@ const Navigation = () => {
 
   useEffect(() => {
     dispatch(fetchAuthMe());
-  }, [dispatch]);
+  }, []);
 
   if (status === 'loading' || status === 'waiting') {
     return null;
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={status === 'success' ? 'main' : 'landing'}
-        screenOptions={{
-          headerShown: false,
-          animation: 'slide_from_right',
-        }}>
-        <Stack.Screen name="landing" component={LandingPage} />
-        <Stack.Screen name="login" component={LoginPage} />
-        <Stack.Screen name="signup" component={SignUpPage} />
-        <Stack.Screen name="create-password" component={CreatePasswordPage} />
-        <Stack.Screen name="verify" component={VerifyAccount} />
-        <Stack.Screen name="main" component={HomeStack} />
-        <Stack.Screen name="success" component={SuccessBookingPage} />
-        <Stack.Screen name="cancel" component={CancelBookingPage} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName={status === 'success' ? 'main' : 'landing'}
+          screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_right',
+          }}>
+          <Stack.Screen name="landing" component={LandingPage} />
+          <Stack.Screen name="login" component={LoginPage} />
+          <Stack.Screen name="signup" component={SignUpPage} />
+          <Stack.Screen name="create-password" component={CreatePasswordPage} />
+          <Stack.Screen name="verify" component={VerifyAccount} />
+          <Stack.Screen name="main" component={HomeStack} />
+          <Stack.Screen name="success" component={SuccessBookingPage} />
+          <Stack.Screen name="cancel" component={CancelBookingPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 

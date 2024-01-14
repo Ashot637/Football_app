@@ -109,15 +109,12 @@ const authSlice = createSlice({
     });
     builder.addCase(fetchCode.pending, (state) => {
       state.user = null;
-      state.status = 'loading';
     });
     builder.addCase(fetchCode.fulfilled, (state, action) => {
       state.user = action.payload;
-      state.status = 'success';
     });
     builder.addCase(fetchCode.rejected, (state) => {
       state.user = null;
-      state.status = 'error';
       state.isInvalidCode = true;
     });
     builder.addCase(fetchAuthMe.pending, (state) => {

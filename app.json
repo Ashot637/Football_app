@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Arm MatchDay",
-    "slug": "ArmMatchDay",
+    "slug": "armmatchday",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon1024.png",
@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -19,7 +21,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon1024.png"
       },
-      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"],
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+      ],
       "package": "com.tesvan.ArmMatchDay"
     },
     "web": {
@@ -43,9 +49,10 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "db928bd0-898d-42f1-bc8c-8f8ffdfb7c73"
+        "projectId": "27ea85cc-8fa8-4213-ac86-81753bd7ab09"
       }
-    }
+    },
+    "owner": "ashotmartirosyan"
   },
   "usesCleartextTraffic": true
 }
