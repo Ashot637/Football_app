@@ -1,5 +1,13 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
-import { ImageBackground, ScrollView, StyleSheet, View, Image, RefreshControl } from 'react-native';
+import { useCallback, useLayoutEffect, useState } from 'react';
+import {
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
 import PrimaryText from '../components/PrimaryText';
 
 import axios, { BASE_URL } from '../axios/axios';
@@ -8,8 +16,6 @@ import { COLORS } from '../helpers/colors';
 
 import locationIcon from '../assets/images/location.png';
 import GameNavigation from '../components/GameNavigation';
-
-import loader from '../assets/images/loader.gif';
 
 import { useTranslation } from 'react-i18next';
 
@@ -35,7 +41,11 @@ const SingleGame = ({ route }) => {
     <>
       {isLoading && (
         <View style={styles.loader}>
-          <Image source={loader} />
+          <ActivityIndicator
+            size={'large'}
+            style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
+            color={COLORS.yellow}
+          />
         </View>
       )}
       {!isLoading && game && (

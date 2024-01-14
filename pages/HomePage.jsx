@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
-  Image,
+  ActivityIndicator,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -16,8 +16,6 @@ import { COLORS } from '../helpers/colors';
 
 import axios from '../axios/axios';
 import Game from '../components/Game';
-
-import loader from '../assets/images/loader.gif';
 
 import { useTranslation } from 'react-i18next';
 import i18n from '../languages/i18n';
@@ -118,7 +116,11 @@ const HomePage = ({ route }) => {
         </PrimaryText>
         {isLoading && (
           <View style={styles.loader}>
-            <Image source={loader} />
+            <ActivityIndicator
+              size={'large'}
+              style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
+              color={COLORS.yellow}
+            />
           </View>
         )}
         <View style={styles.games}>

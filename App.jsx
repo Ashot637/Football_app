@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import Navigation from './components/Navigation';
 
 import { useFonts } from 'expo-font';
@@ -41,6 +42,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
+        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
         <Navigation></Navigation>
       </I18nextProvider>
     </Provider>

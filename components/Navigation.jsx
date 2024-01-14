@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { fetchAuthMe } from '../redux/authSlice/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAuthMe, selectAuth } from '../redux/authSlice/authSlice';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -49,15 +49,20 @@ const HomeStack = () => {
 
 const Navigation = () => {
   const dispatch = useDispatch();
+  const { status } = useSelector(selectAuth);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
   }, [dispatch]);
 
+  if (status === 'loading' || status === 'waiting') {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="landing"
+        initialRouteName={status === 'success' ? 'main' : 'landing'}
         screenOptions={{
           headerShown: false,
           animation: 'slide_from_right',

@@ -72,15 +72,19 @@ const ProfilePage = ({ navigation }) => {
   };
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.75,
-    });
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (!result.canceled) {
-      setSelectedImg(result.assets[0]);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.75,
+      });
+
+      if (!result.canceled) {
+        setSelectedImg(result.assets[0]);
+      }
     }
   };
 

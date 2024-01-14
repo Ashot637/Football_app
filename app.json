@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "football",
-    "slug": "football",
+    "name": "Arm MatchDay",
+    "slug": "ArmMatchDay",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/icon1024.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.webp",
-      "resizeMode": "cover"
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fff"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -16,19 +17,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png"
+        "foregroundImage": "./assets/images/icon1024.png"
       },
-      "permissions": ["android.permission.RECORD_AUDIO"],
-      "package": "com.tesvan.football"
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"],
+      "package": "com.tesvan.ArmMatchDay"
     },
     "web": {
-      "favicon": "./assets/images/logo.png"
+      "favicon": "./assets/images/icon1024.png"
     },
     "plugins": [
       [
         "expo-image-picker",
         {
-          "photosPermission": "Uploading a user photo adds a personal touch to your profile, fostering a sense of  trust."
+          "photosPermission": "Uploading a user photo adds a personal touch to your profile, fostering a sense of trust."
         }
       ],
       [
@@ -42,7 +43,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "1d37dcd5-7c3f-44fd-b0ed-fc6c6c87820c"
+        "projectId": "db928bd0-898d-42f1-bc8c-8f8ffdfb7c73"
       }
     }
   },
