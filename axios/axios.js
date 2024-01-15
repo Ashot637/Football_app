@@ -3,7 +3,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { sessionStorage } from '../helpers/sessionStorage';
 
-// export const BASE_URL = 'http://192.168.100.29:8080/';
+// export const BASE_URL = 'http://192.168.11.55:8080/';
 export const BASE_URL = 'http://146.190.127.106/';
 
 const instance = axios.create({

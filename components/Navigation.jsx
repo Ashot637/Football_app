@@ -26,6 +26,7 @@ import Notifications from '../pages/Notifications';
 import SuccessBookingPage from '../pages/SuccessBookingPage';
 import CancelBookingPage from '../pages/CancelBookingPage';
 import Chat from './Chat/Chat';
+import SplashScreen from './SplashScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,7 +57,7 @@ const Navigation = () => {
   }, []);
 
   if (status === 'loading' || status === 'waiting') {
-    return null;
+    return <SplashScreen />;
   }
 
   return (
