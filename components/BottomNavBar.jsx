@@ -54,7 +54,7 @@ const BottomNavBar = () => {
   useEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (routeName) {
-      setActiveRoute(routeName === 'notifications' ? from : routeName);
+      setActiveRoute('chats'.includes(routeName) ? from : routeName);
     }
   }, [route]);
 

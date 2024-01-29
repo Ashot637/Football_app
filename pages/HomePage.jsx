@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   RefreshControl,
@@ -50,6 +50,7 @@ const HomePage = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const isMounted = useRef(false);
 
   useEffect(() => {
     onRefresh();
@@ -66,15 +67,28 @@ const HomePage = ({ route }) => {
     axios.get('/game/getAll', { params: { date: selectedDate || null } }).then(({ data }) => {
       setGames(data);
       setIsLoading(false);
+      isMounted.current = true;
     });
   });
+
+  const onSelectDate = (date) => {
+    if (selectedDate === date) {
+      isMounted.current = false;
+      setSelectedDate(null);
+    } else {
+      setSelectedDate(date);
+    }
+  };
 
   return (
     <>
       <ScrollView
         style={styles.container}
         refreshControl={
-          <RefreshControl refreshing={isLoading && !selectedDate} onRefresh={onRefresh} />
+          <RefreshControl
+            refreshing={isLoading && !selectedDate && isMounted.current}
+            onRefresh={onRefresh}
+          />
         }>
         <PrimaryText style={styles.title} weight={600}>
           {t('home.choose_date')}
@@ -83,11 +97,7 @@ const HomePage = ({ route }) => {
           <View style={styles.dates}>
             {dates.map((item, index) => {
               return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() =>
-                    selectedDate === item.date ? setSelectedDate(null) : setSelectedDate(item.date)
-                  }>
+                <TouchableOpacity key={index} onPress={() => onSelectDate(item.date)}>
                   <View
                     style={[
                       styles.dateView,

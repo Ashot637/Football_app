@@ -1,19 +1,18 @@
 {
   "expo": {
-    "name": "Arm MatchDay",
-    "slug": "armmatchday",
+    "name": "Ballhola",
+    "slug": "ballhola",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon1024.png",
     "userInterfaceStyle": "light",
+    "permissions": ["NOTIFICATIONS"],
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -26,7 +25,8 @@
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.tesvan.ArmMatchDay"
+      "package": "com.tesvan.ballhola",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/images/icon1024.png"
@@ -49,10 +49,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "27ea85cc-8fa8-4213-ac86-81753bd7ab09"
+        "projectId": "eb785808-ad7c-4a7c-b976-be600a3dd403"
       }
-    },
-    "owner": "ashotmartirosyan"
+    }
   },
   "usesCleartextTraffic": true
 }

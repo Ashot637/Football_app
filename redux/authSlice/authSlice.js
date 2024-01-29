@@ -38,8 +38,8 @@ export const fetchCode = createAsyncThunk('auth/fetchCode', async (params) => {
   return data;
 });
 
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-  const { data } = await axios.get('/auth');
+export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async (expoPushToken) => {
+  const { data } = await axios.get('/auth', { params: { expoPushToken } });
   if (data.accessToken) {
     await AsyncStorage.setItem('accessToken', data.accessToken);
   }
@@ -70,6 +70,9 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload;
+    },
+    changeNewMessagesStatus: (state, action) => {
+      state.user = { ...state.user, hasMessage: action.payload };
     },
     toggleRememberMe: (state) => {
       state.rememberMe = !state.rememberMe;
@@ -144,4 +147,5 @@ export const {
   resetIsSignUpDataValid,
   resetIsWaitingCode,
   resetErrorMessage,
+  changeNewMessagesStatus,
 } = authSlice.actions;

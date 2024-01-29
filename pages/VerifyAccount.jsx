@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
 import PrimaryText from '../components/PrimaryText';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   CodeField,
   Cursor,
@@ -42,8 +44,9 @@ const VerifyAccount = ({ navigation }) => {
     setValue,
   });
 
-  const onVerify = () => {
-    dispatch(fetchCode({ code: value, name, phone, password }));
+  const onVerify = async () => {
+    const expoPushToken = await AsyncStorage.getItem('expoPushToken');
+    dispatch(fetchCode({ code: value, name, phone, password, expoPushToken }));
   };
 
   return (

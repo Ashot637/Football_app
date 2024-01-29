@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuthMe, selectAuth } from '../redux/authSlice/authSlice';
 
@@ -27,6 +29,8 @@ import SuccessBookingPage from '../pages/SuccessBookingPage';
 import CancelBookingPage from '../pages/CancelBookingPage';
 import Chat from './Chat/Chat';
 import SplashScreen from './SplashScreen';
+import useSocket from '../hooks/useSocket';
+import Groups from './Groups';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,18 +47,23 @@ const HomeStack = () => {
       <Tab.Screen name="stadiums" component={Stadions} options={{ header: () => <SearchBar /> }} />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
       <Tab.Screen name="profile" component={ProfilePage} />
-      <Tab.Screen name="notifications" component={Notifications} />
+      <Tab.Screen name="chats" component={Groups} />
     </Tab.Navigator>
   );
 };
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector(selectAuth);
+  const { status, user } = useSelector(selectAuth);
 
   useEffect(() => {
-    dispatch(fetchAuthMe());
+    (async () => {
+      const expoPushToken = await AsyncStorage.getItem('expoPushToken');
+      dispatch(fetchAuthMe(expoPushToken));
+    })();
   }, []);
+
+  useSocket(user);
 
   if (status === 'loading' || status === 'waiting') {
     return <SplashScreen />;
@@ -75,6 +84,14 @@ const Navigation = () => {
           <Stack.Screen name="create-password" component={CreatePasswordPage} />
           <Stack.Screen name="verify" component={VerifyAccount} />
           <Stack.Screen name="main" component={HomeStack} />
+          <Stack.Screen
+            name="chat"
+            component={Chat}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
           <Stack.Screen name="success" component={SuccessBookingPage} />
           <Stack.Screen name="cancel" component={CancelBookingPage} />
         </Stack.Navigator>

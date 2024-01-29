@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import PrimaryText from '../components/PrimaryText';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth, fetchLogin, toggleRememberMe } from '../redux/authSlice/authSlice';
 
@@ -33,8 +35,9 @@ const LoginPage = ({ navigation }) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  const onLogin = () => {
-    dispatch(fetchLogin({ password, phone })).then(() => {
+  const onLogin = async () => {
+    const expoPushToken = await AsyncStorage.getItem('expoPushToken');
+    dispatch(fetchLogin({ password, phone, expoPushToken })).then(() => {
       setPhone('');
       setPassword('');
     });

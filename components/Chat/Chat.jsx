@@ -1,70 +1,144 @@
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { COLORS } from '../../helpers/colors';
 import PrimaryText from '../PrimaryText';
-import Message from './Message';
+import SenderMessage from './SenderMessage';
+import ReceiverMessage from './ReceiverMessage';
 
-const messages = [
-  {
-    name: 'Daniel',
-    text: 'Hello!',
-  },
-  {
-    name: 'Daniel',
-    text: 'Hello!',
-  },
-  {
-    name: 'You',
-    text: 'Hello!',
-  },
-  {
-    name: 'Daniel',
-    text: 'Hello!',
-  },
-  {
-    name: 'You',
-    text: 'Hello!',
-  },
-  {
-    name: 'You',
-    text: 'Hello!',
-  },
-  {
-    name: 'You',
-    text: 'Hello!',
-  },
-  {
-    name: 'You',
-    text: 'Hello!',
-  },
-  {
-    name: 'You',
-    text: 'Hello!',
-  },
-];
+import sendIcon from '../../assets/images/send.png';
+import axios from '../../axios/axios';
 
-const Chat = () => {
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../redux/authSlice/authSlice';
+
+import useChat from './useChat';
+
+const Chat = ({ route }) => {
+  const { user } = useSelector(selectAuth);
+  const {
+    openMenuMessageId,
+    setOpenMenuMessageId,
+    isLoading,
+    messages,
+    fetchData,
+    onReactToMessage,
+    onSendMessage,
+    onDeleteMessage,
+    text,
+    setText,
+  } = useChat(route.params);
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const onBackPress = () => {
+  //       navigation.navigate('chats');
+  //       axios.post('/message/readGroupMessages', { groupId });
+
+  //       return true;
+  //     };
+
+  //     BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+  //     return () => {
+  //       BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  //     };
+  //   }),
+  // );
+
   return (
-    <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.messagesHolder}>
-          <View style={styles.block}>
-            <PrimaryText weight={600} style={styles.date}>
-              Today
-            </PrimaryText>
-            {messages.map((message, index) => {
-              return <Message key={index} user={message} me={message.name === 'You'} />;
-            })}
+    <>
+      {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}> */}
+      <TouchableWithoutFeedback onPress={() => openMenuMessageId && setOpenMenuMessageId(null)}>
+        <View style={styles.container}>
+          {isLoading ? (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingBottom: 25,
+              }}>
+              <ActivityIndicator
+                size={'large'}
+                style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
+                color={COLORS.yellow}
+              />
+            </View>
+          ) : (
+            <FlatList
+              scrollEnabled={!openMenuMessageId}
+              data={messages}
+              inverted
+              contentContainerStyle={{ paddingTop: 20, paddingBottom: 50 }}
+              initialNumToRender={20}
+              maxToRenderPerBatch={10}
+              showsVerticalScrollIndicator={false}
+              onEndReached={fetchData}
+              keyExtractor={(item, index) => item.date}
+              renderItem={({ item: { date, messages } }) => {
+                return (
+                  <View>
+                    <PrimaryText weight={600} style={styles.date}>
+                      {date}
+                    </PrimaryText>
+                    {messages.map((message, index) => {
+                      if (message.userId === user.id) {
+                        return (
+                          <SenderMessage
+                            key={message.id.toString() + date}
+                            setOpenMenuMessageId={setOpenMenuMessageId}
+                            data={message}
+                            isOpenMenu={message.id === openMenuMessageId}
+                            isNextUserSame={messages[index - 1]?.userId === message.userId}
+                            onReactToMessage={onReactToMessage}
+                            onDeleteMessage={onDeleteMessage}
+                          />
+                        );
+                      }
+                      return (
+                        <ReceiverMessage
+                          key={message.id.toString() + date}
+                          setOpenMenuMessageId={setOpenMenuMessageId}
+                          data={message}
+                          isOpenMenu={message.id === openMenuMessageId}
+                          isNextUserSame={messages[index + 1]?.userId === message.userId}
+                          onReactToMessage={onReactToMessage}
+                        />
+                      );
+                    })}
+                  </View>
+                );
+              }}
+            />
+          )}
+          <View style={styles.inputView}>
+            <TextInput
+              value={text}
+              onChangeText={setText}
+              style={styles.input}
+              placeholder="Write your message"
+              placeholderTextColor={COLORS.grey}
+            />
+            <TouchableOpacity
+              style={styles.sendBtn}
+              onPress={onSendMessage}
+              disabled={!text.trim().length}>
+              <Image source={sendIcon} />
+            </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
-      <TextInput
-        style={styles.input}
-        placeholder="Write your message"
-        placeholderTextColor={COLORS.grey}
-      />
-    </View>
+      </TouchableWithoutFeedback>
+      {/* </KeyboardAvoidingView> */}
+    </>
   );
 };
 
@@ -72,7 +146,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.black,
     paddingHorizontal: 16,
-    paddingBottom: 15,
     flex: 1,
   },
   messagesHolder: {
@@ -86,15 +159,35 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   inputView: {
-    position: 'absolute',
-    bottom: 0,
+    flexDirection: 'row',
+    columnGap: 10,
+    backgroundColor: 'transparent',
+    marginBottom: 15,
   },
   input: {
     backgroundColor: COLORS.darkBlue,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 20,
+    height: 40,
     borderRadius: 12,
     color: '#fff',
+    flex: 1,
+  },
+  sendBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: COLORS.lightblue,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#111613E5',
+    opacity: 0.9,
   },
 });
 

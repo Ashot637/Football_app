@@ -1,6 +1,6 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFromSearchIcon } from '../redux/searchSlice/searchSlice';
 import { setFrom } from '../redux/notificationSlice/notificationSlice';
 
@@ -13,11 +13,21 @@ import { COLORS } from '../helpers/colors';
 import logoImg from '../assets/images/logo.png';
 import searchIcon from '../assets/images/search.png';
 import notificationIcon from '../assets/images/notification.png';
+import { changeNewMessagesStatus, selectAuth } from '../redux/authSlice/authSlice';
+import { useEffect } from 'react';
+import { socket } from '../hooks/useSocket';
 
 const Header = () => {
+  const { user } = useSelector(selectAuth);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
+
+  useEffect(() => {
+    socket.on('user-new-message', () => {
+      dispatch(changeNewMessagesStatus(true));
+    });
+  }, []);
 
   const onOpenSearch = () => {
     dispatch(setFromSearchIcon(true));
@@ -25,9 +35,9 @@ const Header = () => {
   };
 
   const onOpenNotifcations = () => {
-    if (route.name !== 'notifications') {
+    if (!'chats'.includes(route.name)) {
       dispatch(setFrom(route.name));
-      navigation.navigate('notifications');
+      navigation.navigate('chats');
     }
   };
 
@@ -43,6 +53,7 @@ const Header = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={onOpenNotifcations}>
             <Image source={notificationIcon} height={24} width={24} />
+            {user.hasMessage && <View style={styles.newMessage} />}
           </TouchableOpacity>
         </View>
       </View>
@@ -70,6 +81,15 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     columnGap: 24,
+  },
+  newMessage: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: COLORS.yellow,
+    position: 'absolute',
+    right: 3,
+    top: 1,
   },
 });
 
