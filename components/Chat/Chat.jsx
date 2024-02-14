@@ -15,12 +15,12 @@ import SenderMessage from './SenderMessage';
 import ReceiverMessage from './ReceiverMessage';
 
 import sendIcon from '../../assets/images/send.png';
-import axios from '../../axios/axios';
 
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../redux/authSlice/authSlice';
 
 import useChat from './useChat';
+import { useTranslation } from 'react-i18next';
 
 const Chat = ({ route }) => {
   const { user } = useSelector(selectAuth);
@@ -36,29 +36,23 @@ const Chat = ({ route }) => {
     text,
     setText,
   } = useChat(route.params);
+  const { t } = useTranslation();
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const onBackPress = () => {
-  //       navigation.navigate('chats');
-  //       axios.post('/message/readGroupMessages', { groupId });
+  const displayDate = (date) => {
+    const dateArray = date.split(' ');
 
-  //       return true;
-  //     };
-
-  //     BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-  //     return () => {
-  //       BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  //     };
-  //   }),
-  // );
+    return dateArray.length === 1
+      ? t(`date.${date}`)
+      : dateArray[0] + ' ' + t(`date.month.${dateArray[1]}`);
+  };
 
   return (
     <>
-      {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}> */}
       <TouchableWithoutFeedback onPress={() => openMenuMessageId && setOpenMenuMessageId(null)}>
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' && 'padding'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}
+          style={styles.container}>
           {isLoading ? (
             <View
               style={{
@@ -83,12 +77,12 @@ const Chat = ({ route }) => {
               maxToRenderPerBatch={10}
               showsVerticalScrollIndicator={false}
               onEndReached={fetchData}
-              keyExtractor={(item, index) => item.date}
+              keyExtractor={(item) => item.date}
               renderItem={({ item: { date, messages } }) => {
                 return (
                   <View>
                     <PrimaryText weight={600} style={styles.date}>
-                      {date}
+                      {displayDate(date)}
                     </PrimaryText>
                     {messages.map((message, index) => {
                       if (message.userId === user.id) {
@@ -125,7 +119,7 @@ const Chat = ({ route }) => {
               value={text}
               onChangeText={setText}
               style={styles.input}
-              placeholder="Write your message"
+              placeholder={t('chat.write_your_message')}
               placeholderTextColor={COLORS.grey}
             />
             <TouchableOpacity
@@ -135,9 +129,8 @@ const Chat = ({ route }) => {
               <Image source={sendIcon} />
             </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      {/* </KeyboardAvoidingView> */}
     </>
   );
 };
@@ -163,6 +156,7 @@ const styles = StyleSheet.create({
     columnGap: 10,
     backgroundColor: 'transparent',
     marginBottom: 15,
+    paddingTop: 3,
   },
   input: {
     backgroundColor: COLORS.darkBlue,

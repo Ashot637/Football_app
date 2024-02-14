@@ -92,7 +92,7 @@ const LoginPage = ({ navigation }) => {
           <PrimaryButton
             title={t('form.login')}
             onPress={() => onLogin()}
-            disabled={phone.trim().length < 9 || !password.length}
+            disabled={phone.trim().length < 9 || password.length < 8}
           />
         </View>
         <View style={styles.bottomTextView}>

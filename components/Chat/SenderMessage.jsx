@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { BASE_URL } from '../../axios/axios';
 
 import likeImg from '../../assets/images/heart.png';
+import { useTranslation } from 'react-i18next';
 
 let timer = null;
 const TIMEOUT = 250;
@@ -27,10 +28,11 @@ const debounce = (onSingle, onDouble) => {
 
 const SenderMessage = memo(
   ({ data, setOpenMenuMessageId, isOpenMenu, onDeleteMessage, onReactToMessage }) => {
+    const { t } = useTranslation();
     const onPress = () => {
       debounce(
         () => setOpenMenuMessageId(null),
-        () => onReactToMessage(data.id),
+        () => onReactToMessage(data.id, data.userId),
       );
     };
 
@@ -52,7 +54,7 @@ const SenderMessage = memo(
                   <TouchableOpacity
                     onPress={(e) => {
                       e.stopPropagation();
-                      onReactToMessage(data.id);
+                      onReactToMessage(data.id, data.userId);
                     }}>
                     <Image source={likeImg} />
                   </TouchableOpacity>
@@ -61,9 +63,11 @@ const SenderMessage = memo(
                   <TouchableOpacity
                     onPress={(e) => {
                       e.stopPropagation();
-                      onDeleteMessage(data.id);
+                      onDeleteMessage(data.id, data.userId);
                     }}>
-                    <PrimaryText style={styles.action}>Delete from everyone</PrimaryText>
+                    <PrimaryText style={styles.action}>
+                      {t('chat.delete_from_everyone')}
+                    </PrimaryText>
                   </TouchableOpacity>
                 </View>
               </>
@@ -162,7 +166,7 @@ const styles = StyleSheet.create({
     flex: 1,
     bottom: '100%',
     marginBottom: 2,
-    width: 230,
+    width: 240,
     right: 0,
     zIndex: 2,
   },

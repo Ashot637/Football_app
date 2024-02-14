@@ -115,6 +115,11 @@
     "INVALID_PHONE_OR_PASWORD": "Неверный номер или пароль",
     "INVALID_OTP": "Неверный ОТП"
   },
+  "chat": {
+    "title": "Чаты",
+    "write_your_message": "Напишите свое сообщение",
+    "delete_from_everyone": "Удалить у всех"
+  },
   "common": {
     "amd": "AMD",
     "go_to_home": "На главную",

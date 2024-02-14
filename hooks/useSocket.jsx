@@ -11,15 +11,11 @@ const useSocket = () => {
   useEffect(() => {
     if (user) {
       socket = io(BASE_URL);
-      socket.on('connect', () => {
-        console.log('Connected to Socket.IO server');
-      });
+      socket.on('connect', () => {});
 
       socket.emit('user-connected', user.id);
 
-      socket.on('disconnect', () => {
-        console.log('Disconnected from Socket.IO server');
-      });
+      socket.on('disconnect', () => {});
     }
 
     return () => {

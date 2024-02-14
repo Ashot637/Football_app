@@ -18,19 +18,24 @@ import SignUpPage from '../pages/SignUpPage';
 import CreatePasswordPage from '../pages/CreatePasswordPage';
 import VerifyAccount from '../pages/VerifyAccount';
 
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import Constants from 'expo-constants';
+
 import HomePage from '../pages/HomePage';
 import Stadions from '../pages/Stadions';
 import SingleGame from '../pages/SingleGame';
 import MyActivityPage from '../pages/MyActivityPage';
 import ProfilePage from '../pages/ProfilePage';
 import SearchBar from './SearchBar';
-import Notifications from '../pages/Notifications';
+import NotificationsPage from '../pages/Notifications';
 import SuccessBookingPage from '../pages/SuccessBookingPage';
 import CancelBookingPage from '../pages/CancelBookingPage';
 import Chat from './Chat/Chat';
 import SplashScreen from './SplashScreen';
 import useSocket from '../hooks/useSocket';
 import Groups from './Groups';
+import CreateGamePage from '../pages/CreateGamePage/CreateGamePage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,6 +52,7 @@ const HomeStack = () => {
       <Tab.Screen name="stadiums" component={Stadions} options={{ header: () => <SearchBar /> }} />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
       <Tab.Screen name="profile" component={ProfilePage} />
+      <Tab.Screen name="notifications" component={NotificationsPage} />
       <Tab.Screen name="chats" component={Groups} />
     </Tab.Navigator>
   );
@@ -57,6 +63,39 @@ const Navigation = () => {
   const { status, user } = useSelector(selectAuth);
 
   useEffect(() => {
+    const registerForPushNotificationsAsync = async () => {
+      if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+          name: 'default',
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+        });
+      }
+
+      if (Device.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+          alert('Please enable notifications permission to receive chat alerts.');
+          return;
+        }
+        let token = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId: Constants.expoConfig.extra.eas.projectId,
+          })
+        ).data;
+        await AsyncStorage.setItem('expoPushToken', token);
+      } else {
+        alert('Must use physical device for Push Notifications');
+      }
+    };
+
+    registerForPushNotificationsAsync();
     (async () => {
       const expoPushToken = await AsyncStorage.getItem('expoPushToken');
       dispatch(fetchAuthMe(expoPushToken));

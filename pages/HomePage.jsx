@@ -50,6 +50,7 @@ const HomePage = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedStadiumsType, setSelectedStadiumsType] = useState(0);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -90,6 +91,41 @@ const HomePage = ({ route }) => {
             onRefresh={onRefresh}
           />
         }>
+        <View style={styles.dates}>
+          <TouchableOpacity onPress={() => setSelectedStadiumsType(0)}>
+            <View
+              style={[
+                styles.dateView,
+                !selectedStadiumsType && {
+                  borderColor: COLORS.yellow,
+                  backgroundColor: COLORS.darkgrey,
+                },
+                { marginLeft: 16 },
+              ]}>
+              <PrimaryText
+                style={[styles.dateText, !selectedStadiumsType && { color: COLORS.yellow }]}
+                weight={600}>
+                Aveilable Stadiums
+              </PrimaryText>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setSelectedStadiumsType(1)}>
+            <View
+              style={[
+                styles.dateView,
+                selectedStadiumsType && {
+                  borderColor: COLORS.yellow,
+                  backgroundColor: COLORS.darkgrey,
+                },
+              ]}>
+              <PrimaryText
+                style={[styles.dateText, selectedStadiumsType && { color: COLORS.yellow }]}
+                weight={600}>
+                Favorite Stadiums
+              </PrimaryText>
+            </View>
+          </TouchableOpacity>
+        </View>
         <PrimaryText style={styles.title} weight={600}>
           {t('home.choose_date')}
         </PrimaryText>

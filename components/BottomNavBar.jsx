@@ -54,7 +54,7 @@ const BottomNavBar = () => {
   useEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (routeName) {
-      setActiveRoute('chats'.includes(routeName) ? from : routeName);
+      setActiveRoute(['chat', 'chats', 'notifications'].includes(routeName) ? from : routeName);
     }
   }, [route]);
 
@@ -67,10 +67,7 @@ const BottomNavBar = () => {
           );
         }
         return (
-          <TouchableOpacity
-            // style={{ flex: 1 }}
-            key={item.title}
-            onPress={() => navigation.navigate(item.routes[0])}>
+          <TouchableOpacity key={item.title} onPress={() => navigation.navigate(item.routes[0])}>
             <View style={styles.item}>
               {item.routes.includes(activeRoute) ? (
                 <>

@@ -13,6 +13,8 @@ import { COLORS } from '../helpers/colors';
 import logoImg from '../assets/images/logo.png';
 import searchIcon from '../assets/images/search.png';
 import notificationIcon from '../assets/images/notification.png';
+import messangerIcon from '../assets/images/messanger.png';
+
 import { changeNewMessagesStatus, selectAuth } from '../redux/authSlice/authSlice';
 import { useEffect } from 'react';
 import { socket } from '../hooks/useSocket';
@@ -35,10 +37,17 @@ const Header = () => {
   };
 
   const onOpenNotifcations = () => {
-    if (!'chats'.includes(route.name)) {
+    if (!['chats', 'chat', 'notifications'].includes(route.name)) {
       dispatch(setFrom(route.name));
-      navigation.navigate('chats');
     }
+    navigation.navigate('notifications');
+  };
+
+  const onOpenChats = () => {
+    if (!['chats', 'chat', 'notifications'].includes(route.name)) {
+      dispatch(setFrom(route.name));
+    }
+    navigation.navigate('chats');
   };
 
   return (
@@ -49,11 +58,14 @@ const Header = () => {
         </TouchableOpacity>
         <View style={styles.actions}>
           <TouchableOpacity onPress={onOpenSearch}>
-            <Image source={searchIcon} height={24} width={24} />
+            <Image source={searchIcon} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onOpenNotifcations}>
-            <Image source={notificationIcon} height={24} width={24} />
-            {user.hasMessage && <View style={styles.newMessage} />}
+            <Image source={notificationIcon} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onOpenChats}>
+            <Image source={messangerIcon} style={styles.icon} />
+            {user?.hasMessage && <View style={styles.newMessage} />}
           </TouchableOpacity>
         </View>
       </View>
@@ -83,13 +95,17 @@ const styles = StyleSheet.create({
     columnGap: 24,
   },
   newMessage: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: COLORS.yellow,
     position: 'absolute',
-    right: 3,
-    top: 1,
+    right: 0,
+    top: -3,
+  },
+  icon: {
+    height: 24,
+    width: 24,
   },
 });
 

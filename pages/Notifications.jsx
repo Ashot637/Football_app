@@ -11,7 +11,7 @@ import PrimaryText from '../components/PrimaryText';
 
 import { useTranslation } from 'react-i18next';
 
-const Notifications = ({ navigation }) => {
+const NotificationsPage = ({ navigation }) => {
   const { t } = useTranslation();
 
   const { from } = useSelector(selectNotification);
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notifications;
+export default NotificationsPage;

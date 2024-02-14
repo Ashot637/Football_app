@@ -118,7 +118,8 @@ const ProfilePage = ({ navigation }) => {
     setSelectedImg(null);
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
+    await axios.post('/auth/logout');
     dispatch(logout());
     navigation.reset({
       index: 0,

@@ -3,13 +3,14 @@ import { COLORS } from '../helpers/colors';
 
 import redUniformIcon from '../assets/images/uniform-red.png';
 import blueUniformIcon from '../assets/images/uniform-blue.png';
-import yellowUniformIcon from '../assets/images/uniform-yellow.png';
+import blackUniformIcon from '../assets/images/uniform-black.png';
 import whiteUniformIcon from '../assets/images/uniform-white.png';
+
 import PrimaryText from './PrimaryText';
 
 import { useTranslation } from 'react-i18next';
 
-const icons = [redUniformIcon, blueUniformIcon, yellowUniformIcon, whiteUniformIcon];
+const icons = [redUniformIcon, blueUniformIcon, blackUniformIcon, whiteUniformIcon];
 
 const Uniforms = ({ game }) => {
   const { t } = useTranslation();

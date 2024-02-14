@@ -115,6 +115,11 @@
     "INVALID_PHONE_OR_PASWORD": "Անվավեր հեռախոսահամար կամ գաղտնաբառ",
     "INVALID_OTP": "Անվավեր OTP"
   },
+  "chat": {
+    "title": "Զրուցարաններ",
+    "write_your_message": "Գրեք ձեր հաղորդագրությունը",
+    "delete_from_everyone": "Ջնջել բոլորի համար"
+  },
   "common": {
     "amd": "դրամ",
     "go_to_home": "Գլխավոր",

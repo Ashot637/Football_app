@@ -30,7 +30,7 @@ const Message = memo(
     const onPress = () => {
       debounce(
         () => setOpenMenuMessageId(null),
-        () => onReactToMessage(data.id),
+        () => onReactToMessage(data.id, data.userId),
       );
     };
 
@@ -51,7 +51,7 @@ const Message = memo(
                 <TouchableOpacity
                   onPress={(e) => {
                     e.stopPropagation();
-                    onReactToMessage(data.id);
+                    onReactToMessage(data.id, data.userId);
                   }}>
                   <Image source={likeImg} />
                 </TouchableOpacity>
@@ -60,7 +60,7 @@ const Message = memo(
             <TouchableOpacity
               onPress={onPress}
               onLongPress={(e) => {
-                setOpenMenuMessageId(data.id);
+                setOpenMenuMessageId(data.id, data.userId);
               }}>
               <View style={[styles.block]}>
                 <PrimaryText style={[styles.message]}>{data.text}</PrimaryText>

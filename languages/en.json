@@ -115,6 +115,11 @@
     "INVALID_PHONE_OR_PASWORD": "Invalid phone or password",
     "INVALID_OTP": "Invalid OTP"
   },
+  "chat": {
+    "title": "Chats",
+    "write_your_message": "Write your message",
+    "delete_from_everyone": "Delete from everyone"
+  },
   "common": {
     "amd": "AMD",
     "go_to_home": "Go to homepage",

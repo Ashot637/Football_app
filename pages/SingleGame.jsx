@@ -19,11 +19,17 @@ import GameNavigation from '../components/GameNavigation';
 
 import { useTranslation } from 'react-i18next';
 
+import BookNow from '../components/BookNow';
+import Uniforms from '../components/Uniforms';
+import Facilities from '../components/Facilities';
+import GamePlayersList from '../components/GamePlayersList';
+
 const SingleGame = ({ route }) => {
   const { t } = useTranslation();
   const { id } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [game, setGame] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useLayoutEffect(() => {
     onRefresh();
@@ -36,6 +42,19 @@ const SingleGame = ({ route }) => {
       setIsLoading(false);
     });
   }, [id]);
+
+  const displayView = (index) => {
+    switch (index) {
+      case 0:
+        return <BookNow game={game} />;
+      case 1:
+        return <Uniforms game={game} />;
+      case 2:
+        return <Facilities facilities={game.stadion.facilities} />;
+      case 3:
+        return <GamePlayersList game={game} />;
+    }
+  };
 
   return (
     <>
@@ -69,7 +88,9 @@ const SingleGame = ({ route }) => {
               </View>
             </View>
           </ImageBackground>
-          <GameNavigation game={game} />
+          <GameNavigation activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
+            {displayView(activeIndex)}
+          </GameNavigation>
         </ScrollView>
       )}
     </>

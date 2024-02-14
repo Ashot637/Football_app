@@ -81,7 +81,7 @@ const CreatePasswordPage = ({ navigation }) => {
         <PrimaryButton
           title={t('form.signup')}
           onPress={() => onSignup()}
-          disabled={password !== repeatPassword || !password.trim().length}
+          disabled={password !== repeatPassword || !password.trim().length || password.length < 8}
         />
       </BackgroundImageLayout>
     </KeyboardAvoidingView>

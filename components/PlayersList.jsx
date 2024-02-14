@@ -10,6 +10,11 @@ import avatarImg from '../assets/images/avatar.png';
 
 import { useTranslation } from 'react-i18next';
 
+import redUniformIcon from '../assets/images/uniform-red.png';
+import blueUniformIcon from '../assets/images/uniform-blue.png';
+import blackUniformIcon from '../assets/images/uniform-black.png';
+import whiteUniformIcon from '../assets/images/uniform-white.png';
+
 const PlayersList = ({ players, guests, maxPlayersCount, title }) => {
   const { t } = useTranslation();
 
@@ -30,6 +35,10 @@ const PlayersList = ({ players, guests, maxPlayersCount, title }) => {
               </View>
               <View style={styles.nameView}>
                 <PrimaryText style={styles.name}>{player.name}</PrimaryText>
+                <View style={styles.uniforms}>
+                  <Image source={blackUniformIcon} style={styles.uniform} />
+                  <Image source={whiteUniformIcon} style={styles.uniform} />
+                </View>
               </View>
             </View>
           );
@@ -97,6 +106,7 @@ const styles = StyleSheet.create({
     paddingLeft: 53,
     zIndex: -1,
     position: 'absolute',
+    flexDirection: 'row',
   },
   name: {
     fontSize: 20,
@@ -114,6 +124,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     marginBottom: 14,
+  },
+  uniforms: {
+    marginLeft: 'auto',
+    marginRight: 12,
+    flexDirection: 'row',
+    columnGap: 12,
+  },
+  uniform: {
+    width: 24,
+    height: 24,
   },
 });
 

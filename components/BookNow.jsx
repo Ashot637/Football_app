@@ -17,7 +17,7 @@ import PrimaryButton from './PrimaryButton';
 
 import redUniformIcon from '../assets/images/uniform-red.png';
 import blueUniformIcon from '../assets/images/uniform-blue.png';
-import yellowUniformIcon from '../assets/images/uniform-yellow.png';
+import blackUniformIcon from '../assets/images/uniform-black.png';
 import whiteUniformIcon from '../assets/images/uniform-white.png';
 import closeIcon from '../assets/images/close.png';
 
@@ -26,7 +26,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import PrimaryModal from './PrimaryModal';
 
-const icons = [redUniformIcon, blueUniformIcon, yellowUniformIcon, whiteUniformIcon];
+const icons = [redUniformIcon, blueUniformIcon, blackUniformIcon, whiteUniformIcon];
 
 const BookNow = ({ game }) => {
   const { t } = useTranslation();
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     paddingVertical: 16,
     borderWidth: 1,
-    borderColor: COLORS.lightYellow,
+    borderColor: COLORS.black,
     borderLeftWidth: 0,
     borderRightWidth: 0,
   },

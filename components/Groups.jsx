@@ -26,6 +26,8 @@ import { socket } from '../hooks/useSocket';
 import calendarIcon from '../assets/images/calendar.png';
 import clockIcon from '../assets/images/clock.png';
 
+import { useTranslation } from 'react-i18next';
+
 const Groups = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -33,6 +35,7 @@ const Groups = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { from } = useSelector(selectNotification);
   const isMounted = useRef(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     onRefresh();
@@ -77,7 +80,7 @@ const Groups = () => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        navigation.navigate(from === 'game' ? 'home' : from);
+        navigation.navigate(from === 'game' || from === 'notifications' ? 'home' : from);
 
         return true;
       };
@@ -91,19 +94,6 @@ const Groups = () => {
   );
 
   useEffect(() => {
-    // socket.on('new-message-in-group', (groupId) => {
-    //   setChats((chats) =>
-    //     chats.map((chat) => {
-    //       if (chat.id === groupId) {
-    //         return {
-    //           ...chat,
-    //           isNewMessage: true,
-    //         };
-    //       }
-    //       return chat;
-    //     }),
-    //   );
-    // });
     socket.on('read-message-in-group', (groupId) => {
       setChats((chats) =>
         chats.map((chat) => {
@@ -128,7 +118,7 @@ const Groups = () => {
       {!isLoading ? (
         <>
           <PrimaryText style={styles.tilte} weight={600}>
-            Chats
+            {t('chat.title')}
           </PrimaryText>
           <View style={styles.blocks}>
             {chats.map(({ game, id, isNewMessage }) => {

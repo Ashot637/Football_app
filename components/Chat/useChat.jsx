@@ -3,7 +3,7 @@ import { selectAuth } from '../../redux/authSlice/authSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { socket } from '../../hooks/useSocket';
 import axios from '../../axios/axios';
-import { format, isToday, isYesterday } from 'date-fns';
+import { format, isToday } from 'date-fns';
 
 const PAGE = 2;
 
@@ -29,11 +29,9 @@ const useChat = (params) => {
               let formattedDate;
 
               if (isToday(messageDate)) {
-                formattedDate = 'Today';
-              } else if (isYesterday(messageDate)) {
-                formattedDate = 'Yesterday';
+                formattedDate = 'today';
               } else {
-                formattedDate = format(messageDate, 'dd MMM');
+                formattedDate = format(messageDate, 'dd MMMM');
               }
 
               if (!acc[formattedDate]) {
@@ -93,11 +91,9 @@ const useChat = (params) => {
           let formattedDate;
 
           if (isToday(messageDate)) {
-            formattedDate = 'Today';
-          } else if (isYesterday(messageDate)) {
-            formattedDate = 'Yesterday';
+            formattedDate = 'today';
           } else {
-            formattedDate = format(messageDate, 'dd MMM');
+            formattedDate = format(messageDate, 'dd MMMM');
           }
 
           if (!acc[formattedDate]) {
@@ -126,11 +122,11 @@ const useChat = (params) => {
     socket.emit('join-group', { groupId, userId: user.id });
     socket.on('new-message', (newMessage) => {
       setMessages((prev) => {
-        const isThereToday = prev.find((group) => group['date'] === 'Today');
+        const isThereToday = prev.find((group) => group['date'] === 'today');
         const updatedMessages = prev.map((group) => {
-          if (group['date'] === 'Today') {
+          if (group['date'] === 'today') {
             return {
-              date: 'Today',
+              date: 'today',
               messages: [...(group.messages || []), newMessage],
             };
           }
@@ -142,7 +138,7 @@ const useChat = (params) => {
           ? updatedMessages
           : [
               {
-                date: 'Today',
+                date: 'today',
                 messages: [newMessage],
               },
               ...updatedMessages,
@@ -217,11 +213,11 @@ const useChat = (params) => {
     };
 
     setMessages((prev) => {
-      const isThereToday = prev.find((group) => group['date'] === 'Today');
+      const isThereToday = prev.find((group) => group['date'] === 'today');
       const updatedMessages = prev.map((group) => {
-        if (group['date'] === 'Today') {
+        if (group['date'] === 'today') {
           return {
-            date: 'Today',
+            date: 'today',
             messages: [...(group.messages || []), newMessage],
           };
         }
@@ -233,7 +229,7 @@ const useChat = (params) => {
         ? updatedMessages
         : [
             {
-              date: 'Today',
+              date: 'today',
               messages: [newMessage],
             },
             ...updatedMessages,
@@ -270,8 +266,14 @@ const useChat = (params) => {
   );
 
   const onReactToMessage = useCallback(
-    (id) => {
-      axios.post('/message/react', { messageId: id, groupId });
+    (id, messageOwnerId) => {
+      axios.post('/message/react', {
+        messageId: id,
+        groupId,
+        messageOwnerId,
+        groupTitle,
+        userName: user.name,
+      });
       setMessages((prev) => {
         const updatedMessages = prev.map((group) => {
           if (group.messages.some((message) => message.id === id)) {

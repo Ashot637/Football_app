@@ -7,15 +7,22 @@ import { COLORS } from '../helpers/colors';
 import { BASE_URL } from '../axios/axios';
 
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { selectCreateGame } from '../redux/createGameSlice/createGameSlice';
 
-const Facilities = ({ game }) => {
+const Facilities = () => {
   const { t } = useTranslation();
+  const {
+    stadion: { facilities },
+  } = useSelector(selectCreateGame);
 
   return (
     <View style={styles.container}>
-      <PrimaryText style={styles.title}>{t('game.facilities')}</PrimaryText>
+      <PrimaryText style={styles.title} weight={600}>
+        {t('game.facilities')}
+      </PrimaryText>
       <View style={styles.items}>
-        {game.stadion.facilities.map((item) => {
+        {facilities.map((item) => {
           return (
             <View style={styles.item} key={item.id}>
               <View style={styles.icon}>
@@ -38,7 +45,6 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.lightWhite,
     fontSize: 22,
-    fontWeight: '600',
     marginBottom: 12,
     textAlign: 'center',
   },
