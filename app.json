@@ -13,8 +13,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.tesvan.ballhola"
+      "supportsTablet": false,
+      "bundleIdentifier": "com.tesvan.ballhola",
+      "buildNumber": "1.0.2"
     },
     "android": {
       "adaptiveIcon": {
