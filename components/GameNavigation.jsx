@@ -12,32 +12,35 @@ import uniformIcon from '../assets/images/uniform.png';
 import facilitiesIcon from '../assets/images/facilities.png';
 import playersIcon from '../assets/images/players.png';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useEffect, useLayoutEffect } from 'react';
 
 const items = [
   {
     icon: bookIcon,
-    Element: BookNow,
-  },
-  {
-    icon: uniformIcon,
-    Element: Uniforms,
-  },
-  {
-    icon: facilitiesIcon,
-    Element: Facilities,
   },
   {
     icon: playersIcon,
-    Element: GamePlayersList,
+  },
+  {
+    icon: uniformIcon,
+  },
+  {
+    icon: facilitiesIcon,
   },
 ];
 
-const GameNavigation = ({ children, activeIndex, setActiveIndex }) => {
+const GameNavigation = ({ children, activeIndex, setActiveIndex, hideIndex }) => {
+  useLayoutEffect(() => {
+    if (hideIndex === 0) {
+      setActiveIndex(1);
+    }
+  }, [hideIndex]);
   return (
     <View>
       <LinearGradient colors={[COLORS.black, COLORS.darkgrey]}>
         <View style={styles.container}>
           {items.map(({ icon }, index) => {
+            if ([0, 1, 2, 3].includes(hideIndex) && index === hideIndex) return null;
             return (
               <TouchableOpacity key={index} onPress={() => setActiveIndex(index)}>
                 <View style={[styles.item, activeIndex === index && styles.itemActive]}>

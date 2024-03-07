@@ -1,9 +1,11 @@
-import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Accordion from '../../components/Accordion';
 import PrimaryText from '../../components/PrimaryText';
 import { COLORS } from '../../helpers/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCreateGame, setStadion } from '../../redux/createGameSlice/createGameSlice';
+
+import icon from '../../assets/images/stadium.png';
 
 const ChooseStadion = ({ accordionId, toggleAccordion, isActive, stadions }) => {
   const dispatch = useDispatch();
@@ -11,34 +13,39 @@ const ChooseStadion = ({ accordionId, toggleAccordion, isActive, stadions }) => 
 
   return (
     <Accordion
+      icon={icon}
+      iconInverted
       title={selectedStadion?.title}
       toggleIsOpen={() => toggleAccordion(accordionId)}
       isOpen={isActive}>
-      <ScrollView style={styles.stadions} scrollIndicatorInsets={{ right: 9 }}>
-        {stadions.map((stadion, index) => {
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                dispatch(setStadion(stadion));
-                toggleAccordion(accordionId);
-              }}
-              key={stadion.id}
-              style={[styles.stadion, index === stadions.length - 1 && { borderBottomWidth: 0 }]}>
-              <PrimaryText style={{ color: COLORS.grey }} weight={600}>
-                {stadion.title}
-              </PrimaryText>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+      <View style={styles.stadions}>
+        <ScrollView nestedScrollEnabled>
+          {stadions.map((stadion, index) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(setStadion(stadion));
+                  toggleAccordion(accordionId);
+                }}
+                key={stadion.id}
+                style={[styles.stadion, index === stadions.length - 1 && { borderBottomWidth: 0 }]}>
+                <PrimaryText style={{ color: COLORS.grey }} weight={600}>
+                  {stadion.title}
+                </PrimaryText>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
     </Accordion>
   );
 };
 
 const styles = StyleSheet.create({
   stadions: {
-    maxHeight: 230,
+    height: 230,
     paddingHorizontal: 9,
+    paddingRight: 5,
     backgroundColor: '#2F4131',
     borderRadius: 16,
   },
@@ -47,6 +54,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     borderBottomColor: COLORS.grey,
     borderBottomWidth: 1,
+    marginRight: 6,
   },
 });
 

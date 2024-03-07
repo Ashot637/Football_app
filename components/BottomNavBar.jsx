@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 const items = [
   {
     title: 'home',
-    routes: ['home', 'game'],
+    routes: ['home', 'game', 'create'],
     icon: homeIcon,
   },
   {

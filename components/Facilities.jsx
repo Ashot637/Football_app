@@ -7,14 +7,9 @@ import { COLORS } from '../helpers/colors';
 import { BASE_URL } from '../axios/axios';
 
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { selectCreateGame } from '../redux/createGameSlice/createGameSlice';
 
-const Facilities = () => {
+const Facilities = ({ facilities }) => {
   const { t } = useTranslation();
-  const {
-    stadion: { facilities },
-  } = useSelector(selectCreateGame);
 
   return (
     <View style={styles.container}>

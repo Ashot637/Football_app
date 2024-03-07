@@ -20,7 +20,7 @@ const BackgroundImageLayout = ({ children, padding = 15, route }) => {
     if (user && isFocused) {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'main' }],
+        routes: [{ name: 'select' }],
       });
     }
   }, [user, isFocused, navigation]);

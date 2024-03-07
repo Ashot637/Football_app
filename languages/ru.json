@@ -26,6 +26,7 @@
   },
   "home": {
     "choose_date": "Выберите дату",
+    "choose_variant": "Какой вариант?",
     "available_stadiums": "Доступные стадионы"
   },
   "date": {
@@ -85,7 +86,15 @@
     "add_new_guest": "Добавить нового гостя",
     "already_booked": "Уже забронирован",
     "maximum_players": "Макс. кол-во игроков",
-    "your_booking_canceled": "Ваше бронирование успешно отменено"
+    "your_booking_canceled": "Ваше бронирование успешно отменено",
+    "available_games": "Доступные игры",
+    "favorite_games": "Любимые игры",
+    "my_game_creations": "Мои созданные игры",
+    "booked_spots": "Забронированные места",
+    "extended_successfully": "Этот же матч был успешно продлен.",
+    "extended_title": "рганизованный Вами футбольный матч продолжится до",
+    "extend": "Продлить",
+    "invite_players": "Пригласить"
   },
   "user": {
     "name": "Имя",
@@ -120,6 +129,13 @@
     "write_your_message": "Напишите свое сообщение",
     "delete_from_everyone": "Удалить у всех"
   },
+  "create_game": {
+    "title": "Создать матч",
+    "asking": "Вы уже забронировали по телефону в тот же день, в то же время и в том же месте?",
+    "once": "Создайте один раз",
+    "month": "Следующие 4 недели",
+    "create": "Создать матч"
+  },
   "common": {
     "amd": "AMD",
     "go_to_home": "На главную",
@@ -127,8 +143,17 @@
     "search": "Поиск...",
     "total_price": "Цена",
     "duration": "Длительность",
+    "durat": "Длитель.",
+    "start_time": "Начало",
     "date": "Дата",
     "add": "Добавить",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "accept": "Подтвердить",
+    "players": "Игроки",
+    "me": "я",
+    "dear": "Уважаемый",
+    "yes": "Да",
+    "no": "Нет",
+    "understand": "Закрыть"
   }
 }

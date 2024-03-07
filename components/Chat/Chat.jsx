@@ -72,7 +72,7 @@ const Chat = ({ route }) => {
               scrollEnabled={!openMenuMessageId}
               data={messages}
               inverted
-              contentContainerStyle={{ paddingTop: 20, paddingBottom: 50 }}
+              contentContainerStyle={{ paddingTop: 20, paddingBottom: 70 }}
               initialNumToRender={20}
               maxToRenderPerBatch={10}
               showsVerticalScrollIndicator={false}
@@ -85,7 +85,7 @@ const Chat = ({ route }) => {
                       {displayDate(date)}
                     </PrimaryText>
                     {messages.map((message, index) => {
-                      if (message.userId === user.id) {
+                      if (message.userId === user?.id) {
                         return (
                           <SenderMessage
                             key={message.id.toString() + date}

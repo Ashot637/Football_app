@@ -9,26 +9,25 @@ import whiteUniformIcon from '../../assets/images/uniform-white.png';
 import PrimaryText from '../../components/PrimaryText';
 import { COLORS } from '../../helpers/colors';
 import CheckBox from '../../components/CheckBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCreateGame, setUniforms } from '../../redux/createGameSlice/createGameSlice';
+import { useTranslation } from 'react-i18next';
 
 const icons = [redUniformIcon, blueUniformIcon, blackUniformIcon, whiteUniformIcon];
 
 const ChooseUniform = () => {
-  const [selectedUnifroms, setSelectedUniforms] = useState([]);
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { uniforms } = useSelector(selectCreateGame);
 
   const onSelectUniform = (index) => {
-    selectedUnifroms.includes(index);
-    if (selectedUnifroms.length === 2 && !selectedUnifroms.includes(index)) {
-      setSelectedUniforms((prev) => [prev[1], index]);
-    } else {
-      selectedUnifroms.includes(index)
-        ? setSelectedUniforms((prev) => prev.filter((i) => i !== index))
-        : setSelectedUniforms((prev) => [...prev, index]);
-    }
+    dispatch(setUniforms(index));
   };
+
   return (
     <View style={styles.container}>
       <PrimaryText style={styles.title} weight={600}>
-        Choose your uniform
+        {t('game.uniform_color')}
       </PrimaryText>
       {icons.map((icon, index) => {
         return (
@@ -37,10 +36,7 @@ const ChooseUniform = () => {
             <View style={styles.bar}>
               <View style={[styles.bar]} />
             </View>
-            <CheckBox
-              state={selectedUnifroms.includes(index)}
-              setState={() => onSelectUniform(index)}
-            />
+            <CheckBox state={uniforms.includes(index)} setState={() => onSelectUniform(index)} />
           </View>
         );
       })}

@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Touchable,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 import PrimaryText from './PrimaryText';
 
@@ -44,67 +52,76 @@ const UpcomingBookings = () => {
           games?.map((game) => {
             return (
               <View style={styles.block} key={game.id}>
-                <PrimaryText weight={700} style={styles.blockTitle}>
-                  {game.stadion.title}
-                </PrimaryText>
-                <View style={styles.stadionInfoView}>
-                  <View style={styles.stadionInfoRow}>
-                    <Image source={stadionIcon} style={styles.icon} />
-                    <PrimaryText style={styles.stadionInfoText}>{game.stadion.title}</PrimaryText>
+                <TouchableWithoutFeedback
+                  onPress={() => navigation.navigate('game', { id: game.id })}>
+                  <View style={{ rowGap: 10, marginBottom: 15 }}>
+                    <PrimaryText weight={700} style={styles.blockTitle}>
+                      {game.stadion.title}
+                    </PrimaryText>
+                    <View style={styles.stadionInfoView}>
+                      <View style={styles.stadionInfoRow}>
+                        <Image source={stadionIcon} style={styles.icon} />
+                        <PrimaryText style={styles.stadionInfoText}>
+                          {game.stadion.title}
+                        </PrimaryText>
+                      </View>
+                      <View style={styles.stadionInfoRow}>
+                        <Image source={locationIcon} style={styles.icon} />
+                        <PrimaryText style={styles.stadionInfoText}>
+                          {game.stadion.address}
+                        </PrimaryText>
+                      </View>
+                    </View>
+                    <View style={styles.gameInfoContainer}>
+                      <View style={styles.gameInfo}>
+                        <PrimaryText style={styles.gameInfoTopText}>
+                          {game.price} {t('common.amd')}
+                        </PrimaryText>
+                        <PrimaryText
+                          style={[
+                            styles.gameInfoBottomText,
+                            i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                          ]}
+                          weight={600}>
+                          {t('common.total_price')}
+                        </PrimaryText>
+                      </View>
+                      <View style={[styles.gameInfo, styles.gameInfoMiddle]}>
+                        <PrimaryText style={styles.gameInfoTopText}>
+                          {minutesDifference(game.startTime, game.endTime)}
+                        </PrimaryText>
+                        <PrimaryText
+                          style={[
+                            styles.gameInfoBottomText,
+                            i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                          ]}
+                          weight={600}>
+                          {t('common.duration')}
+                        </PrimaryText>
+                      </View>
+                      <View style={styles.gameInfo}>
+                        <PrimaryText style={styles.gameInfoTopText}>
+                          {format(game.startTime, 'dd.MM.yyyy')}
+                        </PrimaryText>
+                        <PrimaryText
+                          style={[
+                            styles.gameInfoBottomText,
+                            i18n.language === 'am' && styles.gameInfoBottomTextSmall,
+                          ]}
+                          weight={600}>
+                          {t('common.date')}
+                        </PrimaryText>
+                      </View>
+                    </View>
+                    <PrimaryText style={styles.bookingNumber} weight={600}>
+                      {t('success.your_booking_number')}
+                    </PrimaryText>
+                    <PrimaryText style={styles.number} weight={600}>
+                      {game.users[0].UserGame.id}
+                    </PrimaryText>
+                    <View style={styles.line} />
                   </View>
-                  <View style={styles.stadionInfoRow}>
-                    <Image source={locationIcon} style={styles.icon} />
-                    <PrimaryText style={styles.stadionInfoText}>{game.stadion.address}</PrimaryText>
-                  </View>
-                </View>
-                <View style={styles.gameInfoContainer}>
-                  <View style={styles.gameInfo}>
-                    <PrimaryText style={styles.gameInfoTopText}>
-                      {game.price} {t('common.amd')}
-                    </PrimaryText>
-                    <PrimaryText
-                      style={[
-                        styles.gameInfoBottomText,
-                        i18n.language === 'am' && styles.gameInfoBottomTextSmall,
-                      ]}
-                      weight={600}>
-                      {t('common.total_price')}
-                    </PrimaryText>
-                  </View>
-                  <View style={[styles.gameInfo, styles.gameInfoMiddle]}>
-                    <PrimaryText style={styles.gameInfoTopText}>
-                      {minutesDifference(game.startTime, game.endTime)}
-                    </PrimaryText>
-                    <PrimaryText
-                      style={[
-                        styles.gameInfoBottomText,
-                        i18n.language === 'am' && styles.gameInfoBottomTextSmall,
-                      ]}
-                      weight={600}>
-                      {t('common.duration')}
-                    </PrimaryText>
-                  </View>
-                  <View style={styles.gameInfo}>
-                    <PrimaryText style={styles.gameInfoTopText}>
-                      {format(game.startTime, 'dd.MM.yyyy')}
-                    </PrimaryText>
-                    <PrimaryText
-                      style={[
-                        styles.gameInfoBottomText,
-                        i18n.language === 'am' && styles.gameInfoBottomTextSmall,
-                      ]}
-                      weight={600}>
-                      {t('common.date')}
-                    </PrimaryText>
-                  </View>
-                </View>
-                <PrimaryText style={styles.bookingNumber} weight={600}>
-                  {t('success.your_booking_number')}
-                </PrimaryText>
-                <PrimaryText style={styles.number} weight={600}>
-                  {game.users[0].UserGame.id}
-                </PrimaryText>
-                <View style={styles.line} />
+                </TouchableWithoutFeedback>
                 <View style={{ alignItems: 'center' }}>
                   <TouchableOpacity onPress={() => onCancelBooking(game.id)}>
                     <PrimaryText style={styles.cancel} weight={600}>
@@ -136,7 +153,6 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     backgroundColor: COLORS.darkgrey,
     paddingHorizontal: 16,
-    rowGap: 10,
     borderRadius: 16,
     overflow: 'hidden',
   },

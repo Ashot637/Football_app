@@ -3,16 +3,19 @@ import { COLORS } from '../helpers/colors';
 import PrimaryText from './PrimaryText';
 
 import arrowIcon from '../assets/images/arrow.png';
-import stadionIcon from '../assets/images/stadium.png';
 
-const Accordion = ({ title, children, isOpen, toggleIsOpen }) => {
+const Accordion = ({ title, children, isOpen, toggleIsOpen, icon, iconInverted = false }) => {
   return (
     <View>
       <TouchableOpacity onPress={() => toggleIsOpen()}>
         <View style={styles.container}>
           <Image
-            source={stadionIcon}
-            style={{ width: 24, height: 24, transform: [{ rotate: '90deg' }] }}
+            source={icon}
+            style={{
+              width: 24,
+              height: 24,
+              ...(iconInverted ? { transform: [{ rotate: '90deg' }] } : {}),
+            }}
           />
           <PrimaryText style={styles.title} weight={600}>
             {title}

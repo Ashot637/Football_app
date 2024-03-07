@@ -40,7 +40,9 @@ const SuccessBookingPage = ({ route, navigation }) => {
           <View style={styles.gameInfoContainer}>
             <View style={styles.gameInfo}>
               <PrimaryText style={styles.gameInfoTopText}>
-                {game.price} {t('common.amd')}
+                {game.price
+                  ? game.price + ' ' + t('common.amd')
+                  : `${format(game.startTime, 'HH:mm')} - ${format(game.endTime, 'HH:mm')}`}
               </PrimaryText>
               <PrimaryText
                 style={[
@@ -48,7 +50,7 @@ const SuccessBookingPage = ({ route, navigation }) => {
                   i18n.language === 'am' && styles.gameInfoBottomTextSmall,
                 ]}
                 weight={600}>
-                {t('common.total_price')}
+                {game.price ? t('common.total_price') : 'Time'}
               </PrimaryText>
             </View>
             <View style={[styles.gameInfo, styles.gameInfoMiddle]}>

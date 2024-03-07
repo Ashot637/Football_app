@@ -29,7 +29,8 @@
         "android.permission.NOTIFICATIONS"
       ],
       "googleServicesFile": "./google-services.json",
-      "package": "com.tesvan.ballhola"
+      "package": "com.tesvan.ballhola",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/images/icon1024.png"

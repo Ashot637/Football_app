@@ -23,6 +23,8 @@ import BookNow from '../components/BookNow';
 import Uniforms from '../components/Uniforms';
 import Facilities from '../components/Facilities';
 import GamePlayersList from '../components/GamePlayersList';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../redux/authSlice/authSlice';
 
 const SingleGame = ({ route }) => {
   const { t } = useTranslation();
@@ -30,6 +32,7 @@ const SingleGame = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [game, setGame] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { user } = useSelector(selectAuth);
 
   useLayoutEffect(() => {
     onRefresh();
@@ -48,13 +51,15 @@ const SingleGame = ({ route }) => {
       case 0:
         return <BookNow game={game} />;
       case 1:
-        return <Uniforms game={game} />;
-      case 2:
-        return <Facilities facilities={game.stadion.facilities} />;
-      case 3:
         return <GamePlayersList game={game} />;
+      case 2:
+        return <Uniforms game={game} />;
+      case 3:
+        return <Facilities facilities={game.stadion.facilities} />;
     }
   };
+
+  const userAlreadyBooked = game?.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
 
   return (
     <>
@@ -73,12 +78,14 @@ const SingleGame = ({ route }) => {
           refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}>
           <ImageBackground source={{ uri: BASE_URL + game.stadion.img }} style={styles.image}>
             <View style={styles.info}>
-              <View style={styles.priceView}>
-                <PrimaryText style={styles.priceText} weight={600}>
-                  {game.price} {t('common.amd')}
-                  {t('game.per_person')}
-                </PrimaryText>
-              </View>
+              {!!game.price && (
+                <View style={styles.priceView}>
+                  <PrimaryText style={styles.priceText} weight={600}>
+                    {game.price} {t('common.amd')}
+                    {t('game.per_person')}
+                  </PrimaryText>
+                </View>
+              )}
               <PrimaryText style={styles.title} weight={600}>
                 {game.stadion.title}
               </PrimaryText>
@@ -88,7 +95,10 @@ const SingleGame = ({ route }) => {
               </View>
             </View>
           </ImageBackground>
-          <GameNavigation activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
+          <GameNavigation
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+            hideIndex={userAlreadyBooked && 0}>
             {displayView(activeIndex)}
           </GameNavigation>
         </ScrollView>

@@ -11,9 +11,11 @@ import {
   endOfMonth,
   format,
   getDay,
+  isBefore,
   isSameDay,
   isSameMonth,
-  isThisMonth,
+  setHours,
+  setMinutes,
   startOfMonth,
   subDays,
   subMonths,
@@ -25,13 +27,15 @@ import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCreateGame, setDate } from '../../redux/createGameSlice/createGameSlice';
 
+import icon from '../../assets/images/calendar.png';
+
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const { date } = useSelector(selectCreateGame);
+  const { date, time } = useSelector(selectCreateGame);
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayOfMonth = endOfMonth(currentDate);
@@ -79,7 +83,8 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
 
   return (
     <Accordion
-      title={format(date, 'dd MMMM yyyy') || 'Choose date'}
+      icon={icon}
+      title={date ? format(date, 'dd MMMM yyyy') : t('home.choose_date')}
       toggleIsOpen={() => toggleAccordion(accordionId)}
       isOpen={isActive}>
       <View style={styles.container}>
@@ -122,12 +127,13 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
             data={[...previusMonthDays, ...daysInMonth, ...nextMonthDays]}
             columnWrapperStyle={styles.row}
             renderItem={({ item }) => {
-              const disabled = !isSameMonth(item, currentDate);
+              const disabled =
+                !isSameMonth(item, currentDate) || isBefore(addDays(item, 1), new Date());
               return (
                 <TouchableOpacity
                   disabled={disabled}
                   onPress={() => {
-                    dispatch(setDate(item));
+                    dispatch(setDate(String(item)));
                     toggleAccordion(accordionId);
                   }}>
                   <View style={styles.dayBlock}>

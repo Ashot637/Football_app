@@ -40,7 +40,7 @@ const Stadions = () => {
           {stadions.map((stadion, index) => {
             return (
               <TouchableOpacity
-                key={stadion.title}
+                key={stadion.id}
                 onPress={() =>
                   selectedStadionId === stadion.id
                     ? setSelectedStadionId(null)

@@ -23,21 +23,24 @@ const Game = ({ game }) => {
         resizeMode="contain">
         <View style={styles.container}>
           <View style={styles.info}>
-            <View style={styles.infoView}>
-              <PrimaryText style={styles.infoText} weight={600}>
-                {game.price} {t('common.amd')}
-              </PrimaryText>
-            </View>
+            {!!game.price && (
+              <View style={styles.infoView}>
+                <PrimaryText style={styles.infoText} weight={600}>
+                  {game.price} {t('common.amd')}
+                </PrimaryText>
+              </View>
+            )}
             <View style={[styles.infoView, styles.infoViewDark]}>
               <PrimaryText style={styles.infoText}>{`${format(game.startTime, 'HH:mm')} - ${format(
                 game.endTime,
                 'HH:mm',
               )}`}</PrimaryText>
             </View>
+
             <View style={[styles.infoView, styles.infoViewDark, styles.players]}>
               <Image source={playersIcon} style={styles.playersIcon} />
               <PrimaryText style={styles.infoText} weight={600}>
-                {game.playersCount} / {game.maxPlayersCount}
+                {game.playersCount} {game.maxPlayersCount < 50 ? '/ ' + game.maxPlayersCount : ''}
               </PrimaryText>
             </View>
           </View>

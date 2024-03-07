@@ -36,6 +36,8 @@ import SplashScreen from './SplashScreen';
 import useSocket from '../hooks/useSocket';
 import Groups from './Groups';
 import CreateGamePage from '../pages/CreateGamePage/CreateGamePage';
+import SelectSport from '../pages/SelectSport';
+import axios from 'axios';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,6 +50,7 @@ const HomeStack = () => {
         header: () => <Header />,
       }}>
       <Tab.Screen name="home" component={HomePage} />
+      <Tab.Screen name="create" component={CreateGamePage} />
       <Tab.Screen name="game" component={SingleGame} />
       <Tab.Screen name="stadiums" component={Stadions} options={{ header: () => <SearchBar /> }} />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
@@ -98,7 +101,8 @@ const Navigation = () => {
     registerForPushNotificationsAsync();
     (async () => {
       const expoPushToken = await AsyncStorage.getItem('expoPushToken');
-      dispatch(fetchAuthMe(expoPushToken));
+      const { data } = await axios.get('http://146.190.127.106/ip');
+      dispatch(fetchAuthMe({ expoPushToken, ip: data }));
     })();
   }, []);
 
@@ -112,7 +116,7 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={status === 'success' ? 'main' : 'landing'}
+          initialRouteName={status === 'success' ? 'select' : 'landing'}
           screenOptions={{
             headerShown: false,
             animation: 'slide_from_right',
@@ -122,6 +126,7 @@ const Navigation = () => {
           <Stack.Screen name="signup" component={SignUpPage} />
           <Stack.Screen name="create-password" component={CreatePasswordPage} />
           <Stack.Screen name="verify" component={VerifyAccount} />
+          <Stack.Screen name="select" component={SelectSport} />
           <Stack.Screen name="main" component={HomeStack} />
           <Stack.Screen
             name="chat"

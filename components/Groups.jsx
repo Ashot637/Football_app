@@ -115,7 +115,7 @@ const Groups = () => {
       refreshControl={
         <RefreshControl refreshing={isLoading && isMounted.current} onRefresh={onRefresh} />
       }>
-      {!isLoading ? (
+      {!isLoading && (
         <>
           <PrimaryText style={styles.tilte} weight={600}>
             {t('chat.title')}
@@ -164,9 +164,8 @@ const Groups = () => {
               );
             })}
           </View>
+          <View style={{ height: 30 }} />
         </>
-      ) : (
-        <></>
       )}
     </ScrollView>
   );

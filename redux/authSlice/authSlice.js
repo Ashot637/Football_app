@@ -38,8 +38,8 @@ export const fetchCode = createAsyncThunk('auth/fetchCode', async (params) => {
   return data;
 });
 
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async (expoPushToken) => {
-  const { data } = await axios.get('/auth', { params: { expoPushToken } });
+export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async ({ expoPushToken, ip }) => {
+  const { data } = await axios.get('/auth', { params: { expoPushToken, ip } });
   if (data.accessToken) {
     await AsyncStorage.setItem('accessToken', data.accessToken);
   }
@@ -86,6 +86,9 @@ const authSlice = createSlice({
     },
     resetIsWaitingCode: (state) => {
       state.isWaitingCode = false;
+    },
+    deleteFirstInvitation: (state) => {
+      state.user.invitations.shift();
     },
     resetErrorMessage: (state) => {
       state.errorMessage = null;
@@ -148,4 +151,5 @@ export const {
   resetIsWaitingCode,
   resetErrorMessage,
   changeNewMessagesStatus,
+  deleteFirstInvitation,
 } = authSlice.actions;

@@ -32,9 +32,8 @@ const BookNow = ({ game }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { user } = useSelector(selectAuth);
-  const [selectedGroup, setSelectedGroup] = useState(1);
   const [isIndividual, setIsIndividual] = useState(true);
-  const [selectedUniform, setSelectedUniform] = useState(0);
+  const [selectedUniforms, setSelectedUniforms] = useState([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [guests, setGuests] = useState([]);
 
@@ -43,9 +42,9 @@ const BookNow = ({ game }) => {
   const onSubmitBooking = () => {
     axios
       .post('/game/register/' + game.id, {
-        team: selectedGroup,
-        uniform: selectedUniform,
+        uniforms: selectedUniforms,
         guests: guests.length ? JSON.stringify(guests) : null,
+        userName: user.name,
       })
       .then(({ data }) => {
         if (data.success) {
@@ -65,30 +64,23 @@ const BookNow = ({ game }) => {
     setGuests(guests.filter((_, i) => i !== index));
   };
 
+  const onSelectUniform = (index) => {
+    if (selectedUniforms.length === 2 && !selectedUniforms.includes(index)) {
+      setSelectedUniforms((prev) => [prev[1], index]);
+    } else {
+      selectedUniforms.includes(index)
+        ? setSelectedUniforms((prev) => prev.filter((i) => i !== index))
+        : setSelectedUniforms((prev) => [...prev, index]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <PrimaryText style={styles.title} weight={600}>
         {t('game.book_now')}
       </PrimaryText>
-      <View style={styles.block}>
-        <PrimaryText style={styles.subtitle} weight={700}>
-          {t('game.choose_group')}
-        </PrimaryText>
-        <View style={styles.checkboxes}>
-          <CheckBox
-            title={t('game.first_group')}
-            state={selectedGroup === 1}
-            setState={() => setSelectedGroup(1)}
-          />
-          <CheckBox
-            title={t('game.second_group')}
-            state={selectedGroup === 2}
-            setState={() => setSelectedGroup(2)}
-          />
-        </View>
-      </View>
-      <View style={styles.block}>
-        <PrimaryText style={styles.subtitle} weight={700}>
+      {/* <View style={styles.block}> */}
+      {/* <PrimaryText style={styles.subtitle} weight={700}>
           {t('game.personal_info')}
         </PrimaryText>
         <View style={styles.checkboxes}>
@@ -102,13 +94,13 @@ const BookNow = ({ game }) => {
             state={!isIndividual}
             setState={() => setIsIndividual(false)}
           />
-        </View>
-        <View style={styles.infoView}>
+        </View> */}
+      {/* <View style={styles.infoView}>
           {isIndividual ? (
             <>
               <PrimaryText style={styles.infoText}>{user?.name}</PrimaryText>
               <PrimaryText style={styles.infoText}>{user?.phone}</PrimaryText>
-              <PrimaryText style={styles.infoText}>{user?.email}</PrimaryText>
+              {user?.email && <PrimaryText style={styles.infoText}>{user.email}</PrimaryText>}
             </>
           ) : (
             <>
@@ -117,7 +109,7 @@ const BookNow = ({ game }) => {
               </PrimaryText>
               {guests.map((guest, index) => {
                 return (
-                  <View style={styles.guest} key={index}>
+                  <View style={styles.guest} key={guest.phone}>
                     <PrimaryText style={styles.infoText}>{guest.name}</PrimaryText>
                     <TouchableOpacity onPress={() => onRemoveGuest(index)}>
                       <Image source={closeIcon} />
@@ -132,8 +124,8 @@ const BookNow = ({ game }) => {
               )}
             </>
           )}
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
       <View style={styles.block}>
         <PrimaryText style={styles.subtitle} weight={700}>
           {t('game.booking_details')}
@@ -152,36 +144,30 @@ const BookNow = ({ game }) => {
           {t('game.uniform_color')}
         </PrimaryText>
         <View style={styles.uniforms}>
-          {(selectedGroup === 1 ? game.uniformsFirstGroup : game.uniformsSecondGroup).map(
-            (uniformChoseUsersCount, index) => {
-              return (
-                <View style={styles.uniformView} key={`${selectedGroup}-${index}`}>
-                  <Image source={icons[index]} style={styles.uniformIcon} />
-                  <View style={styles.bar}>
-                    <View
-                      style={[
-                        styles.barActive,
-                        {
-                          width: `${
-                            uniformChoseUsersCount &&
-                            (uniformChoseUsersCount /
-                              (selectedGroup === 1
-                                ? game.playersCountFirstGroup
-                                : game.playersCountSecondGroup)) *
-                              100
-                          }%`,
-                        },
-                      ]}
-                    />
-                  </View>
-                  <CheckBox
-                    state={selectedUniform === index}
-                    setState={() => setSelectedUniform(index)}
+          {game.uniforms.map((uniformChoseUsersCount, index) => {
+            return (
+              <View style={styles.uniformView} key={index}>
+                <Image source={icons[index]} style={styles.uniformIcon} />
+                <View style={styles.bar}>
+                  <View
+                    style={[
+                      styles.barActive,
+                      {
+                        width: `${
+                          uniformChoseUsersCount &&
+                          (uniformChoseUsersCount / game.playersCount) * 100
+                        }%`,
+                      },
+                    ]}
                   />
                 </View>
-              );
-            },
-          )}
+                <CheckBox
+                  state={selectedUniforms.includes(index)}
+                  setState={() => onSelectUniform(index)}
+                />
+              </View>
+            );
+          })}
         </View>
       </View>
       <View style={styles.block}>
@@ -203,22 +189,16 @@ const BookNow = ({ game }) => {
         title={
           userAlreadyBooked
             ? t('game.already_booked')
-            : game[selectedGroup === 1 ? 'playersCountFirstGroup' : 'playersCountSecondGroup'] ===
-              game.maxPlayersCount / 2
+            : game.maxPlayersCount === game.playersCount
             ? t('game.maximum_players')
             : t('game.book_now')
         }
         onPress={() => onSubmitBooking()}
         disabled={
           userAlreadyBooked ||
-          game[selectedGroup === 1 ? 'playersCountFirstGroup' : 'playersCountSecondGroup'] ===
-            game.maxPlayersCount / 2 ||
+          game.playersCount === game.maxPlayersCount ||
           (!guests.length && !isIndividual) ||
-          (!isIndividual &&
-            game.maxPlayersCount / 2 <
-              game[selectedGroup === 1 ? 'playersCountFirstGroup' : 'playersCountSecondGroup'] +
-                guests.length +
-                1)
+          (!isIndividual && game.maxPlayersCount < game.playersCount + guests.length + 1)
         }
       />
       {isOpenModal && (
@@ -226,6 +206,7 @@ const BookNow = ({ game }) => {
           state={isOpenModal}
           dismiss={() => setIsOpenModal(false)}
           onSubmit={onAddGuest}
+          title={t('game.add_new_guest')}
         />
       )}
     </View>

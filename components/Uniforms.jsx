@@ -19,11 +19,11 @@ const Uniforms = ({ game }) => {
       <PrimaryText style={styles.info} weight={600}>
         {t('game.info_uniforms')}
       </PrimaryText>
-      <PrimaryText style={styles.title} weight={600}>
+      {/* <PrimaryText style={styles.title} weight={600}>
         {t('game.player_from_first_group')}
-      </PrimaryText>
+      </PrimaryText> */}
       <View style={styles.uniforms}>
-        {game.uniformsFirstGroup.map((uniformChoseUsersCount, index) => {
+        {game.uniforms.map((uniformChoseUsersCount, index) => {
           return (
             <View style={styles.uniformView} key={'firstGroup-' + index}>
               <Image source={icons[index]} style={styles.uniformIcon} />
@@ -33,8 +33,7 @@ const Uniforms = ({ game }) => {
                     styles.barActive,
                     {
                       width: `${
-                        uniformChoseUsersCount &&
-                        (uniformChoseUsersCount / game.playersCountFirstGroup) * 100
+                        uniformChoseUsersCount && (uniformChoseUsersCount / game.playersCount) * 100
                       }%`,
                     },
                   ]}
@@ -44,10 +43,10 @@ const Uniforms = ({ game }) => {
           );
         })}
       </View>
-      <PrimaryText style={styles.title} weight={600}>
+      {/* <PrimaryText style={styles.title} weight={600}>
         {t('game.player_from_second_group')}
-      </PrimaryText>
-      <View style={styles.uniforms}>
+      </PrimaryText> */}
+      {/* <View style={styles.uniforms}>
         {game.uniformsSecondGroup.map((uniformChoseUsersCount, index) => {
           return (
             <View style={styles.uniformView} key={'secondGroup-' + index}>
@@ -68,7 +67,7 @@ const Uniforms = ({ game }) => {
             </View>
           );
         })}
-      </View>
+      </View> */}
     </View>
   );
 };

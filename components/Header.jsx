@@ -51,25 +51,27 @@ const Header = () => {
   };
 
   return (
-    <LinearGradient colors={[COLORS.darkgrey, 'rgba(32, 44, 34, 0.92)']} style={styles.gradient}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('home')}>
-          <Image source={logoImg} style={styles.logo} />
-        </TouchableOpacity>
-        <View style={styles.actions}>
-          <TouchableOpacity onPress={onOpenSearch}>
-            <Image source={searchIcon} style={styles.icon} />
+    <>
+      <LinearGradient colors={[COLORS.darkgrey, 'rgba(32, 44, 34, 0.92)']} style={styles.gradient}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <Image source={logoImg} style={styles.logo} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onOpenNotifcations}>
-            <Image source={notificationIcon} style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onOpenChats}>
-            <Image source={messangerIcon} style={styles.icon} />
-            {user?.hasMessage && <View style={styles.newMessage} />}
-          </TouchableOpacity>
+          <View style={styles.actions}>
+            <TouchableOpacity onPress={onOpenSearch}>
+              <Image source={searchIcon} style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onOpenNotifcations}>
+              <Image source={notificationIcon} style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onOpenChats}>
+              <Image source={messangerIcon} style={styles.icon} />
+              {user?.hasMessage && <View style={styles.newMessage} />}
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </LinearGradient>
+      </LinearGradient>
+    </>
   );
 };
 

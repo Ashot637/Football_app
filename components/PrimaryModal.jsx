@@ -18,7 +18,7 @@ import phoneIcon from '../assets/images/call.png';
 
 import { useTranslation } from 'react-i18next';
 
-const PrimaryModal = ({ state, dismiss, onSubmit }) => {
+const PrimaryModal = ({ state, dismiss, onSubmit, title }) => {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,7 +36,7 @@ const PrimaryModal = ({ state, dismiss, onSubmit }) => {
               <Image source={closeIcon} />
             </TouchableOpacity>
           </View>
-          <PrimaryText style={styles.title}>{t('game.add_new_guest')}</PrimaryText>
+          <PrimaryText style={styles.title}>{title}</PrimaryText>
           <View style={styles.inputs}>
             <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
             <Input

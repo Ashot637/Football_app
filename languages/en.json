@@ -26,6 +26,7 @@
   },
   "home": {
     "choose_date": "Choose date",
+    "choose_variant": "Which variant?",
     "available_stadiums": "Available stadiums"
   },
   "date": {
@@ -82,10 +83,18 @@
     "guests": "Guests",
     "book_now": "Book now",
     "maximum_guests_count": "You can have only 2 guests",
-    "add_new_guest": "Add new guest",
+    "add_new_guest": "Add a new guest",
     "already_booked": "Already booked",
     "maximum_players": "Maximum players",
-    "your_booking_canceled": "Your booking has been canceled successfully"
+    "your_booking_canceled": "Your booking has been canceled successfully",
+    "available_games": "Available games",
+    "favorite_games": "Favorite games",
+    "my_game_creations": "My game creations",
+    "booked_spots": "Booked spots",
+    "extended_successfully": "the football match organized by you will continue until",
+    "extended_title": "The same match has been successfully extended.",
+    "extend": "Extend",
+    "invite_players": "Invite players"
   },
   "user": {
     "name": "Name",
@@ -120,6 +129,18 @@
     "write_your_message": "Write your message",
     "delete_from_everyone": "Delete from everyone"
   },
+  "roles": {
+    "title": "Your role",
+    "player": "I'm player",
+    "organizer": "I'm organizer"
+  },
+  "create_game": {
+    "title": "Let's create a game",
+    "asking": "Have you already made a booking by calling, same day, same time, same place?",
+    "once": "Create once",
+    "month": "Next 4 weeks",
+    "create": "Create a match"
+  },
   "common": {
     "amd": "AMD",
     "go_to_home": "Go to homepage",
@@ -127,8 +148,18 @@
     "search": "Search...",
     "total_price": "Price",
     "duration": "Duration",
+    "durat": "Duration",
+    "start_time": "Start time",
     "date": "Date",
     "add": "Add",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "players": "Players",
+    "accept": "Accept",
+    "decline": "Decline",
+    "me": "me",
+    "dear": "Dear",
+    "yes": "Yes",
+    "no": "No",
+    "understand": "Understand"
   }
 }

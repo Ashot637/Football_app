@@ -7,15 +7,11 @@ import {
   Image,
 } from 'react-native';
 
-import PrimaryText from './PrimaryText';
-
 import { COLORS } from '../helpers/colors';
 
 import closeIcon from '../assets/images/close.png';
-import { useTranslation } from 'react-i18next';
 
 const ConfirmationModal = ({ state, dismiss, children }) => {
-  const { t } = useTranslation();
   return (
     <Modal transparent={true} onBackdropPress={dismiss} visible={state} onRequestClose={dismiss}>
       <TouchableWithoutFeedback onPress={dismiss}>

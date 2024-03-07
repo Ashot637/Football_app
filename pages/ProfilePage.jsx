@@ -26,6 +26,7 @@ import logoutIcon from '../assets/images/logout.png';
 
 import { useTranslation } from 'react-i18next';
 import DeleteAccount from '../components/DeleteAccount';
+import ChangeRole from '../components/ChangeRole';
 
 const items = [
   {
@@ -170,8 +171,11 @@ const ProfilePage = ({ navigation }) => {
                 />
               );
             })}
+
             <LanguageSelect />
             <DeleteAccount />
+            {/* <ChangeRole /> */}
+
             <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => onLogout()}>
               <View style={styles.item}>
                 <View style={styles.icon}>

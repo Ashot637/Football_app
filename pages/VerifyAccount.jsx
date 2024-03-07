@@ -17,7 +17,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-
+import axios from 'axios';
 import BackgroundImageLayout from '../components/BackgroundImageLayout';
 import PrimaryButton from '../components/PrimaryButton';
 
@@ -46,7 +46,8 @@ const VerifyAccount = ({ navigation }) => {
 
   const onVerify = async () => {
     const expoPushToken = await AsyncStorage.getItem('expoPushToken');
-    dispatch(fetchCode({ code: value, name, phone, password, expoPushToken }));
+    const { data } = await axios.get('http://146.190.127.106/ip');
+    dispatch(fetchCode({ code: value, name, phone, password, expoPushToken, ip: data }));
   };
 
   return (
