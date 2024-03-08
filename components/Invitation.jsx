@@ -34,9 +34,12 @@ const Invitation = () => {
           <View style={styles.content}>
             <PrimaryText style={styles.title}>{t('invitation.title')}</PrimaryText>
             <PrimaryText style={styles.info} weight={600}>
-              {t('common.dear')} {user.name}, {t('invitation.subtitle')} {user.invitations[0].from},{' '}
-              {t('common.for')} {format(user.invitations[0]?.startTime, 'dd.MM.yyyy HH:hh')},{' '}
-              {'common.at_the'} {user.invitations[0]?.stadion}
+              {t('invitation.info', {
+                name: user.name,
+                from: user.invitations[0].from,
+                date: format(user.invitations[0]?.startTime, 'dd.MM.yyyy HH:hh'),
+                stadion: user.invitations[0]?.stadion,
+              })}
             </PrimaryText>
             <View style={styles.modalBtns}>
               <TouchableOpacity onPress={onCancel} style={{ flex: 1 }}>

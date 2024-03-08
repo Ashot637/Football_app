@@ -15,7 +15,8 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tesvan.ballhola",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.3",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +31,7 @@
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/images/icon1024.png"

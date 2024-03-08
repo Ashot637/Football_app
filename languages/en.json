@@ -141,6 +141,10 @@
     "month": "Next 4 weeks",
     "create": "Create a match"
   },
+  "invitation": {
+    "title": "Invitation for private match",
+    "info": "Dear {{name}}, you have a private match playing invitation from {{from}}, for {{date}}, at the {{stadion}}."
+  },
   "common": {
     "amd": "AMD",
     "go_to_home": "Go to homepage",

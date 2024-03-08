@@ -31,7 +31,7 @@ const PlayersList = ({ players, maxPlayersCount, title, organizerId, groupId }) 
   const onShare = async () => {
     try {
       const shareOptions = {
-        message: `http://146.190.127.106/ip?groupId=${groupId}&from=${user.name}`,
+        message: `http://146.190.127.106/ip?elfddhlxcasd=654123&abc=${groupId}&sdfuhelsufhdwerfdv=asderud&from=${user.name}&opaeruq=65423`,
       };
       await Share.share(shareOptions);
     } catch (error) {
