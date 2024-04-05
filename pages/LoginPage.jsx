@@ -77,14 +77,21 @@ const LoginPage = ({ navigation }) => {
             placeholder={t('user.password')}
           />
         </View>
-        <TouchableOpacity onPress={onRemember}>
-          <View style={styles.rememberView}>
-            <View style={[styles.checkbox, rememberMe && styles.checkboxActive]}>
-              {rememberMe && <Image source={doneIcon} style={styles.done} />}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TouchableOpacity onPress={onRemember}>
+            <View style={styles.rememberView}>
+              <View style={[styles.checkbox, rememberMe && styles.checkboxActive]}>
+                {rememberMe && <Image source={doneIcon} style={styles.done} />}
+              </View>
+              <PrimaryText style={styles.remember}>{t('form.remember_me')}</PrimaryText>
             </View>
-            <PrimaryText style={styles.remember}>{t('form.remember_me')}</PrimaryText>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('forgot-password')}>
+            <PrimaryText weight={600} style={{ color: COLORS.yellow }}>
+              {t('forgot_password.title')}
+            </PrimaryText>
+          </TouchableOpacity>
+        </View>
         {errorMessage && (
           <PrimaryText style={styles.error}>{t(`errors.${errorMessage}`)}</PrimaryText>
         )}

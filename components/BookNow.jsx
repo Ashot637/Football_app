@@ -144,7 +144,7 @@ const BookNow = ({ game }) => {
           {t('game.uniform_color')}
         </PrimaryText>
         <View style={styles.uniforms}>
-          {game.uniforms.map((uniformChoseUsersCount, index) => {
+          {game?.uniforms?.map((uniformChoseUsersCount, index) => {
             return (
               <View style={styles.uniformView} key={index}>
                 <Image source={icons[index]} style={styles.uniformIcon} />

@@ -9,7 +9,7 @@ import { selectAuth } from '../redux/authSlice/authSlice';
 
 const TIMER_MAX_VALUE = 60;
 
-const ResendCode = () => {
+const ResendCode = ({ phone: propsPhone }) => {
   const { t } = useTranslation();
   const { phone } = useSelector(selectAuth);
   const [timer, setTimer] = useState(TIMER_MAX_VALUE);
@@ -39,7 +39,7 @@ const ResendCode = () => {
 
   const onResend = () => {
     setIsLoading(true);
-    axios.post('/auth/resend', { phone });
+    axios.post('/auth/resend', { phone: propsPhone ?? phone });
   };
 
   return (

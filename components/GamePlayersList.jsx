@@ -13,6 +13,10 @@ const GamePlayersList = ({ game }) => {
         title={'common.players'}
         organizerId={game.creatorId}
         groupId={game.groupId}
+        isPublic={game.isPublic}
+        gameId={game.id}
+        usersWillPlayCount={game.usersWillPlayCount}
+        usersWontPlayCount={game.usersWontPlayCount}
       />
       {/* <View style={styles.divider} /> */}
       {/* <PlayersList

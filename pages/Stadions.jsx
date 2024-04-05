@@ -35,23 +35,19 @@ const Stadions = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
-        <View style={styles.stadions}>
+      <View style={styles.stadions}>
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
           {stadions.map((stadion, index) => {
             return (
               <TouchableOpacity
                 key={stadion.id}
+                style={[styles.stadion, index === stadions.length - 1 && { borderBottomWidth: 0 }]}
                 onPress={() =>
                   selectedStadionId === stadion.id
                     ? setSelectedStadionId(null)
                     : setSelectedStadionId(stadion.id)
                 }>
-                <View
-                  style={[
-                    styles.stadionView,
-                    selectedStadionId === stadion.id && styles.stadionViewActive,
-                    !index && { marginLeft: 16 },
-                  ]}>
+                <View style={[styles.stadionView]}>
                   <PrimaryText
                     weight={600}
                     style={[
@@ -64,8 +60,8 @@ const Stadions = () => {
               </TouchableOpacity>
             );
           })}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
       <View style={styles.games}>
         {games?.map((game) => {
           return <Game key={game.id} game={game} />;
@@ -79,29 +75,31 @@ const Stadions = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.black,
-    paddingVertical: 24,
+    paddingBottom: 24,
   },
   stadions: {
-    flexDirection: 'row',
-    columnGap: 8,
-    marginBottom: 24,
+    maxHeight: 230,
+    paddingHorizontal: 9,
+    paddingRight: 5,
+    backgroundColor: '#2F4131',
+    borderTopWidth: 1,
+    borderColor: COLORS.lightblue,
+  },
+  stadion: {
+    paddingHorizontal: 7,
+    paddingVertical: 18,
+    borderBottomColor: COLORS.grey,
+    borderBottomWidth: 1,
+    marginRight: 6,
   },
   stadionView: {
     paddingVertical: 8,
     paddingHorizontal: 20,
-    borderWidth: 2,
-    borderColor: '#fff',
-    borderRadius: 40,
-    height: 'auto',
   },
   stadionText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-  },
-  stadionViewActive: {
-    borderColor: COLORS.lightblue,
-    backgroundColor: COLORS.darkgrey,
   },
   stadionTextActive: {
     color: COLORS.lightblue,

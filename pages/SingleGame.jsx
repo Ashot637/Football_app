@@ -25,8 +25,9 @@ import Facilities from '../components/Facilities';
 import GamePlayersList from '../components/GamePlayersList';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../redux/authSlice/authSlice';
+import ActionButton from 'react-native-action-button';
 
-const SingleGame = ({ route }) => {
+const SingleGame = ({ route, navigation }) => {
   const { t } = useTranslation();
   const { id } = route.params;
   const [isLoading, setIsLoading] = useState(true);
@@ -73,35 +74,56 @@ const SingleGame = ({ route }) => {
         </View>
       )}
       {!isLoading && game && (
-        <ScrollView
-          style={styles.container}
-          refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}>
-          <ImageBackground source={{ uri: BASE_URL + game.stadion.img }} style={styles.image}>
-            <View style={styles.info}>
-              {!!game.price && (
-                <View style={styles.priceView}>
-                  <PrimaryText style={styles.priceText} weight={600}>
-                    {game.price} {t('common.amd')}
-                    {t('game.per_person')}
-                  </PrimaryText>
+        <>
+          <ScrollView
+            style={styles.container}
+            refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}>
+            <ImageBackground source={{ uri: BASE_URL + game.stadion.img }} style={styles.image}>
+              <View style={styles.info}>
+                {!!game.price && (
+                  <View style={styles.priceView}>
+                    <PrimaryText style={styles.priceText} weight={600}>
+                      {game.price} {t('common.amd')}
+                      {t('game.per_person')}
+                    </PrimaryText>
+                  </View>
+                )}
+                <PrimaryText style={styles.title} weight={600}>
+                  {game.stadion.title}
+                </PrimaryText>
+                <View style={styles.addressView}>
+                  <Image source={locationIcon} width={24} height={24} />
+                  <PrimaryText style={styles.addressText}>{game.stadion.address}</PrimaryText>
                 </View>
-              )}
-              <PrimaryText style={styles.title} weight={600}>
-                {game.stadion.title}
-              </PrimaryText>
-              <View style={styles.addressView}>
-                <Image source={locationIcon} width={24} height={24} />
-                <PrimaryText style={styles.addressText}>{game.stadion.address}</PrimaryText>
               </View>
-            </View>
-          </ImageBackground>
-          <GameNavigation
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-            hideIndex={userAlreadyBooked && 0}>
-            {displayView(activeIndex)}
-          </GameNavigation>
-        </ScrollView>
+            </ImageBackground>
+            <GameNavigation
+              activeIndex={activeIndex}
+              setActiveIndex={setActiveIndex}
+              hideIndex={game?.isPublic ? userAlreadyBooked && 0 : 0}>
+              {displayView(activeIndex)}
+            </GameNavigation>
+          </ScrollView>
+          {(userAlreadyBooked || !game.isPublic) && (
+            <ActionButton
+              buttonColor={'#A5CBC3'}
+              style={{ borderRadius: 30 }}
+              renderIcon={() => {
+                return (
+                  <Image
+                    source={require('../assets/images/chat-icon.png')}
+                    style={{ width: 36, height: 36 }}
+                  />
+                );
+              }}
+              onPress={() =>
+                navigation.navigate('chat', {
+                  groupId: game.groupId,
+                  groupTitle: game.stadion.title_en,
+                })
+              }></ActionButton>
+          )}
+        </>
       )}
     </>
   );
@@ -145,7 +167,7 @@ const styles = StyleSheet.create({
     rowGap: 7,
   },
   addressText: {
-    maxWidth: 180,
+    maxWidth: 200,
     textAlign: 'center',
     color: COLORS.lightWhite,
     fontSize: 16,

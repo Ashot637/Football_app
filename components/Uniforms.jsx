@@ -23,7 +23,7 @@ const Uniforms = ({ game }) => {
         {t('game.player_from_first_group')}
       </PrimaryText> */}
       <View style={styles.uniforms}>
-        {game.uniforms.map((uniformChoseUsersCount, index) => {
+        {(game.isPublic ? game.uniforms : [0, 0, 0, 0]).map((uniformChoseUsersCount, index) => {
           return (
             <View style={styles.uniformView} key={'firstGroup-' + index}>
               <Image source={icons[index]} style={styles.uniformIcon} />

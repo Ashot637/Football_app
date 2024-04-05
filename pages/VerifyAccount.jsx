@@ -46,7 +46,7 @@ const VerifyAccount = ({ navigation }) => {
 
   const onVerify = async () => {
     const expoPushToken = await AsyncStorage.getItem('expoPushToken');
-    const { data } = await axios.get('http://146.190.127.106/ip');
+    const { data } = await axios.get('http://146.190.127.106/service/ip');
     dispatch(fetchCode({ code: value, name, phone, password, expoPushToken, ip: data }));
   };
 

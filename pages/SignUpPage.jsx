@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Image,
   Keyboard,
@@ -8,46 +8,52 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
+} from "react-native";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchSignup, resetIsSignUpDataValid, selectAuth } from '../redux/authSlice/authSlice';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchSignup,
+  resetIsSignUpDataValid,
+  selectAuth,
+} from "../redux/authSlice/authSlice";
 
-import BackgroundImageLayout from '../components/BackgroundImageLayout';
-import PrimaryButton from '../components/PrimaryButton';
-import Input from '../components/Input';
+import BackgroundImageLayout from "../components/BackgroundImageLayout";
+import PrimaryButton from "../components/PrimaryButton";
+import Input from "../components/Input";
 
-import backIcon from '../assets/images/back.png';
-import profileIcon from '../assets/images/profile.png';
-import phoneIcon from '../assets/images/call.png';
-import PrimaryText from '../components/PrimaryText';
+import backIcon from "../assets/images/back.png";
+import profileIcon from "../assets/images/profile.png";
+import phoneIcon from "../assets/images/call.png";
+import PrimaryText from "../components/PrimaryText";
 
-import { useTranslation } from 'react-i18next';
-import i18n from '../languages/i18n';
+import { useTranslation } from "react-i18next";
+import i18n from "../languages/i18n";
 
 const SignUpPage = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isSignUpDataValid, errorMessage } = useSelector(selectAuth);
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (isSignUpDataValid) {
-      navigation.navigate('create-password');
+      navigation.navigate("create-password");
       dispatch(resetIsSignUpDataValid());
     }
   }, [isSignUpDataValid, navigation]);
 
   const onSignup = () => {
-    dispatch(fetchSignup({ name: name.trim(), phone: phone.trim() })).then(() => {
-      setName('');
-      setPhone('');
-    });
+    dispatch(fetchSignup({ name: name.trim(), phone: phone.trim() })).then(
+      () => {
+        setName("");
+        setPhone("");
+      }
+    );
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" && "padding"}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <BackgroundImageLayout>
           <View style={styles.top}>
@@ -55,27 +61,40 @@ const SignUpPage = ({ navigation }) => {
               <Image source={backIcon} width={24} height={24} />
             </TouchableOpacity>
             <PrimaryText
-              style={[styles.title, i18n.language === 'en' && styles.titleBig]}
-              weight={600}>
-              {t('form.signup')}
+              style={[styles.title, i18n.language === "en" && styles.titleBig]}
+              weight={600}
+            >
+              {t("form.signup")}
             </PrimaryText>
             <View style={{ width: 42 }} />
           </View>
           <View style={styles.inputs}>
-            <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
+            <Input
+              value={name}
+              setValue={(str) => {
+                if (!/[\d.@#$^&*!]/.test(str)) {
+                  setName(str);
+                }
+              }}
+              img={profileIcon}
+              placeholder={t("user.name")}
+            />
             <Input
               type="phone-pad"
               value={phone}
               setValue={setPhone}
               img={phoneIcon}
-              placeholder={t('user.phone')}
+              placeholder={t("user.phone")}
+              maxLength={13}
             />
           </View>
           {errorMessage && (
-            <PrimaryText style={styles.error}>{t(`errors.${errorMessage}`)}</PrimaryText>
+            <PrimaryText style={styles.error}>
+              {t(`errors.${errorMessage}`)}
+            </PrimaryText>
           )}
           <PrimaryButton
-            title={t('form.signup')}
+            title={t("form.signup")}
             onPress={() => onSignup()}
             disabled={phone.trim().length < 9 || !name.trim().length}
           />
@@ -87,30 +106,30 @@ const SignUpPage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   top: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
     paddingLeft: 18,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 32,
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 21,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   titleBig: {
     fontSize: 28,
   },
   inputs: {
-    display: 'flex',
+    display: "flex",
     rowGap: 24,
     marginBottom: 40,
   },
   error: {
-    color: 'red',
-    textAlign: 'center',
+    color: "red",
+    textAlign: "center",
     marginBottom: 10,
   },
 });

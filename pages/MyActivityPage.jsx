@@ -15,10 +15,10 @@ const items = [
     title: 'activity.your_activity',
     Element: YourActivity,
   },
-  {
-    title: 'activity.upcoming_bookings',
-    Element: UpcomingBookings,
-  },
+  // {
+  //   title: 'activity.upcoming_bookings',
+  //   Element: UpcomingBookings,
+  // },
 ];
 
 const MyActivityPage = () => {
@@ -29,7 +29,7 @@ const MyActivityPage = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.items}>
           {items.map((item, index) => {
             return (
@@ -52,7 +52,7 @@ const MyActivityPage = () => {
             );
           })}
         </View>
-      </ScrollView>
+      </ScrollView> */}
       <Component />
       <View style={{ height: 30 }} />
     </ScrollView>

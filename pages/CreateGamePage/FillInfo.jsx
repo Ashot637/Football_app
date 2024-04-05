@@ -1,30 +1,30 @@
-import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Input from '../../components/Input';
+import { useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Input from "../../components/Input";
 
-import ChooseStadion from './ChooseStadion';
-import ChooseDate from './ChooseDate';
-import PrimaryButton from '../../components/PrimaryButton';
-import ChooseTime from './ChooseTime';
+import ChooseStadion from "./ChooseStadion";
+import ChooseDate from "./ChooseDate";
+import PrimaryButton from "../../components/PrimaryButton";
+import ChooseTime from "./ChooseTime";
 
-import axios from '../../axios/axios';
+import axios from "../../axios/axios";
 
-import priceIcon from '../../assets/images/money-bag-white.png';
-import { useDispatch, useSelector } from 'react-redux';
+import priceIcon from "../../assets/images/money-bag-white.png";
+import { useDispatch, useSelector } from "react-redux";
 import {
   reset,
   selectCreateGame,
   setPrice,
   setRange,
-} from '../../redux/createGameSlice/createGameSlice';
-import { selectAuth } from '../../redux/authSlice/authSlice';
-import { stringToDate } from '../../helpers/stringToDate';
-import { useNavigation } from '@react-navigation/native';
-import CheckBox from '../../components/CheckBox';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import PrimaryText from '../../components/PrimaryText';
-import { useTranslation } from 'react-i18next';
-import { COLORS } from '../../helpers/colors';
+} from "../../redux/createGameSlice/createGameSlice";
+import { selectAuth } from "../../redux/authSlice/authSlice";
+import { stringToDate } from "../../helpers/stringToDate";
+import { useNavigation } from "@react-navigation/native";
+import CheckBox from "../../components/CheckBox";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import PrimaryText from "../../components/PrimaryText";
+import { useTranslation } from "react-i18next";
+import { COLORS } from "../../helpers/colors";
 
 const accordions = [ChooseStadion, ChooseDate, ChooseTime];
 
@@ -34,7 +34,8 @@ const FillInfo = ({ stadions }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { stadion, date, time, duration, uniforms, price, range } = useSelector(selectCreateGame);
+  const { stadion, date, time, duration, uniforms, price, range } =
+    useSelector(selectCreateGame);
   const { user } = useSelector(selectAuth);
 
   const toggleAccordion = (accordionId) => {
@@ -43,9 +44,14 @@ const FillInfo = ({ stadions }) => {
 
   const onCreateMatch = () => {
     const startTime = stringToDate(date, time);
-    const endTime = stringToDate(date, time, duration, duration === 1.5 ? 30 : 0);
+    const endTime = stringToDate(
+      date,
+      time,
+      duration,
+      duration === 1.5 ? 30 : 0
+    );
     axios
-      .post('/game/organizerCreate', {
+      .post("/game/organizerCreate", {
         price,
         startTime,
         endTime,
@@ -56,10 +62,13 @@ const FillInfo = ({ stadions }) => {
       })
       .then(({ data }) => {
         if (data.success) {
-          navigation.navigate('success', { game: data.game, confirmationNumber: data.game.id });
+          navigation.navigate("success", {
+            game: data.game,
+            confirmationNumber: data.game.id,
+          });
           dispatch(reset());
         } else {
-          console.error('Something went wrong');
+          console.error("Something went wrong");
         }
       });
     setIsOpenModal(false);
@@ -68,23 +77,34 @@ const FillInfo = ({ stadions }) => {
   return (
     <View style={styles.container}>
       {isOpenModal && (
-        <ConfirmationModal state={isOpenModal} dismiss={() => setIsOpenModal(false)}>
+        <ConfirmationModal
+          state={isOpenModal}
+          dismiss={() => setIsOpenModal(false)}
+        >
           <PrimaryText style={styles.modalTitle} weight={600}>
-            {t('common.dear')} {user.name}!
+            {t("common.dear")} {user.name}!
           </PrimaryText>
-          <PrimaryText style={styles.modalSubTitle}>{t('create_game.asking')}</PrimaryText>
+          <PrimaryText style={styles.modalSubTitle}>
+            {t("create_game.asking")}
+          </PrimaryText>
           <View style={styles.modalBtns}>
-            <TouchableOpacity onPress={() => setIsOpenModal(false)} style={{ flex: 1 }}>
+            <TouchableOpacity
+              onPress={() => setIsOpenModal(false)}
+              style={{ flex: 1 }}
+            >
               <View style={styles.cancelBtn}>
                 <PrimaryText style={styles.btnText} weight={600}>
-                  {t('common.no')}
+                  {t("common.no")}
                 </PrimaryText>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={onCreateMatch} style={{ flex: 1 }}>
               <View style={styles.submitbtn}>
-                <PrimaryText style={[styles.btnText, { color: COLORS.black }]} weight={600}>
-                  {t('common.yes')}
+                <PrimaryText
+                  style={[styles.btnText, { color: COLORS.black }]}
+                  weight={600}
+                >
+                  {t("common.yes")}
                 </PrimaryText>
               </View>
             </TouchableOpacity>
@@ -108,25 +128,30 @@ const FillInfo = ({ stadions }) => {
           setValue={(p) => dispatch(setPrice(p))}
           img={priceIcon}
           type="phone-pad"
-          placeholder={t('common.total_price')}
+          placeholder={
+            t("common.total_price") +
+            " " +
+            t("common.amd") +
+            t("game.per_person")
+          }
         />
         <View style={{ paddingLeft: 16, rowGap: 24 }}>
           <CheckBox
             state={range === 1}
             setState={() => dispatch(setRange(1))}
-            title={t('create_game.once')}
+            title={t("create_game.once")}
           />
           <CheckBox
             state={range === 4}
             setState={() => dispatch(setRange(4))}
-            title={t('create_game.month')}
+            title={t("create_game.month")}
           />
         </View>
       </View>
       <PrimaryButton
         disabled={!date || !time || !duration}
         onPress={() => setIsOpenModal(true)}
-        title={t('create_game.create')}
+        title={t("create_game.create")}
       />
     </View>
   );
@@ -148,7 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   modalBtns: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 11,
   },
   cancelBtn: {
@@ -165,7 +190,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
     color: COLORS.lightWhite,
   },
 });

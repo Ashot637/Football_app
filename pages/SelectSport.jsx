@@ -1,31 +1,31 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { COLORS } from '../helpers/colors';
-import PrimaryText from '../components/PrimaryText';
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { COLORS } from "../helpers/colors";
+import PrimaryText from "../components/PrimaryText";
 
-import footballBallImg from '../assets/images/football.png';
-import basketballBallImg from '../assets/images/basketball.png';
-import tenisBallImg from '../assets/images/tenis.png';
-import volleyBallImg from '../assets/images/volley.png';
+import footballBallImg from "../assets/images/football.png";
+import basketballBallImg from "../assets/images/basketball.png";
+import tenisBallImg from "../assets/images/tenis.png";
+import volleyBallImg from "../assets/images/volley.png";
 
 const sports = [
   {
     img: footballBallImg,
-    title: 'Football',
+    title: "Football",
     active: true,
   },
   {
     img: basketballBallImg,
-    title: 'Basketball',
+    title: "Basketball",
     active: false,
   },
   {
     img: tenisBallImg,
-    title: 'Tenis',
+    title: "Tennis",
     active: false,
   },
   {
     img: volleyBallImg,
-    title: 'Volleyball',
+    title: "Volleyball",
     active: false,
   },
 ];
@@ -46,8 +46,9 @@ const SelectSport = ({ navigation }) => {
           return (
             <TouchableOpacity
               key={sport.title}
-              onPress={() => navigation.navigate('main')}
-              style={[styles.block, styles.active]}>
+              onPress={() => navigation.navigate("main")}
+              style={[styles.block, styles.active]}
+            >
               <Image source={sport.img} style={styles.img} />
               <PrimaryText style={styles.text}>Football</PrimaryText>
             </TouchableOpacity>
@@ -63,25 +64,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.black,
     paddingHorizontal: 30,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   blocks: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 20,
   },
   block: {
     height: 150,
-    flexBasis: '46.5%',
-    alignItems: 'center',
+    flexBasis: "46.5%",
+    alignItems: "center",
     backgroundColor: COLORS.darkgrey,
     borderRadius: 24,
     opacity: 0.4,
   },
   active: {
     height: 148,
-    flexBasis: '46%',
+    flexBasis: "46%",
     opacity: 1,
     borderWidth: 1,
     borderColor: COLORS.green,

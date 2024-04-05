@@ -21,7 +21,7 @@ const FavoriteGames = () => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState([]);
-  const [selectedType, setSelectedType] = useState(0);
+  const [selectedType, setSelectedType] = useState(2);
 
   useEffect(() => {
     onRefresh();
@@ -39,6 +39,11 @@ const FavoriteGames = () => {
         setGames(data);
         setIsLoading(false);
       });
+    } else {
+      axios.get('/game/getAllGroupGames').then(({ data }) => {
+        setGames(data);
+        setIsLoading(false);
+      });
     }
   });
 
@@ -51,17 +56,17 @@ const FavoriteGames = () => {
       </PrimaryText>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.dates}>
-          <TouchableOpacity onPress={() => setSelectedType(0)}>
+          <TouchableOpacity onPress={() => setSelectedType(2)}>
             <View
               style={[
                 styles.dateView,
-                selectedType === 0 && styles.dateViewActive,
+                selectedType === 2 && styles.dateViewActive,
                 { marginLeft: 16 },
               ]}>
               <PrimaryText
-                style={[styles.dateText, selectedType === 0 && styles.dateTextActive]}
+                style={[styles.dateText, selectedType === 2 && styles.dateTextActive]}
                 weight={600}>
-                {t('game.my_game_creations')}
+                {t('game.group_games')}
               </PrimaryText>
             </View>
           </TouchableOpacity>
@@ -71,6 +76,15 @@ const FavoriteGames = () => {
                 style={[styles.dateText, selectedType === 1 && styles.dateTextActive]}
                 weight={600}>
                 {t('game.booked_spots')}
+              </PrimaryText>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setSelectedType(0)}>
+            <View style={[styles.dateView, selectedType === 0 && styles.dateViewActive]}>
+              <PrimaryText
+                style={[styles.dateText, selectedType === 0 && styles.dateTextActive]}
+                weight={600}>
+                {t('game.my_game_creations')}
               </PrimaryText>
             </View>
           </TouchableOpacity>

@@ -57,6 +57,7 @@ const initialState = {
   password: null,
   phone: null,
   name: null,
+  expoPushToken: null,
 };
 
 const authSlice = createSlice({
@@ -92,6 +93,9 @@ const authSlice = createSlice({
     },
     resetErrorMessage: (state) => {
       state.errorMessage = null;
+    },
+    setExpoPushToken: (state, action) => {
+      state.expoPushToken = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -152,4 +156,5 @@ export const {
   resetErrorMessage,
   changeNewMessagesStatus,
   deleteFirstInvitation,
+  setExpoPushToken,
 } = authSlice.actions;

@@ -10,7 +10,7 @@ const useSocket = () => {
   const { user } = useSelector(selectAuth);
   useEffect(() => {
     if (user) {
-      socket = io(BASE_URL);
+      // socket = io('http://146.190.127.106/service');
       socket.on('connect', () => {});
 
       socket.emit('user-connected', user.id);

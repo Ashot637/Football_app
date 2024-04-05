@@ -37,7 +37,7 @@ const HomePage = () => {
               <PrimaryText
                 style={[styles.dateText, !selectedStadiumsType && { color: COLORS.yellow }]}
                 weight={600}>
-                {t('game.available_games')}
+                {t('game.favorite_games')}
               </PrimaryText>
             </View>
           </TouchableOpacity>
@@ -53,20 +53,18 @@ const HomePage = () => {
               <PrimaryText
                 style={[styles.dateText, selectedStadiumsType && { color: COLORS.yellow }]}
                 weight={600}>
-                {t('game.favorite_games')}
+                {t('game.available_games')}
               </PrimaryText>
             </View>
           </TouchableOpacity>
         </ScrollView>
       </View>
 
-      {!selectedStadiumsType ? <AveilableGames /> : <FavoriteGames />}
-      {!!selectedStadiumsType && (
-        <ActionButton
-          buttonColor={COLORS.green}
-          style={{ borderRadius: 30 }}
-          onPress={() => navigation.navigate('create')}></ActionButton>
-      )}
+      {selectedStadiumsType ? <AveilableGames /> : <FavoriteGames />}
+      <ActionButton
+        buttonColor={COLORS.green}
+        style={{ borderRadius: 30 }}
+        onPress={() => navigation.navigate('create')}></ActionButton>
     </>
   );
 };

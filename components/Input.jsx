@@ -1,8 +1,16 @@
-import { Image, StyleSheet, TextInput, View } from 'react-native';
+import { Image, StyleSheet, TextInput, View } from "react-native";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-const Input = ({ img, placeholder, value, setValue, type = 'default', secureTextEntry }) => {
+const Input = ({
+  img,
+  placeholder,
+  value,
+  setValue,
+  type = "default",
+  secureTextEntry,
+  maxLength = 30,
+}) => {
   return (
     <View style={styles.inputView}>
       <Image source={img} style={styles.icon} />
@@ -14,8 +22,8 @@ const Input = ({ img, placeholder, value, setValue, type = 'default', secureText
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         placeholderTextColor={COLORS.grey}
-        selectionColor={'#fff'}
-        maxLength={30}
+        selectionColor={"#fff"}
+        maxLength={maxLength}
       />
     </View>
   );
@@ -23,21 +31,21 @@ const Input = ({ img, placeholder, value, setValue, type = 'default', secureText
 
 const styles = StyleSheet.create({
   inputView: {
-    width: '100%',
+    width: "100%",
     backgroundColor: COLORS.darkgrey,
     borderRadius: 16,
     paddingLeft: 16,
     height: 64,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     columnGap: 8,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   input: {
-    width: '100%',
-    color: '#fff',
-    fontWeight: '600',
-    height: '100%',
+    width: "100%",
+    color: "#fff",
+    fontWeight: "600",
+    height: "100%",
   },
   icon: {
     width: 24,

@@ -9,7 +9,7 @@ const PAGE = 2;
 
 const useChat = (params) => {
   const { groupId, groupTitle } = params;
-  const { user } = useSelector(selectAuth);
+  const { user, expoPushToken } = useSelector(selectAuth);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
@@ -121,29 +121,31 @@ const useChat = (params) => {
   useEffect(() => {
     socket.emit('join-group', { groupId, userId: user.id });
     socket.on('new-message', (newMessage) => {
-      setMessages((prev) => {
-        const isThereToday = prev.find((group) => group['date'] === 'today');
-        const updatedMessages = prev.map((group) => {
-          if (group['date'] === 'today') {
-            return {
-              date: 'today',
-              messages: [...(group.messages || []), newMessage],
-            };
-          }
-
-          return group;
-        });
-
-        return isThereToday
-          ? updatedMessages
-          : [
-              {
+      if (newMessage.user.id !== user.id) {
+        setMessages((prev) => {
+          const isThereToday = prev.find((group) => group['date'] === 'today');
+          const updatedMessages = prev.map((group) => {
+            if (group['date'] === 'today') {
+              return {
                 date: 'today',
-                messages: [newMessage],
-              },
-              ...updatedMessages,
-            ];
-      });
+                messages: [...(group.messages || []), newMessage],
+              };
+            }
+
+            return group;
+          });
+
+          return isThereToday
+            ? updatedMessages
+            : [
+                {
+                  date: 'today',
+                  messages: [newMessage],
+                },
+                ...updatedMessages,
+              ];
+        });
+      }
       onReadMessages();
     });
     socket.on('react-to-message', ({ messageId, user }) => {
@@ -202,7 +204,14 @@ const useChat = (params) => {
 
   const onSendMessage = () => {
     const id = Date.now();
-    axios.post('/message/send', { text, groupId, id, groupTitle, userName: user.name });
+    axios.post('/message/send', {
+      text,
+      groupId,
+      id,
+      groupTitle,
+      userName: user.name,
+      expoPushToken,
+    });
     const newMessage = {
       id: +id,
       text,

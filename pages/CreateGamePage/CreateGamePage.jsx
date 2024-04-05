@@ -42,7 +42,6 @@ const CreateGamePage = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <Invitation /> */}
       <ScrollView style={styles.container}>
         <PrimaryText weight={600} style={styles.title}>
           {t('create_game.title')}

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ballhola",
     "slug": "ballhola",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon1024.png",
     "userInterfaceStyle": "light",
@@ -15,23 +15,26 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tesvan.ballhola",
-      "buildNumber": "1.0.3",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "buildNumber": "1.0.7",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon1024.png"
+        "foregroundImage": "./assets/images/androidIcon.png"
       },
       "permissions": [
         "android.permission.NOTIFICATIONS",
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.RECORD_AUDIO",
-        "android.permission.NOTIFICATIONS"
+        "android.permission.RECORD_AUDIO"
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 3
+      "versionCode": 7,
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/images/icon1024.png"
