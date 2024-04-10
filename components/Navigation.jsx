@@ -45,6 +45,7 @@ import axios from "axios";
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPassword";
 import VerifyPhone from "../pages/ForgotPassword/VerifyPhone";
 import NewPasswordPage from "../pages/ForgotPassword/NewPassword";
+import { BASE_URL } from "../axios/axios";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -117,7 +118,9 @@ const Navigation = () => {
     (async () => {
       const expoPushToken = await AsyncStorage.getItem("expoPushToken");
       dispatch(setExpoPushToken(expoPushToken));
-      const { data } = await axios.get("http://146.190.127.106/service/ip");
+      const { data } = await axios
+        .get(BASE_URL + "ip")
+        .catch((err) => console.log(err));
       dispatch(fetchAuthMe({ expoPushToken, ip: data }));
     })();
   }, []);

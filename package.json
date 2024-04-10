@@ -25,7 +25,9 @@
     "expo-jwt": "^1.7.0",
     "expo-linear-gradient": "~12.3.0",
     "expo-notifications": "~0.20.1",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "expo-updates": "~0.18.19",
     "i18next": "^23.7.11",
     "jsonwebtoken": "^9.0.2",
     "react": "18.2.0",
@@ -38,9 +40,7 @@
     "react-native-screens": "~3.22.0",
     "react-redux": "^9.0.4",
     "socket.io-client": "^4.7.4",
-    "use-debounce": "^10.0.0",
-    "expo-splash-screen": "~0.20.5",
-    "expo-updates": "~0.18.19"
+    "use-debounce": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

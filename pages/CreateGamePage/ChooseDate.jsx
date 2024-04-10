@@ -1,8 +1,14 @@
-import { FlatList, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import Accordion from '../../components/Accordion';
-import PrimaryText from '../../components/PrimaryText';
-import { COLORS } from '../../helpers/colors';
-import { useTranslation } from 'react-i18next';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Accordion from "../../components/Accordion";
+import PrimaryText from "../../components/PrimaryText";
+import { COLORS } from "../../helpers/colors";
+import { useTranslation } from "react-i18next";
 import {
   addDays,
   addMonths,
@@ -20,16 +26,27 @@ import {
   subDays,
   subMonths,
   subYears,
-} from 'date-fns';
+} from "date-fns";
 
-import arrowIcon from '../../assets/images/arrow.png';
-import { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCreateGame, setDate } from '../../redux/createGameSlice/createGameSlice';
+import arrowIcon from "../../assets/images/arrow.png";
+import { memo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCreateGame,
+  setDate,
+} from "../../redux/createGameSlice/createGameSlice";
 
-import icon from '../../assets/images/calendar.png';
+import icon from "../../assets/images/calendar.png";
 
-const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const weekDays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
   const { t } = useTranslation();
@@ -40,7 +57,10 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayOfMonth = endOfMonth(currentDate);
 
-  const daysInMonth = eachDayOfInterval({ start: firstDayOfMonth, end: lastDayOfMonth });
+  const daysInMonth = eachDayOfInterval({
+    start: firstDayOfMonth,
+    end: lastDayOfMonth,
+  });
 
   const startingDayIndex = getDay(firstDayOfMonth);
   const endingDayIndex = getDay(lastDayOfMonth);
@@ -50,7 +70,10 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
 
   if (startingDayIndex !== 1) {
     previusMonthDays = eachDayOfInterval({
-      start: subDays(lastDayOfPrevMonth, startingDayIndex === 0 ? 5 : startingDayIndex - 2),
+      start: subDays(
+        lastDayOfPrevMonth,
+        startingDayIndex === 0 ? 5 : startingDayIndex - 2
+      ),
       end: lastDayOfPrevMonth,
     });
   }
@@ -84,17 +107,21 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
   return (
     <Accordion
       icon={icon}
-      title={date ? format(date, 'dd MMMM yyyy') : t('home.choose_date')}
+      title={date ? format(date, "dd MMMM yyyy") : t("home.choose_date")}
       toggleIsOpen={() => toggleAccordion(accordionId)}
-      isOpen={isActive}>
+      isOpen={isActive}
+    >
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.block}>
             <TouchableOpacity onPress={onPrevMonth}>
-              <Image source={arrowIcon} style={{ transform: [{ rotate: '180deg' }] }} />
+              <Image
+                source={arrowIcon}
+                style={{ transform: [{ rotate: "180deg" }] }}
+              />
             </TouchableOpacity>
             <PrimaryText style={styles.title} weight={600}>
-              {t(`date.month.${format(currentDate, 'MMMM')}`)}
+              {t(`date.month.${format(currentDate, "MMMM")}`)}
             </PrimaryText>
             <TouchableOpacity onPress={onNextMonth}>
               <Image source={arrowIcon} />
@@ -102,10 +129,13 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
           </View>
           <View style={styles.block}>
             <TouchableOpacity onPress={onPrevYear}>
-              <Image source={arrowIcon} style={{ transform: [{ rotate: '180deg' }] }} />
+              <Image
+                source={arrowIcon}
+                style={{ transform: [{ rotate: "180deg" }] }}
+              />
             </TouchableOpacity>
             <PrimaryText style={styles.title} weight={600}>
-              {format(currentDate, 'yyyy')}
+              {format(currentDate, "yyyy")}
             </PrimaryText>
             <TouchableOpacity onPress={onNextYear}>
               <Image source={arrowIcon} />
@@ -128,14 +158,15 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
             columnWrapperStyle={styles.row}
             renderItem={({ item }) => {
               const disabled =
-                !isSameMonth(item, currentDate) || isBefore(addDays(item, 1), new Date());
+                !isSameMonth(item, currentDate) || isBefore(item, new Date());
               return (
                 <TouchableOpacity
                   disabled={disabled}
                   onPress={() => {
                     dispatch(setDate(String(item)));
                     toggleAccordion(accordionId);
-                  }}>
+                  }}
+                >
                   <View style={styles.dayBlock}>
                     <PrimaryText
                       key={item}
@@ -144,8 +175,9 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
                         isSameDay(item, date) && styles.active,
                         disabled && styles.disabled,
                       ]}
-                      weight={600}>
-                      {format(item, 'd')}
+                      weight={600}
+                    >
+                      {format(item, "d")}
                     </PrimaryText>
                   </View>
                 </TouchableOpacity>
@@ -164,19 +196,19 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 18,
     paddingHorizontal: 8,
-    backgroundColor: '#2F4131',
+    backgroundColor: "#2F4131",
     borderRadius: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
   },
   block: {
     columnGap: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontSize: 18,
@@ -184,36 +216,36 @@ const styles = StyleSheet.create({
   },
   row: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   weekDays: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 5,
   },
   weekDay: {
     fontSize: 15,
     color: COLORS.lightWhite,
     width: 38,
-    textAlign: 'center',
+    textAlign: "center",
   },
   dayBlock: {
     width: 38,
     height: 38,
-    alignItems: 'center',
+    alignItems: "center",
   },
   day: {
     borderRadius: 5,
     width: 28,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 20,
-    color: '#fff',
+    color: "#fff",
   },
   active: {
-    backgroundColor: '#4CBB17',
+    backgroundColor: "#4CBB17",
   },
   disabled: {
-    color: '#fff',
+    color: "#fff",
     opacity: 0.4,
   },
 });

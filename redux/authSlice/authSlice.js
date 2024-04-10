@@ -1,54 +1,65 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import axios from '../../axios/axios';
+import axios from "../../axios/axios";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { sessionStorage } from '../../helpers/sessionStorage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { sessionStorage } from "../../helpers/sessionStorage";
 
-export const fetchSignup = createAsyncThunk('auth/fetchSignup', async (params, thunkAPI) => {
-  try {
-    const { data } = await axios.post('/auth/register', { ...params });
-    return { phone: data.phone, name: data.name };
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.message);
+export const fetchSignup = createAsyncThunk(
+  "auth/fetchSignup",
+  async (params, thunkAPI) => {
+    try {
+      const { data } = await axios.post("/auth/register", { ...params });
+      return { phone: data.phone, name: data.name };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
   }
+);
+
+export const fetchLogin = createAsyncThunk(
+  "auth/fetchLogin",
+  async (params, thunkAPI) => {
+    try {
+      const { data } = await axios.post("/auth/login", { ...params });
+      if (data.accessToken) {
+        if (thunkAPI.getState().auth.rememberMe) {
+          await AsyncStorage.setItem("accessToken", data.accessToken);
+        } else {
+          sessionStorage.token = data.accessToken;
+        }
+      }
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const fetchCode = createAsyncThunk("auth/fetchCode", async (params) => {
+  const { data } = await axios.post("/auth/verifyCode", { ...params });
+  if (data.accessToken) {
+    await AsyncStorage.setItem("accessToken", data.accessToken);
+  }
+  return data;
 });
 
-export const fetchLogin = createAsyncThunk('auth/fetchLogin', async (params, thunkAPI) => {
-  try {
-    const { data } = await axios.post('/auth/login', { ...params });
+export const fetchAuthMe = createAsyncThunk(
+  "auth/fetchAuthMe",
+  async ({ expoPushToken, ip }) => {
+    const { data } = await axios.get("/auth", {
+      params: { expoPushToken, ip },
+    });
     if (data.accessToken) {
-      if (thunkAPI.getState().auth.rememberMe) {
-        await AsyncStorage.setItem('accessToken', data.accessToken);
-      } else {
-        sessionStorage.token = data.accessToken;
-      }
+      await AsyncStorage.setItem("accessToken", data.accessToken);
     }
     return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.message);
   }
-});
-
-export const fetchCode = createAsyncThunk('auth/fetchCode', async (params) => {
-  const { data } = await axios.post('/auth/verifyCode', { ...params });
-  if (data.accessToken) {
-    await AsyncStorage.setItem('accessToken', data.accessToken);
-  }
-  return data;
-});
-
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async ({ expoPushToken, ip }) => {
-  const { data } = await axios.get('/auth', { params: { expoPushToken, ip } });
-  if (data.accessToken) {
-    await AsyncStorage.setItem('accessToken', data.accessToken);
-  }
-  return data;
-});
+);
 
 const initialState = {
   user: null,
-  status: 'waiting',
+  status: "waiting",
   errorMessage: null,
   isSignUpDataValid: false,
   isWaitingCode: false,
@@ -61,11 +72,11 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
-      AsyncStorage.removeItem('accessToken');
+      AsyncStorage.removeItem("accessToken");
       state.user = null;
       state.phone = null;
     },
@@ -129,15 +140,15 @@ const authSlice = createSlice({
     });
     builder.addCase(fetchAuthMe.pending, (state) => {
       state.user = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(fetchAuthMe.fulfilled, (state, action) => {
       state.user = action.payload;
-      state.status = 'success';
+      state.status = "success";
     });
     builder.addCase(fetchAuthMe.rejected, (state) => {
       state.user = null;
-      state.status = 'error';
+      state.status = "error";
     });
   },
 });

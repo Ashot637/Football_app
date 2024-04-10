@@ -11,6 +11,7 @@ import PrimaryText from "../components/PrimaryText";
 import ProfileItem from "../components/ProfileItem";
 import PrimaryButton from "../components/PrimaryButton";
 import LanguageSelect from "../components/LanguageSelect";
+import ContactUs from "../components/ContactUs";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectAuth, setUser } from "../redux/authSlice/authSlice";
@@ -177,8 +178,8 @@ const ProfilePage = ({ navigation }) => {
                 />
               );
             })}
-
             <LanguageSelect />
+            {/* <ContactUs /> */}
             <DeleteAccount />
             {/* <ChangeRole /> */}
 

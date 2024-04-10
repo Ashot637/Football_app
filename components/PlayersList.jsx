@@ -62,7 +62,7 @@ const PlayersList = ({
         "You never can guess this k3y"
       );
       const shareOptions = {
-        message: `http://146.190.127.106/service/ip?token=${token}`,
+        message: BASE_URL + `ip?token=${token}`,
       };
       await Share.share(shareOptions);
     } catch (error) {
