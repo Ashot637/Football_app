@@ -44,7 +44,7 @@ const GroupPlayers = ({ route }) => {
 
   return (
     <>
-      <ScrollView style={{ backgroundColor: COLORS.black, flex: 1 }}>
+      <ScrollView style={{ backgroundColor: COLORS.background_blue, flex: 1 }}>
         <Heading align="center" title={title + " " + t("common.players")} />
         <View style={{ rowGap: 10, paddingHorizontal: 16, paddingBottom: 16 }}>
           {currentUser && (

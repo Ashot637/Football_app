@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import PrimaryButton from "../../components/PrimaryButton";
 import Input from "../../components/Input";
 
-import phoneIcon from "../../assets/images/call.png";
+import GroupSvg from "../../assets/images/group.svg";
 import Heading from "../../components/Heading";
 import axios from "../../axios/axios";
 
@@ -36,7 +36,7 @@ const CreateGroupPage = ({ navigation }) => {
           <Input
             value={title}
             setValue={setTitle}
-            img={phoneIcon}
+            img={<GroupSvg />}
             placeholder={t("create_group.placeholder")}
           />
           <PrimaryButton
@@ -53,7 +53,7 @@ const CreateGroupPage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
   },
   titleView: {
     paddingVertical: 24,

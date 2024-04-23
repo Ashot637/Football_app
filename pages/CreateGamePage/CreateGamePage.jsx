@@ -19,22 +19,27 @@ const CreateGamePage = ({ route }) => {
   const [groups, setGroups] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const { stadion } = useSelector(selectCreateGame);
-  const { id } = route.params;
+  const groupId = route?.params?.groupId;
+  const stadumId = route?.params?.stadumId;
 
   useEffect(() => {
     axios.get("/stadion/getAllForUser").then(({ data }) => {
       setStadions(data);
-      dispatch(setStadion(data[0]));
+      let index = 0;
+      if (stadumId) {
+        index = data.findIndex((stadium) => stadium.id === stadumId);
+      }
+      dispatch(setStadion(data[index]));
     });
     axios.get("/group/getAll").then(({ data }) => {
       setGroups(data);
       let index = 0;
-      if (id) {
-        index = data.findIndex((group) => group.id === id);
+      if (groupId) {
+        index = data.findIndex((group) => group.id === groupId);
       }
       dispatch(setGroup(data[index]));
     });
-  }, [id]);
+  }, [groupId, stadumId]);
 
   // const displayView = (index) => {
   //   switch (index) {

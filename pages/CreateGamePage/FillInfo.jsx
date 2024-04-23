@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Input from "../../components/Input";
 
 import ChooseStadion from "./ChooseStadion";
@@ -7,7 +7,7 @@ import ChooseDate from "./ChooseDate";
 import PrimaryButton from "../../components/PrimaryButton";
 import ChooseTime from "./ChooseTime";
 
-import axios, { BASE_URL } from "../../axios/axios";
+import axios from "../../axios/axios";
 
 import PriceIcon from "../../assets/images/money bag.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,12 +20,12 @@ import {
 import { selectAuth } from "../../redux/authSlice/authSlice";
 import { stringToDate } from "../../helpers/stringToDate";
 import { useNavigation } from "@react-navigation/native";
-import CheckBox from "../../components/CheckBox";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import PrimaryText from "../../components/PrimaryText";
 import { useTranslation } from "react-i18next";
 import { COLORS } from "../../helpers/colors";
 import ChooseGroup from "./ChooseGroup";
+import RadioButton from "../../components/RadioButton";
 
 const accordions = [ChooseGroup, ChooseStadion, ChooseDate, ChooseTime];
 
@@ -166,7 +166,7 @@ const FillInfo = ({ stadions, groups }) => {
         <Input
           value={price}
           setValue={(p) => dispatch(setPrice(p))}
-          img={<PriceIcon/>}
+          img={<PriceIcon />}
           type="phone-pad"
           placeholder={
             t("common.total_price") +
@@ -176,12 +176,12 @@ const FillInfo = ({ stadions, groups }) => {
           }
         />
         <View style={{ paddingLeft: 16, rowGap: 24 }}>
-          <CheckBox
+          <RadioButton
             state={range === 1}
             setState={() => dispatch(setRange(1))}
             title={t("create_game.once")}
           />
-          <CheckBox
+          <RadioButton
             state={range === 4}
             setState={() => dispatch(setRange(4))}
             title={t("create_game.month")}

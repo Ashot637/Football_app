@@ -16,7 +16,7 @@ const Heading = ({ title, align = "left" }) => {
 const styles = StyleSheet.create({
   titleView: {
     paddingVertical: 24,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.background_blue,
     paddingHorizontal: 16,
   },
   title: {

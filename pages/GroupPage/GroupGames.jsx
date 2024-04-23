@@ -18,7 +18,7 @@ const GroupGames = ({ navigation, route }) => {
   const { id, title, games, isViewMode, ownerId } = route.params;
   return (
     <>
-      <ScrollView style={{ backgroundColor: COLORS.black, flex: 1 }}>
+      <ScrollView style={{ backgroundColor: COLORS.background_blue, flex: 1 }}>
         <Heading align="center" title={title + " " + t("common.games")} />
         <View style={{ rowGap: 16, paddingHorizontal: 16, paddingBottom: 16 }}>
           {games.map((game) => {
@@ -33,7 +33,7 @@ const GroupGames = ({ navigation, route }) => {
       </ScrollView>
       {!isViewMode && user?.id === ownerId && (
         <TouchableOpacity
-          onPress={() => navigation.navigate("create-game", { id })}
+          onPress={() => navigation.navigate("create-game", { groupId: id })}
           style={{
             position: "absolute",
             right: 14,

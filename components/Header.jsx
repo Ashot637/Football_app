@@ -1,17 +1,15 @@
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setFromSearchIcon } from "../redux/searchSlice/searchSlice";
 import { setFrom } from "../redux/notificationSlice/notificationSlice";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { LinearGradient } from "expo-linear-gradient";
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import LogoImg from '../assets/images/Logo.svg';
-import NotificationIcon from '../assets/images/Notification.svg';
-import MessangerIcon from '../assets/images/Chat.svg';
+import LogoImg from "../assets/images/Logo.svg";
+import NotificationIcon from "../assets/images/Notification.svg";
+import MessangerIcon from "../assets/images/Chat.svg";
 
 import {
   changeNewMessagesStatus,
@@ -19,7 +17,6 @@ import {
 } from "../redux/authSlice/authSlice";
 import { useEffect, useState } from "react";
 import { socket } from "../hooks/useSocket";
-import SearchBar from "./SearchBar";
 
 const Header = () => {
   const { user } = useSelector(selectAuth);
@@ -53,36 +50,36 @@ const Header = () => {
     <>
       <View style={styles.background}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('home')}>
-            <LogoImg width={60} height={60}/>
+          <TouchableOpacity onPress={() => navigation.navigate("home")}>
+            <LogoImg width={60} height={60} />
           </TouchableOpacity>
           <View style={styles.actions}>
             <TouchableOpacity onPress={onOpenNotifcations}>
-              <NotificationIcon width={30} height={30}/>
+              <NotificationIcon width={30} height={30} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onOpenChats}>
-              <MessangerIcon width={30} height={30}/>
+              <MessangerIcon width={30} height={30} />
               {user?.hasMessage && <View style={styles.newMessage} />}
             </TouchableOpacity>
-            <View style={styles.actions}>
+            {/* <View style={styles.actions}>
               <TouchableOpacity onPress={onOpenNotifcations}>
-                <Image source={notificationIcon} style={styles.icon} />
+                <NotificationIcon width={24} height={24} />
               </TouchableOpacity>
               <TouchableOpacity onPress={onOpenChats}>
                 <Image source={messangerIcon} style={styles.icon} />
                 {user?.hasMessage && <View style={styles.newMessage} />}
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </View>
-        </View>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#041648',
+    backgroundColor: "#041648",
     paddingTop: 46,
     paddingBottom: 16,
   },
@@ -110,10 +107,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: -3,
-  },
-  icon: {
-    height: 24,
-    width: 24,
   },
 });
 

@@ -1,32 +1,35 @@
-import { useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import PrimaryText from './PrimaryText';
+import PrimaryText from "./PrimaryText";
 
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../redux/authSlice/authSlice';
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice/authSlice";
 
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import axios from '../axios/axios';
+import axios from "../axios/axios";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import CheckBox from './CheckBox';
-import PrimaryButton from './PrimaryButton';
+import CheckBox from "./CheckBox";
+import PrimaryButton from "./PrimaryButton";
 
-import redUniformIcon from '../assets/images/uniform-red.png';
-import blueUniformIcon from '../assets/images/uniform-blue.png';
-import blackUniformIcon from '../assets/images/uniform-black.png';
-import whiteUniformIcon from '../assets/images/uniform-white.png';
-import closeIcon from '../assets/images/close.png';
+import redUniformIcon from "../assets/images/uniform-red.png";
+import blueUniformIcon from "../assets/images/uniform-blue.png";
+import blackUniformIcon from "../assets/images/uniform-black.png";
+import whiteUniformIcon from "../assets/images/uniform-white.png";
+import { useNavigation } from "@react-navigation/native";
 
-import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
+import PrimaryModal from "./PrimaryModal";
 
-import { useTranslation } from 'react-i18next';
-import PrimaryModal from './PrimaryModal';
-
-const icons = [redUniformIcon, blueUniformIcon, blackUniformIcon, whiteUniformIcon];
+const icons = [
+  redUniformIcon,
+  blueUniformIcon,
+  blackUniformIcon,
+  whiteUniformIcon,
+];
 
 const BookNow = ({ game }) => {
   const { t } = useTranslation();
@@ -37,20 +40,24 @@ const BookNow = ({ game }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [guests, setGuests] = useState([]);
 
-  const userAlreadyBooked = game.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
+  const userAlreadyBooked =
+    game.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
 
   const onSubmitBooking = () => {
     axios
-      .post('/game/register/' + game.id, {
+      .post("/game/register/" + game.id, {
         uniforms: selectedUniforms,
         guests: guests.length ? JSON.stringify(guests) : null,
         userName: user.name,
       })
       .then(({ data }) => {
         if (data.success) {
-          navigation.navigate('success', { game, confirmationNumber: data.userGame.id });
+          navigation.navigate("success", {
+            game,
+            confirmationNumber: data.userGame.id,
+          });
         } else {
-          console.error('Something went wrong');
+          console.error("Something went wrong");
         }
       });
   };
@@ -77,7 +84,7 @@ const BookNow = ({ game }) => {
   return (
     <View style={styles.container}>
       <PrimaryText style={styles.title} weight={600}>
-        {t('game.book_now')}
+        {t("game.book_now")}
       </PrimaryText>
       {/* <View style={styles.block}> */}
       {/* <PrimaryText style={styles.subtitle} weight={700}>
@@ -128,20 +135,24 @@ const BookNow = ({ game }) => {
       {/* </View> */}
       <View style={styles.block}>
         <PrimaryText style={styles.subtitle} weight={700}>
-          {t('game.booking_details')}
+          {t("game.booking_details")}
         </PrimaryText>
         <View style={styles.infoView}>
-          <PrimaryText style={styles.infoText}>{game.stadion.title}</PrimaryText>
-          <PrimaryText style={styles.infoText}>{format(game.startTime, 'dd.MM.yyyy')}</PrimaryText>
-          <PrimaryText style={styles.infoText}>{`${format(game.startTime, 'HH:mm')} - ${format(
-            game.endTime,
-            'HH:mm',
-          )}`}</PrimaryText>
+          <PrimaryText style={styles.infoText}>
+            {game.stadion.title}
+          </PrimaryText>
+          <PrimaryText style={styles.infoText}>
+            {format(game.startTime, "dd.MM.yyyy")}
+          </PrimaryText>
+          <PrimaryText style={styles.infoText}>{`${format(
+            game.startTime,
+            "HH:mm"
+          )} - ${format(game.endTime, "HH:mm")}`}</PrimaryText>
         </View>
       </View>
       <View style={styles.block}>
         <PrimaryText style={styles.subtitle} weight={700}>
-          {t('game.uniform_color')}
+          {t("game.uniform_color")}
         </PrimaryText>
         <View style={styles.uniforms}>
           {game?.uniforms?.map((uniformChoseUsersCount, index) => {
@@ -172,33 +183,40 @@ const BookNow = ({ game }) => {
       </View>
       <View style={styles.block}>
         <PrimaryText style={styles.subtitle} weight={700}>
-          {t('game.stadium_info')}
+          {t("game.stadium_info")}
         </PrimaryText>
         <View style={styles.infoView}>
-          <PrimaryText style={styles.infoText}>{game.stadion.title}</PrimaryText>
-          <PrimaryText style={styles.infoText}>{game.stadion.address}</PrimaryText>
+          <PrimaryText style={styles.infoText}>
+            {game.stadion.title}
+          </PrimaryText>
+          <PrimaryText style={styles.infoText}>
+            {game.stadion.address}
+          </PrimaryText>
         </View>
       </View>
       <View style={styles.block}>
         <PrimaryText style={styles.subtitle} weight={700}>
-          {t('game.cancellation_policy')}
+          {t("game.cancellation_policy")}
         </PrimaryText>
-        <PrimaryText style={styles.infoText}>{t('game.cancellation_policy_info')}</PrimaryText>
+        <PrimaryText style={styles.infoText}>
+          {t("game.cancellation_policy_info")}
+        </PrimaryText>
       </View>
       <PrimaryButton
         title={
           userAlreadyBooked
-            ? t('game.already_booked')
+            ? t("game.already_booked")
             : game.maxPlayersCount === game.playersCount
-            ? t('game.maximum_players')
-            : t('game.book_now')
+            ? t("game.maximum_players")
+            : t("game.book_now")
         }
         onPress={() => onSubmitBooking()}
         disabled={
           userAlreadyBooked ||
           game.playersCount === game.maxPlayersCount ||
           (!guests.length && !isIndividual) ||
-          (!isIndividual && game.maxPlayersCount < game.playersCount + guests.length + 1)
+          (!isIndividual &&
+            game.maxPlayersCount < game.playersCount + guests.length + 1)
         }
       />
       {isOpenModal && (
@@ -206,7 +224,7 @@ const BookNow = ({ game }) => {
           state={isOpenModal}
           dismiss={() => setIsOpenModal(false)}
           onSubmit={onAddGuest}
-          title={t('game.add_new_guest')}
+          title={t("game.add_new_guest")}
         />
       )}
     </View>
@@ -228,14 +246,14 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.lightWhite,
     fontSize: 22,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitle: {
-    color: '#EFFFC8',
+    color: "#EFFFC8",
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: "700",
     marginBottom: 10,
   },
   checkboxes: {
@@ -252,14 +270,14 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 20,
-    color: '#fff',
+    color: "#fff",
   },
   uniforms: {
     rowGap: 10,
   },
   uniformView: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     columnGap: 12,
   },
   uniformIcon: {
@@ -269,23 +287,23 @@ const styles = StyleSheet.create({
   bar: {
     flex: 1,
     height: 10,
-    backgroundColor: '#405742',
+    backgroundColor: "#405742",
     borderRadius: 10,
-    position: 'relative',
+    position: "relative",
   },
   barActive: {
-    position: 'absolute',
+    position: "absolute",
     height: 10,
     backgroundColor: COLORS.yellow,
     borderRadius: 10,
   },
   guest: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   guestsViewTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
   },
   guestsViewBtn: {

@@ -53,6 +53,7 @@ import GroupGames from "../pages/GroupPage/GroupGames";
 import GroupPlayers from "../pages/GroupPage/GroupPlayers";
 import ShopPage from "../pages/ShopPage";
 import PersonalDetails from "../pages/PersonalDetails";
+import MyGamesPage from "../pages/MyGames/MyGamesPage";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,9 +67,10 @@ const HomeStack = () => {
       }}
     >
       <Tab.Screen name="home" component={HomePage} />
+      <Tab.Screen name="my-games" component={MyGamesPage} />
       <Tab.Screen name="game" component={SingleGame} />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
-      <Tab.Screen name="personal_details" component={PersonalDetails}/>
+      <Tab.Screen name="personal_details" component={PersonalDetails} />
       <Tab.Screen name="profile" component={ProfilePage} />
       <Tab.Screen name="shop" component={ShopPage} />
       <Tab.Screen name="notifications" component={NotificationsPage} />
@@ -124,7 +126,7 @@ const Navigation = () => {
       const { data } = await axios
         .get(BASE_URL + "ip")
         .catch((err) => console.log(err));
-      dispatch(fetchAuthMe({ expoPushToken, ip: "192.168.11.51" }));
+      dispatch(fetchAuthMe({ expoPushToken, ip: data }));
     })();
   }, []);
 
@@ -138,8 +140,8 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          // initialRouteName={status === "success" ? "select" : "landing"}
-          initialRouteName={"groups"}
+          initialRouteName={status === "success" ? "select" : "landing"}
+          // initialRouteName={"groups"}
           screenOptions={{
             headerShown: false,
             animation: "slide_from_right",

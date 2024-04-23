@@ -1,9 +1,8 @@
 import {
-  Image,
   RefreshControl,
   ScrollView,
-  StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import PrimaryText from "../../components/PrimaryText";
@@ -14,7 +13,7 @@ import { COLORS } from "../../helpers/colors";
 import { useEffect, useState } from "react";
 import axios from "../../axios/axios";
 
-import icon from "../../assets/images/call.png";
+import GroupSvg from "../../assets/images/group.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import Invitation from "../../components/Invitation";
 
@@ -34,7 +33,7 @@ const GroupsPage = ({ navigation }) => {
     <>
       <Invitation />
       <ScrollView
-        style={{ backgroundColor: COLORS.black, flex: 1 }}
+        style={{ backgroundColor: COLORS.background_blue, flex: 1 }}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onRefresh} />
         }
@@ -44,29 +43,47 @@ const GroupsPage = ({ navigation }) => {
           {groups &&
             groups.map((group) => {
               return (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("group", { id: group.id })}
+                <LinearGradient
                   key={group.id}
+                  colors={["rgba(255, 255, 255, 0)", "rgba(12, 249, 221, 0.8)"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  locations={[0.1564, 0.9972]}
                   style={{
                     borderRadius: 10,
-                    flexDirection: "row",
                     alignItems: "center",
-                    columnGap: 12,
-                    paddingVertical: 14,
-                    paddingHorizontal: 20,
-                    backgroundColor: COLORS.green,
-                    borderWidth: 1,
-                    borderColor: "#0CF9DD",
+                    justifyContent: "center",
+                    height: 70,
                   }}
                 >
-                  <Image source={icon} style={{ width: 40, height: 40 }} />
-                  <PrimaryText
-                    weight={600}
-                    style={{ color: COLORS.lightWhite, fontSize: 16 }}
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      navigation.navigate("group", { id: group.id })
+                    }
                   >
-                    {group.title}
-                  </PrimaryText>
-                </TouchableOpacity>
+                    <View
+                      style={{
+                        borderRadius: 10,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: "99.6%",
+                        height: 68,
+                        columnGap: 12,
+                        paddingVertical: 14,
+                        paddingHorizontal: 20,
+                        backgroundColor: "#032176",
+                      }}
+                    >
+                      <GroupSvg width={40} height={40} />
+                      <PrimaryText
+                        weight={600}
+                        style={{ color: COLORS.lightWhite, fontSize: 16 }}
+                      >
+                        {group.title}
+                      </PrimaryText>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </LinearGradient>
               );
             })}
         </View>
@@ -92,7 +109,7 @@ const GroupsPage = ({ navigation }) => {
             borderRadius: 40,
           }}
         >
-          <Image source={icon} />
+          {/* <Image source={icon} /> */}
           <PrimaryText style={{ color: COLORS.darkgrey }}>
             {t("group.create")}
           </PrimaryText>

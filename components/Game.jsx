@@ -114,21 +114,34 @@ import { format } from "date-fns";
 import stadiumIcon from "../assets/images/stadium.png";
 
 import { useTranslation } from "react-i18next";
+import { Fragment } from "react";
 
 const Game = ({ game, disabled }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   const data = [
-    { key: "Date", value: new Date(game.startTime).toLocaleDateString('hy-AM', options= {month: '2-digit', day: '2-digit', year: 'numeric'}) },
-    { key: "Hour", value: `${format(game.startTime, 'HH:mm')}-${format(game.endTime, 'HH:mm')}` },
-    { key: "Players", value: `${game.playersCount}/${game.maxPlayersCount}`},
-    { key: "Price", value:`${game.price} AMD` },
+    {
+      key: "Date",
+      value: new Date(game.startTime).toLocaleDateString(
+        "hy-AM",
+        (options = { month: "2-digit", day: "2-digit", year: "numeric" })
+      ),
+    },
+    {
+      key: "Hour",
+      value: `${format(game.startTime, "HH:mm")}-${format(
+        game.endTime,
+        "HH:mm"
+      )}`,
+    },
+    { key: "Players", value: `${game.playersCount}/${game.maxPlayersCount}` },
+    { key: "Price", value: `${game.price} AMD` },
   ];
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("game", { id: game.id })}
+      onPress={() => !disabled && navigation.navigate("game", { id: game.id })}
     >
       <View style={styles.container}>
         <View style={styles.overlay}>
@@ -147,13 +160,26 @@ const Game = ({ game, disabled }) => {
           </View>
           <View style={styles.redLine}></View>
           {data.map((el, i) => (
-            <>
-            <View key={i} style={styles.dataBlock}>
-            <PrimaryText weight={i === data.length - 1 ? 700: 400} style={styles.key}>{el.key}</PrimaryText>
-              <PrimaryText weight={i === data.length - 1 ? 700: 400} style={[styles.data, i === data.length - 1? styles.price : '']}>{el.value}</PrimaryText>
-            </View>
-            {i != data.length - 1 && <View style={styles.blackLine}></View>}
-            </>
+            <Fragment key={i}>
+              <View style={styles.dataBlock}>
+                <PrimaryText
+                  weight={i === data.length - 1 ? 700 : 400}
+                  style={styles.key}
+                >
+                  {el.key}
+                </PrimaryText>
+                <PrimaryText
+                  weight={i === data.length - 1 ? 700 : 400}
+                  style={[
+                    styles.data,
+                    i === data.length - 1 ? styles.price : "",
+                  ]}
+                >
+                  {el.value}
+                </PrimaryText>
+              </View>
+              {i != data.length - 1 && <View style={styles.blackLine}></View>}
+            </Fragment>
           ))}
         </View>
       </View>
@@ -192,29 +218,29 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(239, 9, 161, 1)",
     marginTop: 10,
   },
-  blackLine:{
+  blackLine: {
     width: "100%",
     height: 0.5,
     backgroundColor: "rgba(26, 130, 237, 0.6)",
     marginTop: 10,
   },
-  dataBlock:{
-    marginTop:5,
-    marginBottom:5,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  dataBlock: {
+    marginTop: 5,
+    marginBottom: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-  key:{
-    color: 'rgba(178, 190, 215, 1)',
-    fontSize: 18
+  key: {
+    color: "rgba(178, 190, 215, 1)",
+    fontSize: 18,
   },
-  data:{
-    color: 'rgba(248, 238, 255, 1)',
-    fontSize: 18
+  data: {
+    color: "rgba(248, 238, 255, 1)",
+    fontSize: 18,
   },
 
-  price:{
-    color: 'rgba(12, 249, 221, 1)'
+  price: {
+    color: "rgba(12, 249, 221, 1)",
   },
 
   infoView: {

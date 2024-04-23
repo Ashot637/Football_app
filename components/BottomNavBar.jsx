@@ -1,36 +1,42 @@
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { COLORS } from '../helpers/colors';
-import { getFocusedRouteNameFromRoute, useNavigation, useRoute } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { selectNotification } from '../redux/notificationSlice/notificationSlice';
+import { COLORS } from "../helpers/colors";
+import {
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectNotification } from "../redux/notificationSlice/notificationSlice";
 
-import Home from '../assets/images/Home-1.svg';
-import HomeActive from '../assets/images/Home.svg'
-import Shop from '../assets/images/shop.svg';
-import ShopActive from '../assets/images/shop-1.svg'
-import Profile from '../assets/images/Profile-1.svg';
-import ProfileActive from '../assets/images/ProfileCyan.svg'
+import Home from "../assets/images/Home-1.svg";
+import HomeActive from "../assets/images/Home.svg";
+import Shop from "../assets/images/shop.svg";
+import ShopActive from "../assets/images/shop-1.svg";
+import Profile from "../assets/images/Profile-1.svg";
+import ProfileActive from "../assets/images/ProfileCyan.svg";
 
 import { useTranslation } from "react-i18next";
+import PrimaryText from "./PrimaryText";
 
 const items = [
-  {    title: 'home',
-    routes: ['home', 'game', 'create'],
-    icon: <Home/>,
-    iconActive: <HomeActive/>
+  {
+    title: "home",
+    routes: ["home", "game", "create"],
+    icon: <Home />,
+    iconActive: <HomeActive />,
   },
   {
-    title: 'store',
-    routes: ['shop'],
-    icon: <Shop/>,
-    iconActive: <ShopActive/>
+    title: "store",
+    routes: ["shop"],
+    icon: <Shop />,
+    iconActive: <ShopActive />,
   },
   {
-    title: 'profile',
-    routes: ['profile'],
-    icon: <Profile/>,
-    iconActive: <ProfileActive/>
+    title: "profile",
+    routes: ["profile"],
+    icon: <Profile />,
+    iconActive: <ProfileActive />,
   },
 ];
 
@@ -67,7 +73,7 @@ const BottomNavBar = () => {
                     {t(`navigation.${item.title}`)}
                   </PrimaryText>
                   <View style={styles.dot}></View>
-                <View>{item.iconActive}</View>
+                  <View>{item.iconActive}</View>
                 </>
               ) : (
                 <View>{item.icon}</View>
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
   nav: {
     width: "100%",
     backgroundColor: COLORS.darkgrey,
-    width: '100%',
+    width: "100%",
     backgroundColor: COLORS.navyBlue,
     paddingHorizontal: 30,
     paddingVertical: 24,
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
   item: {
     alignItems: "center",
     rowGap: 5,
-    width:100
+    width: 100,
   },
   title: {
     color: COLORS.yellow,

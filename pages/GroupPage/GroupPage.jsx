@@ -212,10 +212,10 @@ const GroupPage = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
   },
   block: {
-    backgroundColor: COLORS.green,
+    backgroundColor: "#032176",
     paddingVertical: 33,
     borderRadius: 24,
     marginBottom: 30,
