@@ -98,47 +98,64 @@
 // });
 
 // export default Game;
-import { ImageBackground, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import PrimaryText from './PrimaryText';
+import {
+  ImageBackground,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import PrimaryText from "./PrimaryText";
 
-import { BASE_URL } from '../axios/axios';
-import { COLORS } from '../helpers/colors';
+import { BASE_URL } from "../axios/axios";
+import { COLORS } from "../helpers/colors";
 
-import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns';
+import { useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
 
-import playersIcon from '../assets/images/players.png';
+import playersIcon from "../assets/images/players.png";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-const Game = ({ game }) => {
+const Game = ({ game, disabled }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('game', { id: game.id })}>
+    <TouchableOpacity
+      onPress={() =>
+        !disabled &&
+        navigation.navigate("main", { screen: "game", params: { id: game.id } })
+      }
+    >
       <View style={styles.container}>
-        <ImageBackground source={{ uri: BASE_URL + game.stadion.img }} style={styles.image}>
+        <ImageBackground
+          source={{ uri: BASE_URL + game.stadion.img }}
+          style={styles.image}
+        >
           <View style={styles.overlay}>
             <View style={styles.info}>
               {!!game.price && (
                 <View style={styles.infoView}>
                   <PrimaryText style={styles.infoText} weight={600}>
-                    {game.price} {t('common.amd')}
+                    {game.price} {t("common.amd")}
                   </PrimaryText>
                 </View>
               )}
               <View style={[styles.infoView, styles.infoViewDark]}>
                 <PrimaryText style={styles.infoText}>{`${format(
                   game.startTime,
-                  'HH:mm',
-                )} - ${format(game.endTime, 'HH:mm')}`}</PrimaryText>
+                  "HH:mm"
+                )} - ${format(game.endTime, "HH:mm")}`}</PrimaryText>
               </View>
 
-              <View style={[styles.infoView, styles.infoViewDark, styles.players]}>
+              <View
+                style={[styles.infoView, styles.infoViewDark, styles.players]}
+              >
                 <Image source={playersIcon} style={styles.playersIcon} />
                 <PrimaryText style={styles.infoText} weight={600}>
-                  {game.playersCount} {game.maxPlayersCount < 50 ? '/ ' + game.maxPlayersCount : ''}
+                  {game.playersCount}{" "}
+                  {game.maxPlayersCount < 50 ? "/ " + game.maxPlayersCount : ""}
                 </PrimaryText>
               </View>
             </View>
@@ -156,40 +173,40 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 16 / 9,
     borderRadius: 6,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   container: {
     borderRadius: 15,
   },
   overlay: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     paddingHorizontal: 18,
     paddingVertical: 16,
   },
   info: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     height: 25,
   },
   infoView: {
     backgroundColor: COLORS.green,
     paddingHorizontal: 8,
     paddingVertical: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 20,
   },
   infoViewDark: {
-    backgroundColor: '#008000',
+    backgroundColor: "#008000",
   },
   infoText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   players: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 10,
   },
   playersIcon: {
@@ -197,9 +214,9 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });
 

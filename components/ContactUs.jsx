@@ -11,6 +11,8 @@ import arrowIcon from "../assets/images/arrow.png";
 import { useTranslation } from "react-i18next";
 import PrimaryText from "./PrimaryText";
 
+import { Linking } from "react-native";
+
 const ContactUs = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,13 +42,19 @@ const ContactUs = () => {
       </TouchableOpacity>
       {isOpen && (
         <View style={styles.options}>
-          <TouchableOpacity style={styles.option}>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => Linking.openURL(`tel:${3749999999}`)}
+          >
             <Image source={callIcon} style={{ width: 32, height: 32 }} />
             <PrimaryText weight={700} style={{ color: COLORS.lightWhite }}>
               {t("contact-us.call")}
             </PrimaryText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.option}>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => Linking.openURL("mailto:support@example.com")}
+          >
             <Image source={messageIcon} style={{ width: 32, height: 32 }} />
             <PrimaryText weight={700} style={{ color: COLORS.lightWhite }}>
               {t("contact-us.email")}

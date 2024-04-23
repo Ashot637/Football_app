@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from "react";
 import {
   ImageBackground,
   ScrollView,
@@ -7,25 +7,25 @@ import {
   Image,
   RefreshControl,
   ActivityIndicator,
-} from 'react-native';
-import PrimaryText from '../components/PrimaryText';
+} from "react-native";
+import PrimaryText from "../components/PrimaryText";
 
-import axios, { BASE_URL } from '../axios/axios';
+import axios, { BASE_URL } from "../axios/axios";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import locationIcon from '../assets/images/location.png';
-import GameNavigation from '../components/GameNavigation';
+import locationIcon from "../assets/images/location.png";
+import GameNavigation from "../components/GameNavigation";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import BookNow from '../components/BookNow';
-import Uniforms from '../components/Uniforms';
-import Facilities from '../components/Facilities';
-import GamePlayersList from '../components/GamePlayersList';
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../redux/authSlice/authSlice';
-import ActionButton from 'react-native-action-button';
+import BookNow from "../components/BookNow";
+import Uniforms from "../components/Uniforms";
+import Facilities from "../components/Facilities";
+import GamePlayersList from "../components/GamePlayersList";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice/authSlice";
+import ActionButton from "react-native-action-button";
 
 const SingleGame = ({ route, navigation }) => {
   const { t } = useTranslation();
@@ -41,7 +41,7 @@ const SingleGame = ({ route, navigation }) => {
 
   const onRefresh = useCallback(() => {
     setIsLoading(true);
-    axios.get('/game/getOne/' + id).then(({ data }) => {
+    axios.get("/game/getOne/" + id).then(({ data }) => {
       setGame(data);
       setIsLoading(false);
     });
@@ -60,14 +60,15 @@ const SingleGame = ({ route, navigation }) => {
     }
   };
 
-  const userAlreadyBooked = game?.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
+  const userAlreadyBooked =
+    game?.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
 
   return (
     <>
       {isLoading && (
         <View style={styles.loader}>
           <ActivityIndicator
-            size={'large'}
+            size={"large"}
             style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
             color={COLORS.yellow}
           />
@@ -77,14 +78,20 @@ const SingleGame = ({ route, navigation }) => {
         <>
           <ScrollView
             style={styles.container}
-            refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}>
-            <ImageBackground source={{ uri: BASE_URL + game.stadion.img }} style={styles.image}>
+            refreshControl={
+              <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+            }
+          >
+            <ImageBackground
+              source={{ uri: BASE_URL + game.stadion.img }}
+              style={styles.image}
+            >
               <View style={styles.info}>
                 {!!game.price && (
                   <View style={styles.priceView}>
                     <PrimaryText style={styles.priceText} weight={600}>
-                      {game.price} {t('common.amd')}
-                      {t('game.per_person')}
+                      {game.price} {t("common.amd")}
+                      {t("game.per_person")}
                     </PrimaryText>
                   </View>
                 )}
@@ -93,35 +100,39 @@ const SingleGame = ({ route, navigation }) => {
                 </PrimaryText>
                 <View style={styles.addressView}>
                   <Image source={locationIcon} width={24} height={24} />
-                  <PrimaryText style={styles.addressText}>{game.stadion.address}</PrimaryText>
+                  <PrimaryText style={styles.addressText}>
+                    {game.stadion.address}
+                  </PrimaryText>
                 </View>
               </View>
             </ImageBackground>
             <GameNavigation
               activeIndex={activeIndex}
               setActiveIndex={setActiveIndex}
-              hideIndex={game?.isPublic ? userAlreadyBooked && 0 : 0}>
+              hideIndex={game?.isPublic ? userAlreadyBooked && 0 : 0}
+            >
               {displayView(activeIndex)}
             </GameNavigation>
           </ScrollView>
           {(userAlreadyBooked || !game.isPublic) && (
             <ActionButton
-              buttonColor={'#A5CBC3'}
+              buttonColor={"#A5CBC3"}
               style={{ borderRadius: 30 }}
               renderIcon={() => {
                 return (
                   <Image
-                    source={require('../assets/images/chat-icon.png')}
+                    source={require("../assets/images/chat-icon.png")}
                     style={{ width: 36, height: 36 }}
                   />
                 );
               }}
               onPress={() =>
-                navigation.navigate('chat', {
+                navigation.navigate("chat", {
                   groupId: game.groupId,
                   groupTitle: game.stadion.title_en,
                 })
-              }></ActionButton>
+              }
+            ></ActionButton>
           )}
         </>
       )}
@@ -137,12 +148,12 @@ const styles = StyleSheet.create({
     aspectRatio: 16 / 10,
     paddingTop: 16,
     paddingBottom: 14,
-    position: 'relative',
+    position: "relative",
   },
   info: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '100%',
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: "100%",
   },
   priceView: {
     backgroundColor: COLORS.green,
@@ -151,32 +162,32 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   priceText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   title: {
     fontSize: 20,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
     paddingVertical: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   addressView: {
-    alignItems: 'center',
+    alignItems: "center",
     rowGap: 7,
   },
   addressText: {
     maxWidth: 200,
-    textAlign: 'center',
+    textAlign: "center",
     color: COLORS.lightWhite,
     fontSize: 16,
   },
   loader: {
     backgroundColor: COLORS.black,
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

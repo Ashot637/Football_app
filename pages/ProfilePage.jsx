@@ -179,7 +179,7 @@ const ProfilePage = ({ navigation }) => {
               );
             })}
             <LanguageSelect />
-            {/* <ContactUs /> */}
+            <ContactUs />
             <DeleteAccount />
             {/* <ChangeRole /> */}
 

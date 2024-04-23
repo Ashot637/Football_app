@@ -1,76 +1,89 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setFromSearchIcon } from '../redux/searchSlice/searchSlice';
-import { setFrom } from '../redux/notificationSlice/notificationSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { setFromSearchIcon } from "../redux/searchSlice/searchSlice";
+import { setFrom } from "../redux/notificationSlice/notificationSlice";
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import logoImg from '../assets/images/logo.png';
-import searchIcon from '../assets/images/search.png';
-import notificationIcon from '../assets/images/notification.png';
-import messangerIcon from '../assets/images/messanger.png';
+import logoImg from "../assets/images/logo.png";
+import searchIcon from "../assets/images/search.png";
+import notificationIcon from "../assets/images/notification.png";
+import messangerIcon from "../assets/images/messanger.png";
 
-import { changeNewMessagesStatus, selectAuth } from '../redux/authSlice/authSlice';
-import { useEffect } from 'react';
-import { socket } from '../hooks/useSocket';
+import {
+  changeNewMessagesStatus,
+  selectAuth,
+} from "../redux/authSlice/authSlice";
+import { useEffect, useState } from "react";
+import { socket } from "../hooks/useSocket";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const { user } = useSelector(selectAuth);
+  const [isOpenSeach, setIsOpenSearch] = useState(false);
+  const [value, setValue] = useState("false");
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
 
   useEffect(() => {
-    socket.on('user-new-message', () => {
+    socket.on("user-new-message", () => {
       dispatch(changeNewMessagesStatus(true));
     });
   }, []);
 
-  const onOpenSearch = () => {
-    dispatch(setFromSearchIcon(true));
-    navigation.navigate('stadiums');
-  };
-
   const onOpenNotifcations = () => {
-    if (!['chats', 'chat', 'notifications'].includes(route.name)) {
+    if (!["chats", "chat", "notifications"].includes(route.name)) {
       dispatch(setFrom(route.name));
     }
-    navigation.navigate('notifications');
+    navigation.navigate("notifications");
   };
 
   const onOpenChats = () => {
-    if (!['chats', 'chat', 'notifications'].includes(route.name)) {
+    if (!["chats", "chat", "notifications"].includes(route.name)) {
       dispatch(setFrom(route.name));
     }
-    navigation.navigate('chats');
+    navigation.navigate("chats");
   };
 
   return (
     <>
-      <LinearGradient colors={[COLORS.darkgrey, 'rgba(32, 44, 34, 0.92)']} style={styles.gradient}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('home')}>
-            <Image source={logoImg} style={styles.logo} />
-          </TouchableOpacity>
-          <View style={styles.actions}>
-            <TouchableOpacity onPress={onOpenSearch}>
-              <Image source={searchIcon} style={styles.icon} />
+      {isOpenSeach ? (
+        <SearchBar setOpen={setIsOpenSearch} />
+      ) : (
+        <LinearGradient
+          colors={[COLORS.darkgrey, "rgba(32, 44, 34, 0.92)"]}
+          style={styles.gradient}
+        >
+          <View style={styles.header}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("main"), { screen: "home" };
+                navigation.navigate("home");
+              }}
+            >
+              <Image source={logoImg} style={styles.logo} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={onOpenNotifcations}>
-              <Image source={notificationIcon} style={styles.icon} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onOpenChats}>
-              <Image source={messangerIcon} style={styles.icon} />
-              {user?.hasMessage && <View style={styles.newMessage} />}
-            </TouchableOpacity>
+            <View style={styles.actions}>
+              {/* <TouchableOpacity onPress={() => setIsOpenSearch(true)}>
+                <Image source={searchIcon} style={styles.icon} />
+              </TouchableOpacity> */}
+              <TouchableOpacity onPress={onOpenNotifcations}>
+                <Image source={notificationIcon} style={styles.icon} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onOpenChats}>
+                <Image source={messangerIcon} style={styles.icon} />
+                {user?.hasMessage && <View style={styles.newMessage} />}
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </LinearGradient>
+        </LinearGradient>
+      )}
     </>
   );
 };
@@ -81,9 +94,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingLeft: 20,
     paddingRight: 28,
   },
@@ -93,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   actions: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 24,
   },
   newMessage: {
@@ -101,7 +114,7 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     backgroundColor: COLORS.yellow,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     top: -3,
   },

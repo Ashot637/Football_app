@@ -46,6 +46,11 @@ import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPassword";
 import VerifyPhone from "../pages/ForgotPassword/VerifyPhone";
 import NewPasswordPage from "../pages/ForgotPassword/NewPassword";
 import { BASE_URL } from "../axios/axios";
+import CreateGroupPage from "../pages/CreateGroupPage/CreateGroupPage";
+import GroupPage from "../pages/GroupPage/GroupPage";
+import GroupsPage from "../pages/GroupPage/GroupsPage";
+import GroupGames from "../pages/GroupPage/GroupGames";
+import GroupPlayers from "../pages/GroupPage/GroupPlayers";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,13 +64,7 @@ const HomeStack = () => {
       }}
     >
       <Tab.Screen name="home" component={HomePage} />
-      <Tab.Screen name="create" component={CreateGamePage} />
       <Tab.Screen name="game" component={SingleGame} />
-      <Tab.Screen
-        name="stadiums"
-        component={Stadions}
-        options={{ header: () => <SearchBar /> }}
-      />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
       <Tab.Screen name="profile" component={ProfilePage} />
       <Tab.Screen name="notifications" component={NotificationsPage} />
@@ -121,7 +120,7 @@ const Navigation = () => {
       const { data } = await axios
         .get(BASE_URL + "ip")
         .catch((err) => console.log(err));
-      dispatch(fetchAuthMe({ expoPushToken, ip: data }));
+      dispatch(fetchAuthMe({ expoPushToken, ip: "192.168.11.51" }));
     })();
   }, []);
 
@@ -135,7 +134,8 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={status === "success" ? "select" : "landing"}
+          // initialRouteName={status === "success" ? "select" : "landing"}
+          initialRouteName={"groups"}
           screenOptions={{
             headerShown: false,
             animation: "slide_from_right",
@@ -157,6 +157,54 @@ const Navigation = () => {
           <Stack.Screen
             name="chat"
             component={Chat}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="groups"
+            component={GroupsPage}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="group"
+            component={GroupPage}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="create-game"
+            component={CreateGamePage}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="create-group"
+            component={CreateGroupPage}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="group-matches"
+            component={GroupGames}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="group-players"
+            component={GroupPlayers}
             options={{
               headerShown: true,
               header: () => <Header />,

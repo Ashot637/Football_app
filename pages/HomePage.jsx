@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import PrimaryText from '../components/PrimaryText';
-import ActionButton from 'react-native-action-button';
+import PrimaryText from "../components/PrimaryText";
+import ActionButton from "react-native-action-button";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import FavoriteGames from './FavoriteGames/FavoriteGames';
-import { useNavigation } from '@react-navigation/native';
-import AveilableGames from './AveilableGames';
-import { useTranslation } from 'react-i18next';
-import Invitation from '../components/Invitation';
+import FavoriteGames from "./FavoriteGames/FavoriteGames";
+import { useNavigation } from "@react-navigation/native";
+import AveilableGames from "./AveilableGames";
+import { useTranslation } from "react-i18next";
+import Invitation from "../components/Invitation";
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -20,10 +20,12 @@ const HomePage = () => {
   return (
     <>
       <Invitation />
-      {/* <ChooseRole /> */}
-      <View style={[styles.dates]}>
+      {/* <View style={[styles.dates]}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => setSelectedStadiumsType(0)}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => setSelectedStadiumsType(0)}
+          >
             <View
               style={[
                 styles.dateView,
@@ -33,15 +35,23 @@ const HomePage = () => {
                 },
                 { marginLeft: 16 },
                 { marginRight: 8 },
-              ]}>
+              ]}
+            >
               <PrimaryText
-                style={[styles.dateText, !selectedStadiumsType && { color: COLORS.yellow }]}
-                weight={600}>
-                {t('game.favorite_games')}
+                style={[
+                  styles.dateText,
+                  !selectedStadiumsType && { color: COLORS.yellow },
+                ]}
+                weight={600}
+              >
+                {t("game.favorite_games")}
               </PrimaryText>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => setSelectedStadiumsType(1)}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => setSelectedStadiumsType(1)}
+          >
             <View
               style={[
                 styles.dateView,
@@ -49,11 +59,16 @@ const HomePage = () => {
                   borderColor: COLORS.yellow,
                   backgroundColor: COLORS.darkgrey,
                 },
-              ]}>
+              ]}
+            >
               <PrimaryText
-                style={[styles.dateText, selectedStadiumsType && { color: COLORS.yellow }]}
-                weight={600}>
-                {t('game.available_games')}
+                style={[
+                  styles.dateText,
+                  selectedStadiumsType && { color: COLORS.yellow },
+                ]}
+                weight={600}
+              >
+                {t("game.available_games")}
               </PrimaryText>
             </View>
           </TouchableOpacity>
@@ -64,7 +79,8 @@ const HomePage = () => {
       <ActionButton
         buttonColor={COLORS.green}
         style={{ borderRadius: 30 }}
-        onPress={() => navigation.navigate('create')}></ActionButton>
+        onPress={() => navigation.navigate("create-game")}
+      ></ActionButton>*/}
     </>
   );
 };
@@ -75,14 +91,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
     marginBottom: 16,
     paddingLeft: 16,
   },
   dates: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     columnGap: 8,
     backgroundColor: COLORS.black,
     paddingBottom: 32,
@@ -92,14 +108,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderColor: '#fff',
+    borderColor: "#fff",
     borderRadius: 40,
   },
   dateText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   dateViewActive: {
     borderColor: COLORS.lightblue,
@@ -115,8 +131,8 @@ const styles = StyleSheet.create({
   loader: {
     flex: 1,
     height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
