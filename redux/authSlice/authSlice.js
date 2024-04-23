@@ -22,6 +22,9 @@ export const fetchLogin = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
       const { data } = await axios.post("/auth/login", { ...params });
+      if (data.role !== "USER") {
+        return thunkAPI.rejectWithValue("INVALID_PHONE_OR_PASWORD");
+      }
       if (data.accessToken) {
         if (thunkAPI.getState().auth.rememberMe) {
           await AsyncStorage.setItem("accessToken", data.accessToken);
@@ -50,6 +53,9 @@ export const fetchAuthMe = createAsyncThunk(
     const { data } = await axios.get("/auth", {
       params: { expoPushToken, ip },
     });
+    if (data.role !== "USER") {
+      return thunkAPI.rejectWithValue();
+    }
     if (data.accessToken) {
       await AsyncStorage.setItem("accessToken", data.accessToken);
     }

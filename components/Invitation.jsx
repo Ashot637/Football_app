@@ -1,20 +1,27 @@
-import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
-import PrimaryText from './PrimaryText';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteFirstInvitation, selectAuth, setUser } from '../redux/authSlice/authSlice';
-import { COLORS } from '../helpers/colors';
-import { useTranslation } from 'react-i18next';
+import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import PrimaryText from "./PrimaryText";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteFirstInvitation,
+  selectAuth,
+  setUser,
+} from "../redux/authSlice/authSlice";
+import { COLORS } from "../helpers/colors";
+import { useTranslation } from "react-i18next";
 
-import axios from '../axios/axios';
-import { format } from 'date-fns';
+import axios from "../axios/axios";
+import { format } from "date-fns";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const Invitation = () => {
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuth);
 
   const onConfirm = () => {
-    axios.post('/game/acceptInvitation', {
+    axios.post("/game/acceptInvitation", {
       id: user.invitations[0].id,
       groupId: user.invitations[0].groupId,
     });
@@ -22,9 +29,24 @@ const Invitation = () => {
   };
 
   const onCancel = () => {
-    axios.post('/game/declineInvitation', { id: user.invitations[0].id });
+    axios.post("/game/declineInvitation", { id: user.invitations[0].id });
     dispatch(deleteFirstInvitation());
   };
+
+  useEffect(() => {
+    if (user?.invitations[0]?.hasGame) {
+      navigation.navigate("game", { id: user.invitations[0].gameId });
+      axios.post("/game/declineInvitation", { id: user.invitations[0].id });
+      dispatch(deleteFirstInvitation());
+    }
+    if (user?.invitations[0]?.isGroup) {
+      navigation.navigate("group", {
+        id: user.invitations[0].groupId,
+        invitation: user.invitations[0],
+      });
+      dispatch(deleteFirstInvitation());
+    }
+  }, [user?.invitations[0]]);
 
   return (
     !!user?.invitations?.length &&
@@ -32,12 +54,17 @@ const Invitation = () => {
       <Modal visible transparent>
         <View style={styles.overlay}>
           <View style={styles.content}>
-            <PrimaryText style={styles.title}>{t('invitation.title')}</PrimaryText>
+            <PrimaryText style={styles.title}>
+              {t("invitation.title")}
+            </PrimaryText>
             <PrimaryText style={styles.info} weight={600}>
-              {t('invitation.info', {
+              {t("invitation.info", {
                 name: user.name,
                 from: user.invitations[0].from,
-                date: format(user.invitations[0]?.startTime, 'dd.MM.yyyy HH:hh'),
+                date: format(
+                  user.invitations[0]?.startTime,
+                  "dd.MM.yyyy HH:hh"
+                ),
                 stadion: user.invitations[0]?.stadion,
               })}
             </PrimaryText>
@@ -45,14 +72,17 @@ const Invitation = () => {
               <TouchableOpacity onPress={onCancel} style={{ flex: 1 }}>
                 <View style={styles.cancelBtn}>
                   <PrimaryText style={styles.btnText} weight={600}>
-                    {t('common.cancel')}
+                    {t("common.cancel")}
                   </PrimaryText>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onConfirm} style={{ flex: 1 }}>
                 <View style={styles.submitbtn}>
-                  <PrimaryText style={[styles.btnText, { color: COLORS.black }]} weight={600}>
-                    {t('common.accept')}
+                  <PrimaryText
+                    style={[styles.btnText, { color: COLORS.black }]}
+                    weight={600}
+                  >
+                    {t("common.accept")}
                   </PrimaryText>
                 </View>
               </TouchableOpacity>
@@ -66,14 +96,14 @@ const Invitation = () => {
 
 const styles = StyleSheet.create({
   overlay: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   content: {
-    width: '100%',
+    width: "100%",
     backgroundColor: COLORS.black,
     borderRadius: 25,
     borderWidth: 0.5,
@@ -83,19 +113,19 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 24,
-    color: '#fff',
+    color: "#fff",
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: "center",
   },
   info: {
     fontSize: 16,
     color: COLORS.lightWhite,
-    textAlign: 'center',
+    textAlign: "center",
     marginHorizontal: 5,
     marginBottom: 34,
   },
   modalBtns: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 25,
     marginHorizontal: 20,
   },
@@ -113,7 +143,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
     color: COLORS.lightWhite,
   },
 });

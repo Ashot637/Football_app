@@ -1,25 +1,32 @@
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from "react-native";
 
-const PrimaryText = ({ children, style, weight = 400 }) => {
-  return <Text style={[style, styles[`text${weight}`]]}>{children}</Text>;
+const PrimaryText = ({ children, style, weight = 400, numberOfLines }) => {
+  return (
+    <Text
+      style={[style, styles[`text${weight}`]]}
+      numberOfLines={numberOfLines}
+    >
+      {children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
   text400: {
-    fontWeight: '400',
-    fontFamily: 'main-reg',
+    fontWeight: "400",
+    fontFamily: "main-reg",
   },
   text500: {
-    fontWeight: '500',
-    fontFamily: 'main-med',
+    fontWeight: "500",
+    fontFamily: "main-med",
   },
   text600: {
-    fontWeight: '600',
-    fontFamily: 'main-semi',
+    fontWeight: "600",
+    fontFamily: "main-semi",
   },
   text700: {
-    fontWeight: '700',
-    fontFamily: 'main-bold',
+    fontWeight: "700",
+    fontFamily: "main-bold",
   },
 });
 

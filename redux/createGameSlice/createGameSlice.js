@@ -1,37 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   stadion: null,
+  group: null,
   date: null,
   time: null,
-  // players: [],
   uniforms: [],
   price: null,
   duration: null,
   range: 1,
+  // players: [],
 };
 
 const createGameSlice = createSlice({
-  name: 'createGame',
+  name: "createGame",
   initialState,
   reducers: {
     setStadion: (state, action) => {
       state.stadion = action.payload;
-      // state.time = null;
+    },
+    setGroup: (state, action) => {
+      state.group = action.payload;
     },
     setDate: (state, action) => {
       state.date = action.payload;
-      // state.time = null;
     },
     setTime: (state, action) => {
       state.time = action.payload;
     },
     setUniforms: (state, action) => {
-      if (state.uniforms.length === 2 && !state.uniforms.includes(action.payload)) {
+      if (
+        state.uniforms.length === 2 &&
+        !state.uniforms.includes(action.payload)
+      ) {
         state.uniforms = [state.uniforms[1], action.payload];
       } else {
         state.uniforms.includes(action.payload)
-          ? (state.uniforms = state.uniforms.filter((i) => i !== action.payload))
+          ? (state.uniforms = state.uniforms.filter(
+              (i) => i !== action.payload
+            ))
           : (state.uniforms = [...state.uniforms, action.payload]);
       }
     },
@@ -55,6 +62,7 @@ const createGameSlice = createSlice({
       state.date = null;
       state.price = null;
       state.uniforms = [];
+      state.time = null;
       // state.players = [];
     },
   },
@@ -66,6 +74,7 @@ export default createGameSlice.reducer;
 
 export const {
   setStadion,
+  setGroup,
   setDate,
   setTime,
   setUniforms,

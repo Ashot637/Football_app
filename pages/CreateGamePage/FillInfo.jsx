@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Fragment, useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Input from "../../components/Input";
 
 import ChooseStadion from "./ChooseStadion";
@@ -7,7 +7,7 @@ import ChooseDate from "./ChooseDate";
 import PrimaryButton from "../../components/PrimaryButton";
 import ChooseTime from "./ChooseTime";
 
-import axios from "../../axios/axios";
+import axios, { BASE_URL } from "../../axios/axios";
 
 import priceIcon from "../../assets/images/money-bag-white.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,16 +25,17 @@ import ConfirmationModal from "../../components/ConfirmationModal";
 import PrimaryText from "../../components/PrimaryText";
 import { useTranslation } from "react-i18next";
 import { COLORS } from "../../helpers/colors";
+import ChooseGroup from "./ChooseGroup";
 
-const accordions = [ChooseStadion, ChooseDate, ChooseTime];
+const accordions = [ChooseGroup, ChooseStadion, ChooseDate, ChooseTime];
 
-const FillInfo = ({ stadions }) => {
+const FillInfo = ({ stadions, groups }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [active, setActive] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { stadion, date, time, duration, uniforms, price, range } =
+  const { group, stadion, date, time, duration, uniforms, price, range } =
     useSelector(selectCreateGame);
   const { user } = useSelector(selectAuth);
 
@@ -52,6 +53,7 @@ const FillInfo = ({ stadions }) => {
     );
     axios
       .post("/game/organizerCreate", {
+        groupId: group.id,
         price,
         startTime,
         endTime,
@@ -113,12 +115,50 @@ const FillInfo = ({ stadions }) => {
       )}
       <View style={{ rowGap: 24, marginBottom: 32 }}>
         {accordions.map((Accordion, index) => {
+          // if (!index) {
+          //   return (
+          //     <Fragment key={index}>
+          //       <Accordion
+          //         accordionId={index}
+          //         isActive={active === index}
+          //         stadions={stadions}
+          //         toggleAccordion={toggleAccordion}
+          //       />
+
+          //       {!!stadion?.facilities.length && (
+          //         <PrimaryText style={styles.title} weight={600}>
+          //           {t("game.facilities")}
+          //         </PrimaryText>
+          //       )}
+          //       {!!stadion?.facilities.length && (
+          //         <View style={styles.items}>
+          //           {stadion?.facilities?.map((item) => {
+          //             return (
+          //               <View style={styles.item} key={item.id}>
+          //                 <View style={styles.icon}>
+          //                   <Image
+          //                     source={{ uri: BASE_URL + item.img }}
+          //                     width={32}
+          //                     height={32}
+          //                   />
+          //                 </View>
+          //                 <PrimaryText style={styles.facilitie}>
+          //                   {item.title}
+          //                 </PrimaryText>
+          //               </View>
+          //             );
+          //           })}
+          //         </View>
+          //       )}
+          //     </Fragment>
+          //   );
+          // }
           return (
             <Accordion
               key={index}
               accordionId={index}
               isActive={active === index}
-              stadions={stadions}
+              {...(index ? { stadions } : { groups })}
               toggleAccordion={toggleAccordion}
             />
           );
@@ -192,6 +232,32 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: COLORS.lightWhite,
+  },
+  title: {
+    color: COLORS.lightWhite,
+    fontSize: 22,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  items: {
+    rowGap: 16,
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 10,
+  },
+  icon: {
+    width: 48,
+    aspectRatio: 1,
+    borderRadius: 24,
+    backgroundColor: COLORS.darkgrey,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  facilitie: {
+    color: "#fff",
+    fontSize: 20,
   },
 });
 

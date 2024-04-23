@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tesvan.ballhola",
-      "buildNumber": "1.0.7",
+      "buildNumber": "1.0.8",
       "googleServicesFile": "./GoogleService-Info.plist",
       "runtimeVersion": {
         "policy": "appVersion"
@@ -33,7 +33,7 @@
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 7,
+      "versionCode": 8,
       "runtimeVersion": "1.0.0"
     },
     "web": {
