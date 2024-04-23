@@ -20,7 +20,7 @@ const BackgroundImageLayout = ({ children, padding = 15, route }) => {
     if (user && isFocused) {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'select' }],
+        routes: [{ name: 'main' }],
       });
     }
   }, [user, isFocused, navigation]);
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     bottom: 0,
-    backgroundColor: COLORS.black,
+    backgroundColor: '#041440',
     borderTopLeftRadius: 42,
     borderTopRightRadius: 42,
     paddingTop: 40,

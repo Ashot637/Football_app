@@ -140,7 +140,7 @@ const AveilableGames = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
   },
   title: {
     fontSize: 22,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     columnGap: 8,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingBottom: 32,
   },
   dateView: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   dateViewActive: {
     borderColor: COLORS.lightblue,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
   },
   dateTextActive: {
     color: COLORS.lightblue,

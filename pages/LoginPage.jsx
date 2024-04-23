@@ -20,13 +20,14 @@ import Input from '../components/Input';
 
 import { COLORS } from '../helpers/colors';
 
-import backIcon from '../assets/images/back.png';
-import passwordIcon from '../assets/images/password.png';
-import phoneIcon from '../assets/images/call.png';
-import doneIcon from '../assets/images/done.png';
+import BackIcon from '../assets/images/Arrow - Right.svg';
+import PasswordIcon from '../assets/images/lock.svg';
+import PhoneIcon from '../assets/images/Call.svg';
+import DoneIcon from '../assets/images/Vector.svg';
 
 import { useTranslation } from 'react-i18next';
 import i18n from '../languages/i18n';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const LoginPage = ({ navigation }) => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ const LoginPage = ({ navigation }) => {
       <BackgroundImageLayout>
         <View style={styles.top}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image source={backIcon} width={24} height={24} />
+          <BackIcon/>
           </TouchableOpacity>
           <PrimaryText
             style={[styles.title, i18n.language === 'en' && styles.titleBig]}
@@ -66,14 +67,14 @@ const LoginPage = ({ navigation }) => {
             type="phone-pad"
             value={phone}
             setValue={setPhone}
-            img={phoneIcon}
+            img={<PhoneIcon/>}
             placeholder={t('user.phone')}
           />
           <Input
             secureTextEntry
             value={password}
             setValue={setPassword}
-            img={passwordIcon}
+            img={<PasswordIcon/>}
             placeholder={t('user.password')}
           />
         </View>
@@ -81,13 +82,13 @@ const LoginPage = ({ navigation }) => {
           <TouchableOpacity onPress={onRemember}>
             <View style={styles.rememberView}>
               <View style={[styles.checkbox, rememberMe && styles.checkboxActive]}>
-                {rememberMe && <Image source={doneIcon} style={styles.done} />}
+                {rememberMe && <DoneIcon width={10} height={10}/>}
               </View>
               <PrimaryText style={styles.remember}>{t('form.remember_me')}</PrimaryText>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('forgot-password')}>
-            <PrimaryText weight={600} style={{ color: COLORS.yellow }}>
+            <PrimaryText weight={600} style={{ color: '#0968CA' }}>
               {t('forgot_password.title')}
             </PrimaryText>
           </TouchableOpacity>
@@ -154,9 +155,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.grey,
     borderRadius: 4,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   checkboxActive: {
-    borderColor: COLORS.lightYellow,
+    borderColor: '#0968CA',
   },
   done: {
     width: 15,

@@ -115,7 +115,7 @@ const ChooseTime = ({ accordionId, toggleAccordion, isActive }) => {
 
 const styles = StyleSheet.create({
   duration: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     paddingVertical: 20,
     paddingHorizontal: 16,
     borderRadius: 16,
@@ -131,14 +131,14 @@ const styles = StyleSheet.create({
     height: 230,
     paddingHorizontal: 9,
     paddingRight: 5,
-    backgroundColor: '#2F4131',
+    backgroundColor: COLORS.blue,
     borderRadius: 16,
   },
   singleDuration: {
     paddingHorizontal: 9,
     paddingRight: 5,
     backgroundColor: 'red',
-    backgroundColor: '#2F4131',
+    backgroundColor: COLORS.blue,
     borderRadius: 16,
     marginTop: 10,
   },

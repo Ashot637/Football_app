@@ -19,13 +19,12 @@ const PrimaryButton = ({ title, onPress, disabled }) => {
 const styles = StyleSheet.create({
   button: {
     width: '100%',
-    backgroundColor: COLORS.green,
+    backgroundColor: COLORS.cyan,
     borderRadius: 16,
     paddingTop: 20,
     paddingBottom: 20,
   },
   title: {
-    color: '#fff',
     fontSize: 18,
     textAlign: 'center',
   },

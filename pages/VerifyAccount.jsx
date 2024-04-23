@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   cell: {
     width: 64,
     height: 80,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     overflow: "hidden",
     color: "#fff",
     borderRadius: 16,

@@ -99,7 +99,7 @@
   },
   "user": {
     "name": "Անուն",
-    "phone": "Հեռախոսի համար",
+    "phone": "Հեռախոսահամար",
     "email": "Էլ. հասցե",
     "password": "Գաղտնաբառ",
     "address": "Հասցե",
@@ -109,9 +109,9 @@
     "yes_delete": "Այո, ջնջել"
   },
   "activity": {
-    "your_activity": "Ձեր ակտիվաությունը",
+    "your_activity": "Իմ Պատմությունը",
     "upcoming_bookings": "Առաջիկա ամրագրումներ",
-    "individual_activity": "Ձեր անհատական ​​ակտիվությունը"
+    "individual_activity": "Իմ Պատմությունը"
   },
   "notifications": {
     "title": "Ծանուցումներ"

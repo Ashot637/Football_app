@@ -1,6 +1,5 @@
 import { useReducer, useState } from "react";
 import {
-  Image,
   ScrollView,
   View,
   StyleSheet,
@@ -8,10 +7,6 @@ import {
 } from "react-native";
 
 import PrimaryText from "../components/PrimaryText";
-import ProfileItem from "../components/ProfileItem";
-import PrimaryButton from "../components/PrimaryButton";
-import LanguageSelect from "../components/LanguageSelect";
-import ContactUs from "../components/ContactUs";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectAuth, setUser } from "../redux/authSlice/authSlice";
@@ -20,36 +15,30 @@ import * as ImagePicker from "expo-image-picker";
 
 import axios, { BASE_URL } from "../axios/axios";
 
-import { COLORS } from "../helpers/colors";
-
-import avatarImg from "../assets/images/avatar.png";
-import editIcon from "../assets/images/edit.png";
-import closeIcon from "../assets/images/close.png";
-import profileYellowIcon from "../assets/images/profile_yellow.png";
-import messageIcon from "../assets/images/message.png";
-import callYellowIcon from "../assets/images/call_yellow.png";
-import locationYellowIcon from "../assets/images/location_yellow.png";
-import logoutIcon from "../assets/images/logout.png";
+import ProfileIcon from "../assets/images/Profile.svg";
+import MessageIcon from "../assets/images/Message.svg";
+import CallIcon from "../assets/images/Call.svg";
+import LocationIcon from "../assets/images/Location.svg";
 
 import { useTranslation } from "react-i18next";
-import DeleteAccount from "../components/DeleteAccount";
-import ChangeRole from "../components/ChangeRole";
+import PersonalDetails from "./PersonalDetails";
+import MyActivityPage from "./MyActivityPage";
 
 const items = [
   {
-    icon: profileYellowIcon,
+    icon: <ProfileIcon />,
     title: "name",
   },
   {
-    icon: messageIcon,
+    icon: <MessageIcon />,
     title: "email",
   },
   {
-    icon: callYellowIcon,
+    icon: <CallIcon />,
     title: "phone",
   },
   {
-    icon: locationYellowIcon,
+    icon: <LocationIcon />,
     title: "address",
   },
 ];
@@ -68,6 +57,7 @@ const ProfilePage = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuth);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [tab, setTab] = useState(0);
   const [profileData, dispatchData] = useReducer(reducer, {
     name: user?.name,
     email: user?.email,
@@ -126,6 +116,7 @@ const ProfilePage = ({ navigation }) => {
     setSelectedImg(null);
   };
 
+
   const onLogout = async () => {
     await axios.post("/auth/logout");
     dispatch(logout());
@@ -137,155 +128,72 @@ const ProfilePage = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      {user && (
-        <>
-          <View style={styles.avatarView}>
-            <Image
-              source={
-                selectedImg?.uri
-                  ? { uri: selectedImg.uri }
-                  : user.img
-                  ? { uri: BASE_URL + user.img }
-                  : avatarImg
-              }
-              style={styles.avatar}
-              width={100}
-              height={100}
-            />
-            <TouchableOpacity onPress={pickImage}>
-              <View style={styles.editView}>
-                <Image source={editIcon} style={styles.icon} />
-              </View>
-            </TouchableOpacity>
-            {selectedImg && (
-              <View style={styles.removeView}>
-                <TouchableOpacity onPress={onRemoveSelectedImg}>
-                  <Image source={closeIcon} style={styles.icon} />
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
-          <View style={styles.items}>
-            {items.map(({ title, icon }, index) => {
-              return (
-                <ProfileItem
-                  key={index}
-                  title={`user.${title}`}
-                  icon={icon}
-                  value={profileData[title]}
-                  initialValue={user[title]}
-                  setValue={(value) => handleValueChange(title, value)}
-                />
-              );
-            })}
-            <LanguageSelect />
-            <ContactUs />
-            <DeleteAccount />
-            {/* <ChangeRole /> */}
-
-            <TouchableOpacity
-              style={{ alignSelf: "flex-start" }}
-              onPress={() => onLogout()}
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      >
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => setTab(0)}>
+          <View
+            style={[
+              styles.option,
+              tab == 1 ? styles.option : styles.optionActive,
+            ]}
+          >
+            <PrimaryText
+              style={[
+                { fontSize: 18 },
+                tab == 1 ? { color: "#F0F4FF" } : { color: "#1A82ED" },
+              ]}
             >
-              <View style={styles.item}>
-                <View style={styles.icon}>
-                  <Image source={logoutIcon} style={styles.icon24} />
-                </View>
-                <PrimaryText style={styles.logout} weight={600}>
-                  {t("user.logout")}
-                </PrimaryText>
-              </View>
-            </TouchableOpacity>
-            <PrimaryButton
-              title={t("common.save")}
-              onPress={() => onUpdateData()}
-              disabled={
-                (user["name"] === profileData["name"] &&
-                  user["phone"] === profileData["phone"] &&
-                  user["email"] === profileData["email"] &&
-                  user["address"] === profileData["address"] &&
-                  !selectedImg) ||
-                !profileData["name"].trim() ||
-                profileData["phone"].trim().length < 9
-              }
-            />
+              Անձնական
+            </PrimaryText>
           </View>
-          <View style={{ height: 50 }} />
-        </>
-      )}
+        </TouchableOpacity>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => setTab(1)}>
+          <View
+            style={[
+              styles.option,
+              tab == 0 ? styles.option : styles.optionActive,
+            ]}
+          >
+            <PrimaryText
+              style={[
+                { fontSize: 18 },
+                tab == 0 ? { color: "#F0F4FF" } : { color: "#1A82ED" },
+              ]}
+            >
+              Պատմություն
+            </PrimaryText>
+          </View>
+        </TouchableOpacity>
+      </View>
+      {tab == 0 ? <PersonalDetails onLogout={onLogout} /> : <MyActivityPage/>}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: "#041440",
     paddingVertical: 24,
   },
-  avatarView: {
-    width: 100,
-    height: 100,
-    alignSelf: "center",
-    position: "relative",
-    marginBottom: 32,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  editView: {
-    width: 32,
-    aspectRatio: 1,
-    borderRadius: 16,
+  option: {
+    borderWidth: 1,
+    color: "#F0F4FF",
+    height: 45,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: COLORS.darkgrey,
-    position: "absolute",
-    bottom: 0,
-    right: 0,
+    margin: 15,
+    borderRadius: 30,
+    borderColor: "#F0F4FF",
   },
-  removeView: {
-    width: 32,
-    aspectRatio: 1,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: COLORS.darkgrey,
-    position: "absolute",
-    right: 0,
-  },
-  items: {
-    paddingHorizontal: 16,
-    rowGap: 20,
-  },
-  item: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 20,
-    paddingLeft: 18,
-  },
-  icon: {
-    width: 32,
-    aspectRatio: 1,
-    borderRadius: 16,
-    backgroundColor: COLORS.darkgrey,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  icon24: {
-    width: 24,
-    height: 24,
-  },
-  logout: {
-    color: "#fff",
-    fontWeight: "600",
-    fontSize: 16,
-  },
-  addCard: {
-    color: COLORS.yellow,
-    fontSize: 20,
-    textAlign: "center",
+
+  optionActive: {
+    borderColor: "#1A82ED",
+    backgroundColor: "#B2BED733",
   },
 });
 

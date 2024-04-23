@@ -5,7 +5,6 @@
 // import { COLORS } from '../helpers/colors';
 
 // import { useNavigation } from '@react-navigation/native';
-// import { format } from 'date-fns';
 
 // import playersIcon from '../assets/images/players.png';
 
@@ -107,13 +106,12 @@ import {
 } from "react-native";
 import PrimaryText from "./PrimaryText";
 
-import { BASE_URL } from "../axios/axios";
 import { COLORS } from "../helpers/colors";
 
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
 
-import playersIcon from "../assets/images/players.png";
+import stadiumIcon from "../assets/images/stadium.png";
 
 import { useTranslation } from "react-i18next";
 
@@ -121,49 +119,43 @@ const Game = ({ game, disabled }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
+  const data = [
+    { key: "Date", value: new Date(game.startTime).toLocaleDateString('hy-AM', options= {month: '2-digit', day: '2-digit', year: 'numeric'}) },
+    { key: "Hour", value: `${format(game.startTime, 'HH:mm')}-${format(game.endTime, 'HH:mm')}` },
+    { key: "Players", value: `${game.playersCount}/${game.maxPlayersCount}`},
+    { key: "Price", value:`${game.price} AMD` },
+  ];
+
   return (
     <TouchableOpacity
-      onPress={() =>
-        !disabled &&
-        navigation.navigate("main", { screen: "game", params: { id: game.id } })
-      }
+      onPress={() => navigation.navigate("game", { id: game.id })}
     >
       <View style={styles.container}>
-        <ImageBackground
-          source={{ uri: BASE_URL + game.stadion.img }}
-          style={styles.image}
-        >
-          <View style={styles.overlay}>
-            <View style={styles.info}>
-              {!!game.price && (
-                <View style={styles.infoView}>
-                  <PrimaryText style={styles.infoText} weight={600}>
-                    {game.price} {t("common.amd")}
-                  </PrimaryText>
-                </View>
-              )}
-              <View style={[styles.infoView, styles.infoViewDark]}>
-                <PrimaryText style={styles.infoText}>{`${format(
-                  game.startTime,
-                  "HH:mm"
-                )} - ${format(game.endTime, "HH:mm")}`}</PrimaryText>
-              </View>
-
-              <View
-                style={[styles.infoView, styles.infoViewDark, styles.players]}
-              >
-                <Image source={playersIcon} style={styles.playersIcon} />
-                <PrimaryText style={styles.infoText} weight={600}>
-                  {game.playersCount}{" "}
-                  {game.maxPlayersCount < 50 ? "/ " + game.maxPlayersCount : ""}
-                </PrimaryText>
-              </View>
-            </View>
+        <View style={styles.overlay}>
+          <View style={styles.info}>
+            <Image
+              source={stadiumIcon}
+              style={{
+                width: 25,
+                height: 25,
+                transform: [{ rotate: "90deg" }],
+              }}
+            />
             <PrimaryText style={styles.title} weight={600}>
               {game.stadion.title}
             </PrimaryText>
           </View>
-        </ImageBackground>
+          <View style={styles.redLine}></View>
+          {data.map((el, i) => (
+            <>
+            <View key={i} style={styles.dataBlock}>
+            <PrimaryText weight={i === data.length - 1 ? 700: 400} style={styles.key}>{el.key}</PrimaryText>
+              <PrimaryText weight={i === data.length - 1 ? 700: 400} style={[styles.data, i === data.length - 1? styles.price : '']}>{el.value}</PrimaryText>
+            </View>
+            {i != data.length - 1 && <View style={styles.blackLine}></View>}
+            </>
+          ))}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -177,6 +169,9 @@ const styles = StyleSheet.create({
   },
   container: {
     borderRadius: 15,
+    width: "100%",
+    backgroundColor: "rgba(3, 33, 118, 1)",
+    borderRadius: 6,
   },
   overlay: {
     flex: 1,
@@ -188,7 +183,40 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     height: 25,
+    gap: 20,
+    alignItems: "center",
   },
+  redLine: {
+    width: "100%",
+    height: 0.5,
+    backgroundColor: "rgba(239, 9, 161, 1)",
+    marginTop: 10,
+  },
+  blackLine:{
+    width: "100%",
+    height: 0.5,
+    backgroundColor: "rgba(26, 130, 237, 0.6)",
+    marginTop: 10,
+  },
+  dataBlock:{
+    marginTop:5,
+    marginBottom:5,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  key:{
+    color: 'rgba(178, 190, 215, 1)',
+    fontSize: 18
+  },
+  data:{
+    color: 'rgba(248, 238, 255, 1)',
+    fontSize: 18
+  },
+
+  price:{
+    color: 'rgba(12, 249, 221, 1)'
+  },
+
   infoView: {
     backgroundColor: COLORS.green,
     paddingHorizontal: 8,
@@ -217,6 +245,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+    fontSize: 18,
+    fontWeight: "600",
+    flexWrap: "wrap",
   },
 });
 

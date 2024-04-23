@@ -9,7 +9,7 @@ import ChooseTime from "./ChooseTime";
 
 import axios, { BASE_URL } from "../../axios/axios";
 
-import priceIcon from "../../assets/images/money-bag-white.png";
+import PriceIcon from "../../assets/images/money bag.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   reset,
@@ -166,7 +166,7 @@ const FillInfo = ({ stadions, groups }) => {
         <Input
           value={price}
           setValue={(p) => dispatch(setPrice(p))}
-          img={priceIcon}
+          img={<PriceIcon/>}
           type="phone-pad"
           placeholder={
             t("common.total_price") +

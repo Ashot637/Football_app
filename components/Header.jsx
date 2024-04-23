@@ -7,13 +7,11 @@ import { setFrom } from "../redux/notificationSlice/notificationSlice";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { COLORS } from '../helpers/colors';
 
-import { COLORS } from "../helpers/colors";
-
-import logoImg from "../assets/images/logo.png";
-import searchIcon from "../assets/images/search.png";
-import notificationIcon from "../assets/images/notification.png";
-import messangerIcon from "../assets/images/messanger.png";
+import LogoImg from '../assets/images/Logo.svg';
+import NotificationIcon from '../assets/images/Notification.svg';
+import MessangerIcon from '../assets/images/Chat.svg';
 
 import {
   changeNewMessagesStatus,
@@ -53,26 +51,20 @@ const Header = () => {
 
   return (
     <>
-      {isOpenSeach ? (
-        <SearchBar setOpen={setIsOpenSearch} />
-      ) : (
-        <LinearGradient
-          colors={[COLORS.darkgrey, "rgba(32, 44, 34, 0.92)"]}
-          style={styles.gradient}
-        >
-          <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("main"), { screen: "home" };
-                navigation.navigate("home");
-              }}
-            >
-              <Image source={logoImg} style={styles.logo} />
+      <View style={styles.background}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <LogoImg width={60} height={60}/>
+          </TouchableOpacity>
+          <View style={styles.actions}>
+            <TouchableOpacity onPress={onOpenNotifcations}>
+              <NotificationIcon width={30} height={30}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onOpenChats}>
+              <MessangerIcon width={30} height={30}/>
+              {user?.hasMessage && <View style={styles.newMessage} />}
             </TouchableOpacity>
             <View style={styles.actions}>
-              {/* <TouchableOpacity onPress={() => setIsOpenSearch(true)}>
-                <Image source={searchIcon} style={styles.icon} />
-              </TouchableOpacity> */}
               <TouchableOpacity onPress={onOpenNotifcations}>
                 <Image source={notificationIcon} style={styles.icon} />
               </TouchableOpacity>
@@ -82,14 +74,15 @@ const Header = () => {
               </TouchableOpacity>
             </View>
           </View>
-        </LinearGradient>
-      )}
+        </View>
+        </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  gradient: {
+  background: {
+    backgroundColor: '#041648',
     paddingTop: 46,
     paddingBottom: 16,
   },

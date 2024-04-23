@@ -1,21 +1,16 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import PrimaryText from "../../components/PrimaryText";
 import { COLORS } from "../../helpers/colors";
-import GameNavigation from "../../components/GameNavigation";
 import { useEffect, useState } from "react";
 import axios from "../../axios/axios";
-import Facilities from "../../components/Facilities";
-import ChooseUniform from "./ChooseUniform";
-import FillInfo from "./FillInfo";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectCreateGame,
   setGroup,
   setStadion,
 } from "../../redux/createGameSlice/createGameSlice";
-// import ChoosePlayers from './ChoosePlayers';
-import Invitation from "../../components/Invitation";
 import { useTranslation } from "react-i18next";
+import FillInfo from './FillInfo';
 
 const CreateGamePage = ({ route }) => {
   const dispatch = useDispatch();
@@ -73,7 +68,7 @@ const CreateGamePage = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingTop: 24,
   },
   title: {

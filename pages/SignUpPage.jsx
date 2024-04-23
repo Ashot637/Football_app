@@ -21,9 +21,9 @@ import BackgroundImageLayout from "../components/BackgroundImageLayout";
 import PrimaryButton from "../components/PrimaryButton";
 import Input from "../components/Input";
 
-import backIcon from "../assets/images/back.png";
-import profileIcon from "../assets/images/profile.png";
-import phoneIcon from "../assets/images/call.png";
+import BackIcon from "../assets/images/Arrow - Right.svg";
+import ProfileIcon from "../assets/images/Profile_Grey.svg";
+import PhoneIcon from "../assets/images/Call.svg";
 import PrimaryText from "../components/PrimaryText";
 
 import { useTranslation } from "react-i18next";
@@ -58,7 +58,8 @@ const SignUpPage = ({ navigation }) => {
         <BackgroundImageLayout>
           <View style={styles.top}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image source={backIcon} width={24} height={24} />
+              {/* <Image source={backIcon} width={24} height={24} /> */}
+              <BackIcon/>
             </TouchableOpacity>
             <PrimaryText
               style={[styles.title, i18n.language === "en" && styles.titleBig]}
@@ -76,14 +77,14 @@ const SignUpPage = ({ navigation }) => {
                   setName(str);
                 }
               }}
-              img={profileIcon}
+              img={<ProfileIcon/>}
               placeholder={t("user.name")}
             />
             <Input
               type="phone-pad"
               value={phone}
               setValue={setPhone}
-              img={phoneIcon}
+              img={<PhoneIcon/>}
               placeholder={t("user.phone")}
               maxLength={13}
             />

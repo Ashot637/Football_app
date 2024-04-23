@@ -33,7 +33,7 @@ const Accordion = ({ title, children, isOpen, toggleIsOpen, icon, iconInverted =
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     paddingVertical: 20,
     paddingHorizontal: 16,
     borderRadius: 16,

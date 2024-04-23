@@ -13,7 +13,7 @@ import arrowIcon from '../assets/images/arrow.png';
 
 import { useTranslation } from 'react-i18next';
 
-const ProfileItem = ({ icon, title, initialValue, value, setValue }) => {
+const ProfileItem = ({ icon, title, initialValue, value, setValue, openIcon }) => {
   const { user } = useSelector(selectAuth);
   const [isOpen, setIsOpen] = useState(false);
   const isMounted = useRef(false);
@@ -30,7 +30,7 @@ const ProfileItem = ({ icon, title, initialValue, value, setValue }) => {
     <TouchableOpacity onPress={() => setIsOpen((prev) => !prev)}>
       <View style={[styles.item, isOpen && { marginBottom: 20 }]}>
         <View style={styles.icon}>
-          <Image source={icon} width={24} height={24} />
+          <View>{icon}</View>
         </View>
         <View style={styles.text}>
           <PrimaryText style={styles.title} weight={600}>
@@ -52,7 +52,7 @@ const ProfileItem = ({ icon, title, initialValue, value, setValue }) => {
       </View>
       {isOpen && (
         <Input
-          img={icon}
+          img={openIcon}
           value={value}
           setValue={setValue}
           type={title !== 'user.phone' ? 'default' : 'phone-pad'}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     width: 32,
     aspectRatio: 1,
     borderRadius: 16,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     color: COLORS.grey,
   },
   line: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     height: 1,
     position: 'absolute',
     width: '100%',

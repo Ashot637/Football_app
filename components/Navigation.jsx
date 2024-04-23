@@ -51,6 +51,8 @@ import GroupPage from "../pages/GroupPage/GroupPage";
 import GroupsPage from "../pages/GroupPage/GroupsPage";
 import GroupGames from "../pages/GroupPage/GroupGames";
 import GroupPlayers from "../pages/GroupPage/GroupPlayers";
+import ShopPage from "../pages/ShopPage";
+import PersonalDetails from "../pages/PersonalDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,7 +68,9 @@ const HomeStack = () => {
       <Tab.Screen name="home" component={HomePage} />
       <Tab.Screen name="game" component={SingleGame} />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
+      <Tab.Screen name="personal_details" component={PersonalDetails}/>
       <Tab.Screen name="profile" component={ProfilePage} />
+      <Tab.Screen name="shop" component={ShopPage} />
       <Tab.Screen name="notifications" component={NotificationsPage} />
       <Tab.Screen name="chats" component={Groups} />
     </Tab.Navigator>
@@ -152,7 +156,6 @@ const Navigation = () => {
             name="forgot-password-new-password"
             component={NewPasswordPage}
           />
-          <Stack.Screen name="select" component={SelectSport} />
           <Stack.Screen name="main" component={HomeStack} />
           <Stack.Screen
             name="chat"

@@ -13,7 +13,7 @@ const Input = ({
 }) => {
   return (
     <View style={styles.inputView}>
-      <Image source={img} style={styles.icon} />
+      <View>{img}</View>
       <TextInput
         value={value}
         onChangeText={setValue}
@@ -32,13 +32,13 @@ const Input = ({
 const styles = StyleSheet.create({
   inputView: {
     width: "100%",
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     borderRadius: 16,
     paddingLeft: 16,
     height: 64,
     display: "flex",
     alignItems: "center",
-    columnGap: 8,
+    columnGap: 15,
     flexDirection: "row",
   },
   input: {

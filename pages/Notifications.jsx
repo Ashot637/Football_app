@@ -42,7 +42,7 @@ const NotificationsPage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingHorizontal: 16,
     paddingVertical: 24,
   },

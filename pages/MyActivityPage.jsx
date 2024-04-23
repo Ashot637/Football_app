@@ -15,10 +15,7 @@ const items = [
     title: 'activity.your_activity',
     Element: YourActivity,
   },
-  // {
-  //   title: 'activity.upcoming_bookings',
-  //   Element: UpcomingBookings,
-  // },
+
 ];
 
 const MyActivityPage = () => {
@@ -61,7 +58,7 @@ const MyActivityPage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingVertical: 24,
   },
   items: {

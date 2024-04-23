@@ -1,50 +1,36 @@
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { COLORS } from '../helpers/colors';
+import { getFocusedRouteNameFromRoute, useNavigation, useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { selectNotification } from '../redux/notificationSlice/notificationSlice';
 
-import PrimaryText from "./PrimaryText";
-
-import { COLORS } from "../helpers/colors";
-import {
-  getFocusedRouteNameFromRoute,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import { selectNotification } from "../redux/notificationSlice/notificationSlice";
-
-import homeIcon from "../assets/images/home.png";
-import stadiumIcon from "../assets/images/stadium.png";
-import shopIcon from "../assets/images/shop.png";
-import chartIcon from "../assets/images/chart.png";
-import profileIcon from "../assets/images/profile_bottom.png";
+import Home from '../assets/images/Home-1.svg';
+import HomeActive from '../assets/images/Home.svg'
+import Shop from '../assets/images/shop.svg';
+import ShopActive from '../assets/images/shop-1.svg'
+import Profile from '../assets/images/Profile-1.svg';
+import ProfileActive from '../assets/images/ProfileCyan.svg'
 
 import { useTranslation } from "react-i18next";
 
 const items = [
-  {
-    title: "home",
-    routes: ["home", "game", "create-game"],
-    icon: homeIcon,
+  {    title: 'home',
+    routes: ['home', 'game', 'create'],
+    icon: <Home/>,
+    iconActive: <HomeActive/>
   },
   {
-    title: "stadiums",
-    routes: ["stadiums"],
-    icon: stadiumIcon,
+    title: 'store',
+    routes: ['shop'],
+    icon: <Shop/>,
+    iconActive: <ShopActive/>
   },
   {
-    title: "store",
-    route: ["store"],
-    icon: shopIcon,
-  },
-  {
-    title: "my_activity",
-    routes: ["my_activity"],
-    icon: chartIcon,
-  },
-  {
-    title: "profile",
-    routes: ["profile"],
-    icon: profileIcon,
+    title: 'profile',
+    routes: ['profile'],
+    icon: <Profile/>,
+    iconActive: <ProfileActive/>
   },
 ];
 
@@ -69,16 +55,6 @@ const BottomNavBar = () => {
   return (
     <View style={styles.nav}>
       {items.map((item) => {
-        if (item.title === "store") {
-          return (
-            <Image
-              source={item.icon}
-              key={item.title}
-              style={[styles.icon]}
-              resizeMode="contain"
-            />
-          );
-        }
         return (
           <TouchableOpacity
             key={item.title}
@@ -91,9 +67,10 @@ const BottomNavBar = () => {
                     {t(`navigation.${item.title}`)}
                   </PrimaryText>
                   <View style={styles.dot}></View>
+                <View>{item.iconActive}</View>
                 </>
               ) : (
-                <Image source={item.icon} style={styles.icon} />
+                <View>{item.icon}</View>
               )}
             </View>
           </TouchableOpacity>
@@ -107,6 +84,8 @@ const styles = StyleSheet.create({
   nav: {
     width: "100%",
     backgroundColor: COLORS.darkgrey,
+    width: '100%',
+    backgroundColor: COLORS.navyBlue,
     paddingHorizontal: 30,
     paddingVertical: 24,
     flexDirection: "row",
@@ -116,6 +95,7 @@ const styles = StyleSheet.create({
   item: {
     alignItems: "center",
     rowGap: 5,
+    width:100
   },
   title: {
     color: COLORS.yellow,

@@ -20,7 +20,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import Input from '../components/Input';
 
 import backIcon from '../assets/images/back.png';
-import passwordIcon from '../assets/images/password.png';
+import PasswordIcon from '../assets/images/lock.svg';
 import PrimaryText from '../components/PrimaryText';
 
 import axios from '../axios/axios';
@@ -65,14 +65,14 @@ const CreatePasswordPage = ({ navigation }) => {
           <Input
             value={password}
             setValue={setPassword}
-            img={passwordIcon}
+            img={<PasswordIcon/>}
             secureTextEntry
             placeholder={t('form.create_password')}
           />
           <Input
             value={repeatPassword}
             setValue={setRepeatPassword}
-            img={passwordIcon}
+            img={<PasswordIcon/>}
             secureTextEntry
             placeholder={t('form.repeat_password')}
           />

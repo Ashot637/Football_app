@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import { useState } from "react";
+import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import languageIcon from '../assets/images/lang.png';
-import arrowIcon from '../assets/images/arrow.png';
+import LanguageIcon from "../assets/images/lang.svg";
+import arrowIcon from "../assets/images/arrow.png";
 
-import i18n from '../languages/i18n';
-import { useTranslation } from 'react-i18next';
-import PrimaryText from './PrimaryText';
+import i18n from "../languages/i18n";
+import { useTranslation } from "react-i18next";
+import PrimaryText from "./PrimaryText";
 
-const langauges = ['en', 'ru', 'am'];
+const langauges = ["en", "ru", "am"];
 
 const LanguageSelect = () => {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ const LanguageSelect = () => {
 
   const onChangeLanguage = (lang) => {
     i18n.changeLanguage(lang);
-    AsyncStorage.setItem('language', lang);
+    AsyncStorage.setItem("language", lang);
     setIsOpen(false);
   };
 
@@ -29,11 +29,11 @@ const LanguageSelect = () => {
       <TouchableOpacity onPress={() => setIsOpen((prev) => !prev)}>
         <View style={styles.item}>
           <View style={styles.icon}>
-            <Image source={languageIcon} width={24} height={24} />
+            <LanguageIcon />
           </View>
           <View style={styles.text}>
             <PrimaryText style={styles.title} weight={600}>
-              {t('language.choose')}
+              {t("language.choose")}
             </PrimaryText>
             <PrimaryText style={styles.desc} weight={600}>
               {t(`language.${i18n.language}`)}
@@ -43,7 +43,7 @@ const LanguageSelect = () => {
           <View>
             <Image
               source={arrowIcon}
-              style={[isOpen && { transform: [{ rotate: '90deg' }] }]}
+              style={[isOpen && { transform: [{ rotate: "90deg" }] }]}
               width={18}
               height={18}
             />
@@ -55,7 +55,10 @@ const LanguageSelect = () => {
           {langauges.map((lang) => {
             if (lang === i18n.language) return null;
             return (
-              <TouchableOpacity key={lang} onPress={() => onChangeLanguage(lang)}>
+              <TouchableOpacity
+                key={lang}
+                onPress={() => onChangeLanguage(lang)}
+              >
                 <PrimaryText style={styles.option} weight={700}>
                   {t(`language.${lang}`)}
                 </PrimaryText>
@@ -70,9 +73,9 @@ const LanguageSelect = () => {
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     columnGap: 20,
     paddingLeft: 18,
   },
@@ -80,33 +83,33 @@ const styles = StyleSheet.create({
     width: 32,
     aspectRatio: 1,
     borderRadius: 16,
-    backgroundColor: COLORS.darkgrey,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: COLORS.blue,
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     flex: 1,
-    position: 'relative',
+    position: "relative",
   },
   title: {
-    color: '#fff',
-    fontWeight: '600',
+    color: "#fff",
+    fontWeight: "600",
     marginBottom: 5,
     fontSize: 16,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   desc: {
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.grey,
   },
   line: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     height: 1,
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
   },
   options: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     borderRadius: 16,
     paddingHorizontal: 20,
     paddingVertical: 23,
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   },
   option: {
     color: COLORS.grey,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 });
 

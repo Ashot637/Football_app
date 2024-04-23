@@ -115,7 +115,7 @@ const FavoriteGames = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
   },
   title: {
     fontSize: 22,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   dateViewActive: {
     borderColor: COLORS.lightblue,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
   },
   dateTextActive: {
     color: COLORS.lightblue,

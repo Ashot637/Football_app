@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   modal: {
-    backgroundColor: COLORS.black,
+    backgroundColor: '#031852',
     marginHorizontal: 16,
     position: 'relative',
     paddingVertical: 32,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: COLORS.yellow,
+    borderColor: '#1A82ED',
   },
   close: {
     position: 'absolute',

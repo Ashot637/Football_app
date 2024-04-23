@@ -8,7 +8,7 @@ import { COLORS } from '../helpers/colors';
 
 import { useTranslation } from 'react-i18next';
 
-import deleteAccountIcon from '../assets/images/delete_account.png';
+import DeleteAccountIcon from '../assets/images/delete account.svg';
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/authSlice/authSlice';
@@ -34,7 +34,7 @@ const DeleteAccount = () => {
     <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => setIsOpenModal(true)}>
       <View style={styles.item}>
         <View style={styles.icon}>
-          <Image source={deleteAccountIcon} style={styles.icon24} />
+        <DeleteAccountIcon/>
         </View>
         <PrimaryText style={styles.title} weight={600}>
           {t('user.delete_account')}
@@ -57,7 +57,7 @@ const DeleteAccount = () => {
               </PrimaryText>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> 
       </ConfirmationModal>
     </TouchableOpacity>
   );
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     width: 32,
     aspectRatio: 1,
     borderRadius: 16,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -98,14 +98,14 @@ const styles = StyleSheet.create({
     columnGap: 11,
   },
   cancelBtn: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: '#1C2F63',
     borderRadius: 15,
     paddingVertical: 9,
     borderColor: COLORS.lightWhite,
     borderWidth: 1,
   },
   submitbtn: {
-    backgroundColor: COLORS.yellow,
+    backgroundColor: '#0968CA',
     borderRadius: 15,
     paddingVertical: 10,
   },
