@@ -222,8 +222,8 @@ const styles = StyleSheet.create({
   avatarView: {
     width: 100,
     height: 100,
-    // alignSelf: "center",
-    marginLeft: 30,
+    alignSelf: "center",
+    // marginLeft: 30,
     position: "relative",
     marginBottom: 32,
   },

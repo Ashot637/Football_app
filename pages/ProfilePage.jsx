@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Text,
 } from "react-native";
 
 import PrimaryText from "../components/PrimaryText";
@@ -14,13 +15,21 @@ import { logout, selectAuth, setUser } from "../redux/authSlice/authSlice";
 import * as ImagePicker from "expo-image-picker";
 
 import axios, { BASE_URL } from "../axios/axios";
+import { COLORS } from "../helpers/colors";
 
+import avatarImg from "../assets/images/avatar.png";
+import EditIcon from "../assets/images/Edit.svg";
+import closeIcon from "../assets/images/close.png";
 import ProfileIcon from "../assets/images/Profile.svg";
 import MessageIcon from "../assets/images/Message.svg";
 import CallIcon from "../assets/images/Call.svg";
 import LocationIcon from "../assets/images/Location.svg";
 
 import { useTranslation } from "react-i18next";
+import LogoutIcon from "../assets/images/log out.svg";
+
+import DeleteAccount from "../components/DeleteAccount";
+import ChangeRole from "../components/ChangeRole";
 import PersonalDetails from "./PersonalDetails";
 import MyActivityPage from "./MyActivityPage";
 

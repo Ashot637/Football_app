@@ -9,33 +9,34 @@ import axios from '../axios/axios';
 
 import { COLORS } from '../helpers/colors';
 import Game from '../components/Game';
+import SearchBar from '../components/SearchBar';
 
-const Stadions = () => {
-  const { term } = useSelector(selectSearch);
-  const [stadions, setStadions] = useState([]);
-  const [selectedStadionId, setSelectedStadionId] = useState(null);
-  const [games, setGames] = useState([]);
-  const scrollViewRef = useRef(null);
+const StadiumsSearch = ({navigation}) => {
+  // const { term } = useSelector(selectSearch);
+  // const [stadions, setStadions] = useState([]);
+  // const [selectedStadionId, segtSelectedStadionId] = useState(null);
+  // const [games, setGames] = useState([]);
+  // const scrollViewRef = useRef(null);
 
-  useEffect(() => {
-    axios.get('/stadion/search', { params: { term } }).then(({ data }) => {
-      setStadions(data);
-      setSelectedStadionId(null);
-      scrollViewRef.current.scrollTo({ x: 0, y: 0 });
-    });
-  }, [term]);
+  // useEffect(() => {
+  //   axios.get('/stadion/search', { params: { term } }).then(({ data }) => {
+  //     setStadions(data);
+  //     setSelectedStadionId(null);
+  //   });
+  // }, [term]);
 
-  useEffect(() => {
-    if (selectedStadionId) {
-      axios.get('/game/getByStadionId/' + selectedStadionId).then(({ data }) => setGames(data));
-    } else {
-      setGames([]);
-    }
-  }, [selectedStadionId]);
+  // useEffect(() => {
+  //   if (selectedStadionId) {
+  //     axios.get('/game/getByStadionId/' + selectedStadionId).then(({ data }) => setGames(data));
+  //   } else {
+  //     setGames([]);
+  //   }
+  // }, [selectedStadionId]);
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.stadions}>
+    <SearchBar navigation={navigation}/>
+      {/* <View style={styles.stadions}>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
           {stadions.map((stadion, index) => {
             return (
@@ -66,7 +67,7 @@ const Stadions = () => {
         {games?.map((game) => {
           return <Game key={game.id} game={game} />;
         })}
-      </View>
+      </View> */}
       <View style={{ height: 30 }} />
     </ScrollView>
   );
@@ -74,14 +75,14 @@ const Stadions = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingBottom: 24,
   },
   stadions: {
     maxHeight: 230,
     paddingHorizontal: 9,
     paddingRight: 5,
-    backgroundColor: '#2F4131',
+    backgroundColor: COLORS.blue,
     borderTopWidth: 1,
     borderColor: COLORS.lightblue,
   },
@@ -110,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stadions;
+export default StadiumsSearch;

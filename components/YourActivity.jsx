@@ -25,7 +25,7 @@ const YourActivity = () => {
         {t("activity.individual_activity")}
       </PrimaryText>
       {games.length == 0 ? (
-        <PrimaryText style={{ color: "#B2BED7", fontSize: 18 }}>
+        <PrimaryText style={{ color: "#B2BED7", fontSize: 18, textAlign: 'center' }}>
           Դուք ներկայումս որևէ ակտիվություն չունեք:
         </PrimaryText>
       ) : (
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 22,
     marginBottom: 20,
+    textAlign: 'center'
   },
   blocks: {
     rowGap: 20,

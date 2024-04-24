@@ -69,11 +69,7 @@ const BottomNavBar = () => {
             <View style={styles.item}>
               {item.routes.includes(activeRoute) ? (
                 <>
-                  <PrimaryText style={styles.title}>
-                    {t(`navigation.${item.title}`)}
-                  </PrimaryText>
-                  <View style={styles.dot}></View>
-                  <View>{item.iconActive}</View>
+                <View>{item.iconActive}</View>
                 </>
               ) : (
                 <View>{item.icon}</View>
@@ -90,7 +86,6 @@ const styles = StyleSheet.create({
   nav: {
     width: "100%",
     backgroundColor: COLORS.darkgrey,
-    width: "100%",
     backgroundColor: COLORS.navyBlue,
     paddingHorizontal: 30,
     paddingVertical: 24,

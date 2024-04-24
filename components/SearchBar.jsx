@@ -28,10 +28,10 @@ import { Dimensions } from "react-native";
 import PrimaryText from "./PrimaryText";
 const { height } = Dimensions.get("window");
 
-import icon from "../assets/images/call.png";
+import Arrow from "../assets/images/Arrow.svg";
 import Game from "./Game";
 
-const SearchBar = ({ setOpen }) => {
+const SearchBar = ({ setOpen, navigation}) => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
@@ -41,22 +41,22 @@ const SearchBar = ({ setOpen }) => {
   const [isSearched, setIsSearched] = useState(false);
   const [value] = useDebounce(searchValue, 500);
 
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        setSearchValue("");
-        setOpen(false);
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const onBackPress = () => {
+  //       setSearchValue("");
+  //       setOpen(false);
 
-        return true;
-      };
+  //       return true;
+  //     };
 
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+  //     BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-      return () => {
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-      };
-    })
-  );
+  //     return () => {
+  //       BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+  //     };
+  //   })
+  // );
 
   useEffect(() => {
     if (value.trim().length) {
@@ -84,17 +84,10 @@ const SearchBar = ({ setOpen }) => {
     inputRef.current.focus();
   }, []);
 
-  const onClick = (id, title) => {
-    setSearchValue(title);
-    setSelectedStadionId(id);
-    setIsSearched(true);
-    inputRef.current.blur();
-  };
-
   return (
     <>
       <LinearGradient
-        colors={[COLORS.darkgrey, "rgba(32, 44, 34, 0.92)"]}
+        colors={['#041443', '#032176']}
         style={styles.gradient}
       >
         <View style={styles.header}>
@@ -131,9 +124,9 @@ const SearchBar = ({ setOpen }) => {
           data.map((item) => {
             return (
               <Item
+              navigation={navigation}
                 item={item}
                 key={item.id}
-                onClick={() => onClick(item.id, item.title)}
               />
             );
           })
@@ -143,9 +136,9 @@ const SearchBar = ({ setOpen }) => {
   );
 };
 
-const Item = ({ item, onClick }) => {
+const Item = ({ item, navigation }) => {
   return (
-    <TouchableOpacity onPress={onClick}>
+    <TouchableOpacity onPress={()=> {navigation.navigate('stadium_details', {id: item.id})}}>
       <View
         style={{
           paddingVertical: 15,
@@ -158,7 +151,7 @@ const Item = ({ item, onClick }) => {
         <PrimaryText style={styles.itemText} weight={600} numberOfLines={1}>
           {item.title}
         </PrimaryText>
-        <Image source={icon} style={{ marginLeft: "auto" }} />
+        <Arrow/>
       </View>
     </TouchableOpacity>
   );
@@ -193,9 +186,8 @@ const styles = StyleSheet.create({
     color: COLORS.lightblue,
   },
   list: {
-    paddingTop: 100,
     zIndex: -1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     width: "100%",
     paddingHorizontal: 16,
   },

@@ -3,7 +3,6 @@ import PrimaryText from "../../components/PrimaryText";
 import { COLORS } from "../../helpers/colors";
 import { useEffect, useState } from "react";
 import axios from "../../axios/axios";
-import { useDispatch, useSelector } from "react-redux";
 import {
   selectCreateGame,
   setGroup,
@@ -11,6 +10,8 @@ import {
 } from "../../redux/createGameSlice/createGameSlice";
 import { useTranslation } from "react-i18next";
 import FillInfo from './FillInfo';
+import { useDispatch, useSelector } from 'react-redux';
+import Invitation from '../../components/Invitation';
 
 const CreateGamePage = ({ route }) => {
   const dispatch = useDispatch();

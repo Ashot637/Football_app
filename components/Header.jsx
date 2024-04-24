@@ -32,6 +32,11 @@ const Header = () => {
     });
   }, []);
 
+  // const onOpenSearch = () => {
+  //   dispatch(setFromSearchIcon(true));
+  //   navigation.navigate('stadiums');
+  // };
+
   const onOpenNotifcations = () => {
     if (!["chats", "chat", "notifications"].includes(route.name)) {
       dispatch(setFrom(route.name));
@@ -50,15 +55,18 @@ const Header = () => {
     <>
       <View style={styles.background}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("home")}>
-            <LogoImg width={60} height={60} />
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <LogoImg width={60} height={60}/>
           </TouchableOpacity>
           <View style={styles.actions}>
+            {/* <TouchableOpacity onPress={onOpenSearch}>
+              <Image source={searchIcon} style={styles.icon} />
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={onOpenNotifcations}>
-              <NotificationIcon width={30} height={30} />
+              <NotificationIcon width={30} height={30}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={onOpenChats}>
-              <MessangerIcon width={30} height={30} />
+              <MessangerIcon width={30} height={30}/>
               {user?.hasMessage && <View style={styles.newMessage} />}
             </TouchableOpacity>
             {/* <View style={styles.actions}>

@@ -27,7 +27,7 @@ import * as Device from "expo-device";
 import Constants from "expo-constants";
 
 import HomePage from "../pages/HomePage";
-import Stadions from "../pages/Stadions";
+import StadiumsSearch from "../pages/StadiumsSearch";
 import SingleGame from "../pages/SingleGame";
 import MyActivityPage from "../pages/MyActivityPage";
 import ProfilePage from "../pages/ProfilePage";
@@ -54,6 +54,8 @@ import GroupPlayers from "../pages/GroupPage/GroupPlayers";
 import ShopPage from "../pages/ShopPage";
 import PersonalDetails from "../pages/PersonalDetails";
 import MyGamesPage from "../pages/MyGames/MyGamesPage";
+import StadiumsPage from "../pages/StadiumsPage";
+import StadiumDetails from "../pages/StadiumDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -141,7 +143,6 @@ const Navigation = () => {
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName={status === "success" ? "select" : "landing"}
-          // initialRouteName={"groups"}
           screenOptions={{
             headerShown: false,
             animation: "slide_from_right",
@@ -210,6 +211,23 @@ const Navigation = () => {
           <Stack.Screen
             name="group-players"
             component={GroupPlayers}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="stadiums_main"
+            component={StadiumsPage}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen name="stadiums_search" component={StadiumsSearch} />
+          <Stack.Screen
+            name="stadium_details"
+            component={StadiumDetails}
             options={{
               headerShown: true,
               header: () => <Header />,

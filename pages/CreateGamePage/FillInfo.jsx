@@ -166,7 +166,7 @@ const FillInfo = ({ stadions, groups }) => {
         <Input
           value={price}
           setValue={(p) => dispatch(setPrice(p))}
-          img={<PriceIcon />}
+          img={<PriceIcon/>}
           type="phone-pad"
           placeholder={
             t("common.total_price") +

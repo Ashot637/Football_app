@@ -43,7 +43,7 @@ const blocks = [
   {
     img: stadiumsImg,
     title: "common.stadiums",
-    link: "",
+    link: "stadiums_main",
   },
 ];
 
