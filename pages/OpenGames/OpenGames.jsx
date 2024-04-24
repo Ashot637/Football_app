@@ -8,7 +8,7 @@ import axios from "../../axios/axios";
 import Game from "../../components/Game";
 import PrimaryText from "../../components/PrimaryText";
 
-const MyGamesPage = () => {
+const OpenGamesPage = () => {
   const { t } = useTranslation();
   const [games, setGames] = useState([]);
   const [date, setDate] = useState(null);
@@ -19,11 +19,11 @@ const MyGamesPage = () => {
 
   const onRefresh = () => {
     if (date) {
-      axios.get("/game/myGames?date=" + date).then(({ data }) => {
+      axios.get("/game/openGames?date=" + date).then(({ data }) => {
         setGames(data);
       });
     } else {
-      axios.get("/game/myGames").then(({ data }) => {
+      axios.get("/game/openGames").then(({ data }) => {
         setGames(data);
       });
     }
@@ -37,7 +37,7 @@ const MyGamesPage = () => {
       }
     >
       <View style={{ paddingHorizontal: 16 }}>
-        <Heading title={t("home.my_games")} align="center" />
+        <Heading title={t("home.open_games")} align="center" />
         <DateFilterSection onFilter={setDate} />
         <View style={{ rowGap: 16, addingBottom: 16 }}>
           {games.map((game) => {
@@ -54,4 +54,4 @@ const MyGamesPage = () => {
   );
 };
 
-export default MyGamesPage;
+export default OpenGamesPage;

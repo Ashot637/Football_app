@@ -21,9 +21,9 @@ const Invitation = () => {
   const { user } = useSelector(selectAuth);
 
   const onConfirm = () => {
-    axios.post("/game/acceptInvitation", {
-      id: user.invitations[0].id,
-      groupId: user.invitations[0].groupId,
+    navigation.navigate("game", {
+      id: user.invitations[0].gameId,
+      invitation: user?.invitations[0],
     });
     dispatch(deleteFirstInvitation());
   };
@@ -39,7 +39,7 @@ const Invitation = () => {
       axios.post("/game/declineInvitation", { id: user.invitations[0].id });
       dispatch(deleteFirstInvitation());
     }
-    if (user?.invitations[0]?.isGroup) {
+    if (user?.invitations[0]?.isGroup && !user?.invitations[0]?.isGame) {
       navigation.navigate("group", {
         id: user.invitations[0].groupId,
         invitation: user.invitations[0],
@@ -82,7 +82,7 @@ const Invitation = () => {
                     style={[styles.btnText, { color: COLORS.black }]}
                     weight={600}
                   >
-                    {t("common.accept")}
+                    {t("common.see_more")}
                   </PrimaryText>
                 </View>
               </TouchableOpacity>

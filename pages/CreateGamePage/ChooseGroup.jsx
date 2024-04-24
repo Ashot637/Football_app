@@ -9,8 +9,12 @@ import {
 } from "../../redux/createGameSlice/createGameSlice";
 
 import icon from "../../assets/images/stadium.png";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
+  const navigation = useNavigation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { group: selectedGroup } = useSelector(selectCreateGame);
 
@@ -24,7 +28,7 @@ const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
     >
       <View style={styles.groups}>
         <ScrollView nestedScrollEnabled>
-          {groups.map((group, index) => {
+          {groups.map((group) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -32,10 +36,7 @@ const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
                   toggleAccordion(accordionId);
                 }}
                 key={group.id}
-                style={[
-                  styles.group,
-                  index === groups.length - 1 && { borderBottomWidth: 0 },
-                ]}
+                style={[styles.group]}
               >
                 <PrimaryText style={{ color: COLORS.grey }} weight={600}>
                   {group.title}
@@ -43,6 +44,14 @@ const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
               </TouchableOpacity>
             );
           })}
+          <TouchableOpacity
+            onPress={() => navigation.navigate("create-group")}
+            style={[styles.group, { borderBottomWidth: 0 }]}
+          >
+            <PrimaryText style={{ color: COLORS.grey }} weight={600}>
+              {t("group.create")}
+            </PrimaryText>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </Accordion>

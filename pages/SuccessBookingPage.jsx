@@ -100,12 +100,15 @@ const SuccessBookingPage = ({ route, navigation }) => {
         </View>
         <PrimaryButton
           title={t("common.go_to_home")}
-          onPress={() =>
+          onPress={() => {
+            if (confirmationNumber) {
+              return navigation.navigate("game", { id: game.id });
+            }
             navigation.navigate("group", {
               id: game.groupId,
               refresh: Math.random(),
-            })
-          }
+            });
+          }}
         />
       </View>
     </ImageBackground>

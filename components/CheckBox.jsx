@@ -1,13 +1,13 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import doneIcon from '../assets/images/done.png';
-import PrimaryText from './PrimaryText';
+import doneIcon from "../assets/images/done.png";
+import PrimaryText from "./PrimaryText";
 
 const CheckBox = ({ title, state, setState }) => {
   return (
-    <View style={{ alignItems: 'flex-start' }}>
+    <View style={{ alignItems: "flex-start" }}>
       <TouchableOpacity onPress={setState}>
         <View style={styles.container}>
           <View style={[styles.box, state && styles.boxActive]}>
@@ -22,9 +22,9 @@ const CheckBox = ({ title, state, setState }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   box: {
     width: 24,
@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
     borderColor: COLORS.grey,
     borderWidth: 2,
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   boxActive: {
-    borderColor: COLORS.lightYellow,
+    borderColor: "#0968CA",
   },
   done: {
     width: 16,

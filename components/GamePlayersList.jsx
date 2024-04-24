@@ -1,8 +1,8 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from "react-native";
 
-import PlayersList from './PlayersList';
+import PlayersList from "./PlayersList";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
 const GamePlayersList = ({ game }) => {
   return (
@@ -10,7 +10,7 @@ const GamePlayersList = ({ game }) => {
       <PlayersList
         players={game.users}
         maxPlayersCount={game.maxPlayersCount}
-        title={'common.players'}
+        title={"common.players"}
         organizerId={game.creatorId}
         groupId={game.groupId}
         isPublic={game.isPublic}
@@ -18,13 +18,6 @@ const GamePlayersList = ({ game }) => {
         usersWillPlayCount={game.usersWillPlayCount}
         usersWontPlayCount={game.usersWontPlayCount}
       />
-      {/* <View style={styles.divider} /> */}
-      {/* <PlayersList
-        players={game.users.filter(({ UserGame }) => UserGame.team === 2)}
-        guests={game.guests.filter(({ team }) => team === 2)}
-        maxPlayersCount={game.maxPlayersCount / 2}
-        title={'game.player_from_second_group'}
-      /> */}
     </View>
   );
 };

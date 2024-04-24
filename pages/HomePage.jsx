@@ -38,7 +38,7 @@ const blocks = [
   {
     img: openGamesImg,
     title: "home.open_games",
-    link: "",
+    link: "open-games",
   },
   {
     img: stadiumsImg,

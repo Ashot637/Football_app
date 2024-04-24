@@ -1,4 +1,5 @@
 import {
+  Image,
   Modal,
   StyleSheet,
   TouchableOpacity,
@@ -10,8 +11,12 @@ import PrimaryText from "./PrimaryText";
 
 import { useTranslation } from "react-i18next";
 import CalendarSvg from "../assets/images/calendar.svg";
-import { COLORS } from "../helpers/colors";
-const DateFilterSection = () => {
+import closeIcon from "../assets/images/close.png";
+import Calendar from "./Calendar";
+import PrimaryButton from "./PrimaryButton";
+
+const DateFilterSection = ({ onFilter }) => {
+  const [date, setDate] = useState(null);
   const { t } = useTranslation();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -41,11 +46,26 @@ const DateFilterSection = () => {
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
             <TouchableWithoutFeedback>
               <View
-                style={{ backgroundColor: COLORS.lightWhite, height: "50%" }}
+                style={{
+                  backgroundColor: "#fff",
+                  paddingHorizontal: 16,
+                  paddingBottom: 32,
+                }}
               >
-                <PrimaryText style={styles.modalContent}>
-                  Modal Content
-                </PrimaryText>
+                <TouchableOpacity
+                  onPress={() => setIsOpenModal(false)}
+                  style={{ alignItems: "flex-end", paddingTop: 14 }}
+                >
+                  <Image source={closeIcon} />
+                </TouchableOpacity>
+                <Calendar date={date} setDate={setDate} />
+                <PrimaryButton
+                  onPress={() => {
+                    onFilter(date);
+                    setIsOpenModal(false);
+                  }}
+                  title={t("common.submit")}
+                />
               </View>
             </TouchableWithoutFeedback>
           </View>

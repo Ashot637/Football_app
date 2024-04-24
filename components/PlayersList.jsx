@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, Image, TouchableOpacity, Share } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import ConfirmationModal from "./ConfirmationModal";
 import PrimaryText from "./PrimaryText";
@@ -11,25 +11,13 @@ import { format } from "date-fns";
 import avatarImg from "../assets/images/avatar.png";
 
 import axios from "../axios/axios";
-import jwt from "expo-jwt";
 
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/authSlice/authSlice";
 
-import redUniformIcon from "../assets/images/uniform-red.png";
-import blueUniformIcon from "../assets/images/uniform-blue.png";
-import blackUniformIcon from "../assets/images/uniform-black.png";
-import whiteUniformIcon from "../assets/images/uniform-white.png";
 import yesIcon from "../assets/images/yes.png";
 import noIcon from "../assets/images/no.png";
-
-const icons = [
-  redUniformIcon,
-  blueUniformIcon,
-  blackUniformIcon,
-  whiteUniformIcon,
-];
 
 const PlayersList = ({
   players,
@@ -39,13 +27,14 @@ const PlayersList = ({
   groupId,
   isPublic,
   gameId,
+  uniforms,
   usersWillPlayCount: propsUsersWillPlayCount,
   usersWontPlayCount: propsUsersWontPlayCount,
 }) => {
   const { t } = useTranslation();
   const { user } = useSelector(selectAuth);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [extendedGame, setExtendedGame] = useState();
+  // const [isOpenModal, setIsOpenModal] = useState(false);
+  // const [extendedGame, setExtendedGame] = useState();
   const [status, setStatus] = useState("");
   const [usersWillPlayCount, setUsersWillPlayCount] = useState(
     propsUsersWillPlayCount
@@ -54,32 +43,16 @@ const PlayersList = ({
     propsUsersWontPlayCount
   );
   const currentUser = players.find((player) => player.id === user?.id);
-
-  const onShare = async () => {
-    try {
-      const token = jwt.encode(
-        { from: user.name, groupId: groupId },
-        "You never can guess this k3y"
-      );
-      const shareOptions = {
-        message: BASE_URL + `ip?token=${token}`,
-      };
-      await Share.share(shareOptions);
-    } catch (error) {
-      console.error("Error sharing:", error);
-    }
-  };
+  const willPlay = currentUser ? currentUser.UserGame.willPlay : false;
 
   const onChangeWillPlayGameStatus = (changeTo) => {
     if (changeTo === null) {
-      const prevStatus =
-        typeof status === "string"
-          ? currentUser.games[0].UserGame.willPlay
-          : status;
+      const prevStatus = typeof status === "string" ? willPlay : status;
       axios.patch("/game/changeWillPlayGameStatus", {
         status: changeTo,
         id: gameId,
         prevStatus,
+        uniforms,
       });
       if (prevStatus) {
         setUsersWillPlayCount((prev) => --prev);
@@ -90,6 +63,7 @@ const PlayersList = ({
       axios.patch("/game/changeWillPlayGameStatus", {
         status: changeTo,
         id: gameId,
+        uniforms,
       });
       if (changeTo) {
         setUsersWillPlayCount((prev) => ++prev);
@@ -101,7 +75,7 @@ const PlayersList = ({
   };
 
   const getIconsView = (player) => {
-    let willPlay = player.games[0].UserGame.willPlay;
+    let willPlay = player.UserGame.willPlay;
     if (typeof status !== "string" && player.id === user?.id) {
       willPlay = status;
     }
@@ -127,16 +101,9 @@ const PlayersList = ({
     return <Image source={noIcon} style={{ width: 36, height: 36 }} />;
   };
 
-  const onExtendGame = () => {
-    axios.post("/game/extendGame", { groupId }).then(({ data }) => {
-      setExtendedGame(data);
-      setIsOpenModal(true);
-    });
-  };
-
   return (
     <>
-      {isOpenModal && (
+      {/* {isOpenModal && (
         <ConfirmationModal
           state={isOpenModal}
           dismiss={() => setIsOpenModal(false)}
@@ -145,7 +112,6 @@ const PlayersList = ({
             {t("game.extended_successfully")}
           </PrimaryText>
           <PrimaryText style={styles.modalSubTitle} weight={600}>
-            {/* {t('create_game.asking')} */}
             {t("common.dear") + " " + user.name} {t("game.extended_title")}{" "}
             {extendedGame && format(extendedGame.startTime, "dd.MM.yyyy")}
           </PrimaryText>
@@ -159,111 +125,10 @@ const PlayersList = ({
             </TouchableOpacity>
           </View>
         </ConfirmationModal>
-      )}
+      )} */}
       <PrimaryText style={styles.title} weight={600}>
         {t(title)}
       </PrimaryText>
-      {!isPublic && (
-        <View>
-          <PrimaryText style={styles.pollTitle} weight={600}>
-            {t("poll.title")}
-          </PrimaryText>
-          <View style={styles.poll}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                columnGap: 4,
-              }}
-            >
-              <View
-                style={[
-                  styles.barBg,
-                  { backgroundColor: "rgba(164, 176, 38, 0.5)" },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.bar,
-                    {
-                      backgroundColor: COLORS.yellow,
-                      backgroundColor: COLORS.yellow,
-                      width: `${(usersWillPlayCount / players.length) * 100}%`,
-                    },
-                  ]}
-                ></View>
-
-                <PrimaryText
-                  weight={600}
-                  style={{ fontSize: 20, position: "absolute", left: 15 }}
-                >
-                  {t("common.yes")}
-                </PrimaryText>
-                <PrimaryText weight={600} style={styles.votes}>
-                  {usersWillPlayCount} {t("poll.votes")}
-                </PrimaryText>
-              </View>
-              <PrimaryText
-                weight={600}
-                style={{
-                  fontSize: 20,
-                  color: COLORS.lightWhite,
-                  width: 55,
-                  textAlign: "right",
-                }}
-              >
-                {((usersWillPlayCount / players.length || 0) * 100).toFixed(0)}{" "}
-                %
-              </PrimaryText>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                columnGap: 4,
-              }}
-            >
-              <View
-                style={[
-                  styles.barBg,
-                  { backgroundColor: "rgba(255, 255, 255, 0.5)" },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.bar,
-                    {
-                      backgroundColor: "#fff",
-                      width: `${
-                        (usersWontPlayCount / players.length || 0) * 100
-                      }%`,
-                    },
-                  ]}
-                ></View>
-                <PrimaryText weight={600} style={styles.votes}>
-                  {usersWontPlayCount} {t("poll.votes")}
-                </PrimaryText>
-              </View>
-              <PrimaryText
-                weight={600}
-                style={{ fontSize: 20, position: "absolute", left: 15 }}
-              >
-                {t("common.no")}
-              </PrimaryText>
-              <PrimaryText
-                style={{
-                  fontSize: 20,
-                  color: COLORS.lightWhite,
-                  width: 55,
-                  textAlign: "right",
-                }}
-              >
-                {((usersWontPlayCount / players.length) * 100).toFixed(0)} %
-              </PrimaryText>
-            </View>
-          </View>
-        </View>
-      )}
       <View style={styles.players}>
         {currentUser && (
           <View>
@@ -284,9 +149,8 @@ const PlayersList = ({
                     {currentUser.name.length > 15
                       ? currentUser.name.slice(
                           0,
-                          (typeof status === "string"
-                            ? currentUser.games[0].UserGame.willPlay
-                            : status) !== null
+                          (typeof status === "string" ? willPlay : status) !==
+                            null
                             ? 17
                             : 12
                         ) + "..."
@@ -299,26 +163,10 @@ const PlayersList = ({
                     </PrimaryText>
                   )}
                 </View>
-                {isPublic ? (
-                  <View style={styles.uniforms}>
-                    {currentUser.UserGame?.uniforms?.map((uniformIndex) => {
-                      return (
-                        <Image
-                          source={icons[uniformIndex]}
-                          key={`${currentUser.id}-${uniformIndex}`}
-                          style={styles.uniform}
-                        />
-                      );
-                    })}
-                  </View>
-                ) : (
-                  getIconsView(currentUser)
-                )}
+                {getIconsView(currentUser)}
               </View>
             </View>
-            {(typeof status === "string"
-              ? currentUser.games[0].UserGame.willPlay
-              : status) !== null && (
+            {(typeof status === "string" ? willPlay : status) !== null && (
               <View style={{ alignItems: "flex-end" }}>
                 <TouchableOpacity
                   onPress={() => onChangeWillPlayGameStatus(null)}
@@ -363,21 +211,7 @@ const PlayersList = ({
                     </PrimaryText>
                   )}
                 </View>
-                {isPublic ? (
-                  <View style={styles.uniforms}>
-                    {player.UserGame.uniforms.map((uniformIndex) => {
-                      return (
-                        <Image
-                          source={icons[uniformIndex]}
-                          key={`${player.id}-${uniformIndex}`}
-                          style={styles.uniform}
-                        />
-                      );
-                    })}
-                  </View>
-                ) : (
-                  getIconsView(player)
-                )}
+                {getIconsView(player)}
               </View>
             </View>
           );
@@ -390,7 +224,106 @@ const PlayersList = ({
           })}
         </PrimaryText>
       )}
-      <View style={styles.buttons}>
+      {!isPublic && (
+        <View
+          style={{
+            paddingVertical: 32,
+            marginTop: 10,
+            marginBottom: 32,
+            borderColor: "#B2BED7",
+            borderBottomWidth: 1,
+            borderTopWidth: 1,
+          }}
+        >
+          <PrimaryText style={styles.pollTitle} weight={600}>
+            {t("poll.title")}
+          </PrimaryText>
+          <View style={styles.poll}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                columnGap: 4,
+              }}
+            >
+              <View style={[styles.barBg, { backgroundColor: "#0968CA80" }]}>
+                <View
+                  style={[
+                    styles.bar,
+                    {
+                      backgroundColor: "#0968CA",
+                      width: `${(usersWillPlayCount / players.length) * 100}%`,
+                    },
+                  ]}
+                ></View>
+
+                <PrimaryText
+                  weight={600}
+                  style={{ fontSize: 20, position: "absolute", left: 15 }}
+                >
+                  {t("common.yes")}
+                </PrimaryText>
+                <PrimaryText weight={600} style={styles.votes}>
+                  {usersWillPlayCount} {t("poll.votes")}
+                </PrimaryText>
+              </View>
+              <PrimaryText
+                weight={600}
+                style={{
+                  fontSize: 20,
+                  color: COLORS.lightWhite,
+                  width: 55,
+                  textAlign: "right",
+                }}
+              >
+                {((usersWillPlayCount / players.length || 0) * 100).toFixed(0)}{" "}
+                %
+              </PrimaryText>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                columnGap: 4,
+              }}
+            >
+              <View style={[styles.barBg, { backgroundColor: "#F8EEFF80" }]}>
+                <View
+                  style={[
+                    styles.bar,
+                    {
+                      backgroundColor: "#F8EEFF",
+                      width: `${
+                        (usersWontPlayCount / players.length || 0) * 100
+                      }%`,
+                    },
+                  ]}
+                ></View>
+                <PrimaryText weight={600} style={styles.votes}>
+                  {usersWontPlayCount} {t("poll.votes")}
+                </PrimaryText>
+              </View>
+              <PrimaryText
+                weight={600}
+                style={{ fontSize: 20, position: "absolute", left: 15 }}
+              >
+                {t("common.no")}
+              </PrimaryText>
+              <PrimaryText
+                style={{
+                  fontSize: 20,
+                  color: COLORS.lightWhite,
+                  width: 55,
+                  textAlign: "right",
+                }}
+              >
+                {((usersWontPlayCount / players.length) * 100).toFixed(0)} %
+              </PrimaryText>
+            </View>
+          </View>
+        </View>
+      )}
+      {/* <View style={styles.buttons}>
         {organizerId === user?.id && (
           <TouchableOpacity onPress={onExtendGame} style={styles.extend}>
             <PrimaryText style={styles.extendTitle} weight={400}>
@@ -409,7 +342,7 @@ const PlayersList = ({
             {t("game.invite_players")}
           </PrimaryText>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </>
   );
 };

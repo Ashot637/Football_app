@@ -56,6 +56,7 @@ import PersonalDetails from "../pages/PersonalDetails";
 import MyGamesPage from "../pages/MyGames/MyGamesPage";
 import StadiumsPage from "../pages/StadiumsPage";
 import StadiumDetails from "../pages/StadiumDetails";
+import OpenGamesPage from "../pages/OpenGames/OpenGames";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,6 +71,7 @@ const HomeStack = () => {
     >
       <Tab.Screen name="home" component={HomePage} />
       <Tab.Screen name="my-games" component={MyGamesPage} />
+      <Tab.Screen name="open-games" component={OpenGamesPage} />
       <Tab.Screen name="game" component={SingleGame} />
       <Tab.Screen name="my_activity" component={MyActivityPage} />
       <Tab.Screen name="personal_details" component={PersonalDetails} />
@@ -128,7 +130,7 @@ const Navigation = () => {
       const { data } = await axios
         .get(BASE_URL + "ip")
         .catch((err) => console.log(err));
-      dispatch(fetchAuthMe({ expoPushToken, ip: data }));
+      dispatch(fetchAuthMe({ expoPushToken, ip: "1" }));
     })();
   }, []);
 

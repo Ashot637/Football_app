@@ -15,7 +15,6 @@ import axios, { BASE_URL } from "../axios/axios";
 import { COLORS } from "../helpers/colors";
 
 import locationIcon from "../assets/images/location.png";
-import GameNavigation from "../components/GameNavigation";
 
 import { useTranslation } from "react-i18next";
 
@@ -25,14 +24,14 @@ import Facilities from "../components/Facilities";
 import GamePlayersList from "../components/GamePlayersList";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/authSlice/authSlice";
-import ActionButton from "react-native-action-button";
+import PublicGame from "../components/PublicGame";
+import PrivateGame from "../components/PrivateGame";
 
 const SingleGame = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const { id } = route.params;
+  const { id, invitation } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [game, setGame] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const { user } = useSelector(selectAuth);
 
   useLayoutEffect(() => {
@@ -46,19 +45,6 @@ const SingleGame = ({ route, navigation }) => {
       setIsLoading(false);
     });
   }, [id]);
-
-  const displayView = (index) => {
-    switch (index) {
-      case 0:
-        return <BookNow game={game} />;
-      case 1:
-        return <GamePlayersList game={game} />;
-      case 2:
-        return <Uniforms game={game} />;
-      case 3:
-        return <Facilities facilities={game.stadion.facilities} />;
-    }
-  };
 
   const userAlreadyBooked =
     game?.users.findIndex((gameUser) => gameUser.id === user?.id) > -1;
@@ -106,25 +92,25 @@ const SingleGame = ({ route, navigation }) => {
                 </View>
               </View>
             </ImageBackground>
-            <GameNavigation
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-              hideIndex={game?.isPublic ? userAlreadyBooked && 0 : 0}
-            >
-              {displayView(activeIndex)}
-            </GameNavigation>
+            {game.isPublic ? (
+              <PublicGame game={game} invitation={invitation} />
+            ) : (
+              <PrivateGame game={game} invitation={invitation} />
+            )}
           </ScrollView>
           {(userAlreadyBooked || !game.isPublic) && (
-            <ActionButton
-              buttonColor={"#A5CBC3"}
-              style={{ borderRadius: 30 }}
-              renderIcon={() => {
-                return (
-                  <Image
-                    source={require("../assets/images/chat-icon.png")}
-                    style={{ width: 36, height: 36 }}
-                  />
-                );
+            <View
+              style={{
+                position: "absolute",
+                right: 14,
+                bottom: 9,
+                alignItems: "flex-end",
+                width: 60,
+                height: 60,
+                borderRadius: 30,
+                backgroundColor: "#B2BED7",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               onPress={() =>
                 navigation.navigate("chat", {
@@ -132,7 +118,12 @@ const SingleGame = ({ route, navigation }) => {
                   groupTitle: game.stadion.title_en,
                 })
               }
-            ></ActionButton>
+            >
+              <Image
+                source={require("../assets/images/chat-icon.png")}
+                style={{ width: 36, height: 36 }}
+              />
+            </View>
           )}
         </>
       )}
@@ -142,7 +133,7 @@ const SingleGame = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
   },
   image: {
     aspectRatio: 16 / 10,
@@ -184,7 +175,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   loader: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     height: "100%",
     alignItems: "center",
     justifyContent: "center",

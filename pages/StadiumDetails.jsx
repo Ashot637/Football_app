@@ -29,7 +29,7 @@ const StadiumDetails = ({ route, navigation }) => {
     });
   }, [id]);
 
-    return (
+  return (
     <>
       <View style={styles.background}>
         <ImageBackground
@@ -79,6 +79,7 @@ const StadiumDetails = ({ route, navigation }) => {
             {stadium.facilities.map((item) => {
               return (
                 <View
+                  key={item.id}
                   style={{
                     flexDirection: "row",
                     gap: 20,
@@ -117,7 +118,12 @@ const StadiumDetails = ({ route, navigation }) => {
           </View>
         )}
         <View style={{ padding: 20 }}>
-          <PrimaryButton onPress={()=>{navigation.navigate('create-game', {stadumId: id})}} title={"Ամրագրել հիմա"}></PrimaryButton>
+          <PrimaryButton
+            onPress={() => {
+              navigation.navigate("create-game", { stadumId: id });
+            }}
+            title={"Ամրագրել հիմա"}
+          ></PrimaryButton>
         </View>
       </View>
     </>
