@@ -6,7 +6,7 @@ import { sessionStorage } from "../helpers/sessionStorage";
 export const BASE_URL = "https://ballhola.app/service/";
 // export const BASE_URL = "http://192.168.100.125:8080/";
 
-// export const BASE_URL = "http://192.168.100.58:8080/";
+// export const BASE_URL = "http://192.168.11.51:8080/";
 
 const instance = axios.create({
   baseURL: BASE_URL + "api/v2",

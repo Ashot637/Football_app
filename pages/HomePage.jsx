@@ -20,7 +20,7 @@ import openGamesImg from "../assets/images/open-games.png";
 import stadiumsImg from "../assets/images/stadiums.png";
 import { LinearGradient } from "expo-linear-gradient";
 
-import icon from "../assets/images/call.png";
+import CrossIcon from "../assets/images/cross.svg";
 import Invitation from "../components/Invitation";
 import { useTranslation } from "react-i18next";
 
@@ -173,7 +173,7 @@ const HomePage = () => {
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
             onPress={() => setisOpenActions((prev) => !prev)}
           >
-            <Image source={icon} style={{ width: 20, height: 20 }} />
+            <CrossIcon width={20} height={20} />
           </TouchableOpacity>
         </LinearGradient>
       </View>

@@ -24,14 +24,15 @@ const GroupPage = ({ navigation, route }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get("/group/getOne/" + id).then(({ data }) => setGroup(data));
-    setIsLoading(false);
+    axios.get("/group/getOne/" + id).then(({ data }) => {
+      setGroup(data);
+      setIsLoading(false);
+    });
   }, [id, refresh]);
 
   const onConfirm = () => {
     axios.post("/game/acceptInvitation", {
       id: invitation.id,
-      groupId: invitation.groupId,
     });
     navigation.navigate("group", { id, refresh: Math.random() });
   };
@@ -136,74 +137,73 @@ const GroupPage = ({ navigation, route }) => {
             </>
           )}
         </View>
-        {!isLoading &&
-          (invitation ? (
-            <View
+        {isLoading ? null : invitation ? (
+          <View
+            style={{
+              paddingHorizontal: 16,
+              paddingBottom: 20,
+              flexDirection: "row",
+              alignItems: "stretch",
+              columnGap: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={onCancel}
               style={{
-                paddingHorizontal: 16,
-                paddingBottom: 20,
-                flexDirection: "row",
-                alignItems: "stretch",
-                columnGap: 20,
+                flex: 1,
+                backgroundColor: "#acad28",
+                borderWidth: 1.5,
+                borderColor: COLORS.yellow,
+                borderRadius: 15,
+                height: 60,
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <TouchableOpacity
-                onPress={onCancel}
+              <PrimaryText weight={600} style={{ fontSize: 20 }}>
+                {t("common.decline")}
+              </PrimaryText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onConfirm}
+              style={{
+                flex: 1,
+                backgroundColor: "#acad28",
+                borderColor: COLORS.yellow,
+                borderRadius: 15,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PrimaryText weight={600} style={{ fontSize: 20 }}>
+                {t("common.accept")}
+              </PrimaryText>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          group?.ownerId !== user?.id && (
+            <TouchableOpacity
+              onPress={() => {
+                axios.delete("/group/leave/" + id);
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "select" }, { name: "main" }],
+                });
+              }}
+            >
+              <PrimaryText
                 style={{
-                  flex: 1,
-                  backgroundColor: "#acad28",
-                  borderWidth: 1.5,
-                  borderColor: COLORS.yellow,
-                  borderRadius: 15,
-                  height: 60,
-                  alignItems: "center",
-                  justifyContent: "center",
+                  fontSize: 17,
+                  color: "#68F4E4",
+                  textAlign: "center",
+                  marginBottom: 23,
                 }}
               >
-                <PrimaryText weight={600} style={{ fontSize: 20 }}>
-                  {t("common.decline")}
-                </PrimaryText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onConfirm}
-                style={{
-                  flex: 1,
-                  backgroundColor: "#acad28",
-                  borderColor: COLORS.yellow,
-                  borderRadius: 15,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <PrimaryText weight={600} style={{ fontSize: 20 }}>
-                  {t("common.accept")}
-                </PrimaryText>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            group?.ownerId !== user?.id && (
-              <TouchableOpacity
-                onPress={() => {
-                  axios.delete("/group/leave/" + id);
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: "select" }, { name: "main" }],
-                  });
-                }}
-              >
-                <PrimaryText
-                  style={{
-                    fontSize: 17,
-                    color: "#68F4E4",
-                    textAlign: "center",
-                    marginBottom: 23,
-                  }}
-                >
-                  {t("group.leave")}
-                </PrimaryText>
-              </TouchableOpacity>
-            )
-          ))}
+                {t("group.leave")}
+              </PrimaryText>
+            </TouchableOpacity>
+          )
+        )}
       </View>
     </>
   );

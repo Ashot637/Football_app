@@ -13,6 +13,7 @@ import { selectAuth } from "../redux/authSlice/authSlice";
 import { useNavigation } from "@react-navigation/native";
 
 import axios from "../axios/axios";
+import Uniforms from "./Uniforms";
 const PrivateGame = ({ game, invitation }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -32,8 +33,7 @@ const PrivateGame = ({ game, invitation }) => {
           from: user.name,
           groupId: game.groupId,
           gameId: game.id,
-          isGame,
-          isGroup: !isGame,
+          type: isGame ? "PRIVATE_GAME" : "GROUP",
         },
         "You never can guess this k3y"
       );
@@ -54,35 +54,58 @@ const PrivateGame = ({ game, invitation }) => {
   const onConfirmInvitation = async () => {
     await axios.post("/game/acceptInvitation", {
       id: invitation.id,
-      groupId: invitation.groupId,
-      gameId: invitation.gameId,
     });
     navigation.navigate("game", { id: game.id, refresh: Math.random() });
   };
 
   return (
     <View style={{ paddingTop: 32, paddingBottom: 20, paddingHorizontal: 16 }}>
-      <View
-        style={{
-          paddingVertical: 32,
-          marginBottom: 32,
-          borderColor: "#B2BED7",
-          borderBottomWidth: 1,
-        }}
-      >
-        <PrimaryText
-          weight={600}
+      {!!game.uniforms?.indexes.length && (
+        <View
           style={{
-            color: COLORS.lightWhite,
-            marginBottom: 12,
-            fontSize: 20,
-            textAlign: "center",
+            paddingBottom: 32,
+            marginBottom: 32,
+            borderColor: "#B2BED7",
+            borderBottomWidth: 1,
           }}
         >
-          {t("game.facilities")}
-        </PrimaryText>
-        <Facilities facilities={game?.stadion?.facilities} />
-      </View>
+          <PrimaryText
+            weight={600}
+            style={{
+              color: COLORS.lightWhite,
+              marginBottom: 12,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+          >
+            {t("game.uniforms")}
+          </PrimaryText>
+          <Uniforms uniforms={game.uniforms.indexes} />
+        </View>
+      )}
+      {!!game.stadion?.facilities.length && (
+        <View
+          style={{
+            paddingBottom: 32,
+            marginBottom: 32,
+            borderColor: "#B2BED7",
+            borderBottomWidth: 1,
+          }}
+        >
+          <PrimaryText
+            weight={600}
+            style={{
+              color: COLORS.lightWhite,
+              marginBottom: 12,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+          >
+            {t("game.facilities")}
+          </PrimaryText>
+          <Facilities facilities={game.stadion.facilities} />
+        </View>
+      )}
       <PlayersList
         players={game.users}
         maxPlayersCount={game.maxPlayersCount}
@@ -91,7 +114,6 @@ const PrivateGame = ({ game, invitation }) => {
         groupId={game.groupId}
         isPublic={game.isPublic}
         gameId={game.id}
-        uniforms={[]}
         usersWillPlayCount={game.usersWillPlayCount}
         usersWontPlayCount={game.usersWontPlayCount}
       />

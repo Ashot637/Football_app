@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Image,
   Modal,
@@ -6,25 +6,30 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import PrimaryText from './PrimaryText';
-import Input from './Input';
+} from "react-native";
+import PrimaryText from "./PrimaryText";
+import Input from "./Input";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import closeIcon from '../assets/images/close.png';
-import profileIcon from '../assets/images/profile.png';
-import phoneIcon from '../assets/images/call.png';
+import closeIcon from "../assets/images/close.png";
+import profileIcon from "../assets/images/profile.png";
+import phoneIcon from "../assets/images/call.png";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const PrimaryModal = ({ state, dismiss, onSubmit, title }) => {
   const { t } = useTranslation();
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
   return (
-    <Modal transparent={true} onBackdropPress={dismiss} visible={state} onRequestClose={dismiss}>
+    <Modal
+      transparent={true}
+      onBackdropPress={dismiss}
+      visible={state}
+      onRequestClose={dismiss}
+    >
       <TouchableWithoutFeedback onPress={dismiss}>
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
@@ -38,33 +43,44 @@ const PrimaryModal = ({ state, dismiss, onSubmit, title }) => {
           </View>
           <PrimaryText style={styles.title}>{title}</PrimaryText>
           <View style={styles.inputs}>
-            <Input value={name} setValue={setName} img={profileIcon} placeholder={t('user.name')} />
+            <Input
+              value={name}
+              setValue={setName}
+              img={profileIcon}
+              placeholder={t("user.name")}
+            />
             <Input
               type="phone-pad"
               value={phone}
               setValue={setPhone}
               img={phoneIcon}
-              placeholder={t('user.phone')}
+              placeholder={t("user.phone")}
             />
           </View>
           <View style={styles.btns}>
             <TouchableOpacity onPress={dismiss}>
               <View style={styles.cancelBtn}>
                 <PrimaryText style={styles.btnText} weight={600}>
-                  {t('common.cancel')}
+                  {t("common.cancel")}
                 </PrimaryText>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => onSubmit(name, phone)}
-              disabled={!name.trim().length || phone.trim().length < 9}>
+              disabled={!name.trim().length || phone.trim().length < 9}
+            >
               <View
                 style={[
                   styles.submitbtn,
-                  (!name.trim().length || phone.trim().length < 9) && styles.disabled,
-                ]}>
-                <PrimaryText style={[styles.btnText, { color: COLORS.black }]} weight={600}>
-                  {t('common.add')}
+                  (!name.trim().length || phone.trim().length < 9) &&
+                    styles.disabled,
+                ]}
+              >
+                <PrimaryText
+                  style={[styles.btnText, { color: COLORS.black }]}
+                  weight={600}
+                >
+                  {t("common.add")}
                 </PrimaryText>
               </View>
             </TouchableOpacity>
@@ -77,23 +93,23 @@ const PrimaryModal = ({ state, dismiss, onSubmit, title }) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalHolder: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 16,
   },
   modal: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     marginHorizontal: 16,
-    position: 'relative',
+    position: "relative",
     paddingVertical: 32,
     paddingHorizontal: 10,
     borderRadius: 20,
@@ -101,14 +117,14 @@ const styles = StyleSheet.create({
     borderColor: COLORS.yellow,
   },
   close: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     top: 10,
   },
   title: {
     fontSize: 22,
     color: COLORS.lightWhite,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 32,
   },
   inputs: {
@@ -116,9 +132,9 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   btns: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
   cancelBtn: {
     width: 108,
@@ -139,7 +155,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
     color: COLORS.lightWhite,
   },
 });

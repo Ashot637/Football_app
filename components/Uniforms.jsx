@@ -15,29 +15,10 @@ const icons = [
   whiteUniformIcon,
 ];
 
-const Uniforms = ({
-  game,
-  selectedUniforms,
-  setSelectedUniforms,
-  cantSelect,
-}) => {
-  const onSelectUniform = (index) => {
-    if (selectedUniforms.length === 2 && !selectedUniforms.includes(index)) {
-      setSelectedUniforms((selectedUniforms) => [selectedUniforms[1], index]);
-    } else {
-      selectedUniforms.includes(index)
-        ? setSelectedUniforms((selectedUniforms) =>
-            selectedUniforms.filter((i) => i !== index)
-          )
-        : setSelectedUniforms((selectedUniforms) => [
-            ...selectedUniforms,
-            index,
-          ]);
-    }
-  };
+const Uniforms = ({ uniforms }) => {
   return (
     <View style={styles.uniforms}>
-      {(game.isPublic ? game.uniforms : [0, 0, 0, 0]).map(
+      {/* {(game.isPublic ? game.uniforms : [0, 0, 0, 0]).map(
         (uniformChoseUsersCount, index) => {
           return (
             <View style={styles.uniformView} key={"firstGroup-" + index}>
@@ -64,52 +45,77 @@ const Uniforms = ({
             </View>
           );
         }
-      )}
+      )} */}
+      {uniforms.map((index) => {
+        return (
+          <View
+            key={index}
+            style={{
+              backgroundColor: COLORS.background_blue,
+              width: 60,
+              height: 60,
+              alignItems: "center",
+              justifyContent: "center",
+              borderColor: "#0968CA",
+              borderWidth: 1,
+              borderRadius: 10,
+            }}
+          >
+            <Image source={icons[index]} style={{ width: 48, height: 48 }} />
+          </View>
+        );
+      })}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  info: {
-    color: COLORS.lightblue,
-    fontSize: 16,
-    fontWeight: "600",
-    textAlign: "center",
-    marginBottom: 32,
-  },
-  title: {
-    color: COLORS.lightWhite,
-    fontSize: 22,
-    fontWeight: "600",
-    textAlign: "center",
-    marginBottom: 24,
-  },
   uniforms: {
-    rowGap: 10,
-    marginBottom: 7,
-  },
-  uniformView: {
     flexDirection: "row",
     alignItems: "center",
-    columnGap: 12,
+    justifyContent: "center",
+    columnGap: 24,
   },
-  uniformIcon: {
-    width: 48,
-    height: 48,
-  },
-  bar: {
-    flex: 1,
-    height: 10,
-    backgroundColor: "#405742",
-    borderRadius: 10,
-    position: "relative",
-  },
-  barActive: {
-    position: "absolute",
-    height: 10,
-    backgroundColor: COLORS.yellow,
-    borderRadius: 10,
-  },
+  // info: {
+  //   color: COLORS.lightblue,
+  //   fontSize: 16,
+  //   fontWeight: "600",
+  //   textAlign: "center",
+  //   marginBottom: 32,
+  // },
+  // title: {
+  //   color: COLORS.lightWhite,
+  //   fontSize: 22,
+  //   fontWeight: "600",
+  //   textAlign: "center",
+  //   marginBottom: 24,
+  // },
+  // uniforms: {
+  //   rowGap: 10,
+  //   marginBottom: 7,
+  // },
+  // uniformView: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   columnGap: 12,
+  // },
+  // uniformIcon: {
+  //   width: 48,
+  //   height: 48,
+  // },
+  // bar: {
+  //   flex: 1,
+  //   height: 10,
+  //   backgroundColor: "#405742",
+  //   borderRadius: 10,
+  //   position: "relative",
+  // },
+  // barActive: {
+  //   position: "absolute",
+  //   height: 10,
+  //   backgroundColor: COLORS.yellow,
+  //   borderRadius: 10,
+  // },
 });
 
 export default Uniforms;

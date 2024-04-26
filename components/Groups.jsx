@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   BackHandler,
   Image,
@@ -7,26 +7,26 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-} from 'react-native';
-import PrimaryText from './PrimaryText';
+} from "react-native";
+import PrimaryText from "./PrimaryText";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import axios from '../axios/axios';
+import axios from "../axios/axios";
 
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeNewMessagesStatus } from '../redux/authSlice/authSlice';
-import { selectNotification } from '../redux/notificationSlice/notificationSlice';
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { changeNewMessagesStatus } from "../redux/authSlice/authSlice";
+import { selectNotification } from "../redux/notificationSlice/notificationSlice";
 
-import { socket } from '../hooks/useSocket';
+import { socket } from "../hooks/useSocket";
 
-import calendarIcon from '../assets/images/calendar.png';
-import clockIcon from '../assets/images/clock.png';
+import calendarIcon from "../assets/images/calendar.png";
+import clockIcon from "../assets/images/clock.png";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Groups = () => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const Groups = () => {
 
   useEffect(() => {
     onRefresh();
-    socket.on('group-new-message', (groupId) => {
+    socket.on("group-new-message", (groupId) => {
       setChats((chats) => {
         const array = [...chats];
         const index = array.findIndex((obj) => obj.id === groupId);
@@ -58,10 +58,12 @@ const Groups = () => {
 
   useEffect(() => {
     if (chats.length) {
-      const chatsWithNewMessages = chats.filter((chat) => chat.isNewMessage).length;
+      const chatsWithNewMessages = chats.filter(
+        (chat) => chat.isNewMessage
+      ).length;
       if (!chatsWithNewMessages) {
         dispatch(changeNewMessagesStatus(false));
-        axios.post('/message/markUserMessagesRead');
+        axios.post("/message/markUserMessagesRead");
       }
     }
   }, [chats]);
@@ -69,7 +71,7 @@ const Groups = () => {
   const onRefresh = () => {
     setIsLoading(true);
     axios
-      .get('/message/getAllGroups')
+      .get("/message/getAllGroups")
       .then(({ data }) => setChats(data))
       .finally(() => {
         setIsLoading(false);
@@ -80,21 +82,23 @@ const Groups = () => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        navigation.navigate(from === 'game' || from === 'notifications' ? 'home' : from);
+        navigation.navigate(
+          from === "game" || from === "notifications" ? "home" : from
+        );
 
         return true;
       };
 
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
       return () => {
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
       };
-    }),
+    })
   );
 
   useEffect(() => {
-    socket.on('read-message-in-group', (groupId) => {
+    socket.on("read-message-in-group", (groupId) => {
       setChats((chats) =>
         chats.map((chat) => {
           if (chat.id === groupId) {
@@ -104,7 +108,7 @@ const Groups = () => {
             };
           }
           return chat;
-        }),
+        })
       );
     });
   }, []);
@@ -113,18 +117,22 @@ const Groups = () => {
     <ScrollView
       style={styles.container}
       refreshControl={
-        <RefreshControl refreshing={isLoading && isMounted.current} onRefresh={onRefresh} />
-      }>
+        <RefreshControl
+          refreshing={isLoading && isMounted.current}
+          onRefresh={onRefresh}
+        />
+      }
+    >
       {!isLoading && (
         <>
           <PrimaryText style={styles.tilte} weight={600}>
-            {t('chat.title')}
+            {t("chat.title")}
           </PrimaryText>
           <View style={styles.blocks}>
-            {chats.map(({ game, id, isNewMessage }) => {
+            {chats.map(({ id, isNewMessage, title }) => {
               return (
                 <TouchableOpacity
-                  key={game.id}
+                  key={id}
                   onPress={() => {
                     setChats((chats) =>
                       chats.map((chat) => {
@@ -135,30 +143,37 @@ const Groups = () => {
                           };
                         }
                         return chat;
-                      }),
+                      })
                     );
-                    navigation.navigate('chat', { groupId: id, groupTitle: game.stadion.title_en });
-                  }}>
+                    navigation.navigate("chat", {
+                      groupId: id,
+                      groupTitle: title,
+                    });
+                  }}
+                >
                   <View style={styles.block}>
                     {isNewMessage && <View style={styles.newMessage} />}
                     <PrimaryText weight={700} style={styles.blockTitle}>
-                      {game.stadion.title}
+                      {title}
                     </PrimaryText>
-                    <View style={styles.infoRow}>
+                    {/* <View style={styles.infoRow}>
                       <View style={styles.infoRowBlock}>
                         <Image source={calendarIcon} style={styles.icon} />
                         <PrimaryText style={styles.subtitle}>
-                          {format(game.startTime, 'dd.MM.yyyy')}
+                          {format(game.startTime, "dd.MM.yyyy")}
                         </PrimaryText>
                       </View>
                       <View style={styles.infoRowBlock}>
                         <Image source={clockIcon} style={styles.icon} />
-                        <PrimaryText style={styles.subtitle} weight={600}>{`${format(
-                          game.startTime,
-                          'HH:mm',
-                        )} - ${format(game.endTime, 'HH:mm')}`}</PrimaryText>
+                        <PrimaryText
+                          style={styles.subtitle}
+                          weight={600}
+                        >{`${format(game.startTime, "HH:mm")} - ${format(
+                          game.endTime,
+                          "HH:mm"
+                        )}`}</PrimaryText>
                       </View>
-                    </View>
+                    </View> */}
                   </View>
                 </TouchableOpacity>
               );
@@ -181,8 +196,8 @@ const styles = StyleSheet.create({
   },
   tilte: {
     fontSize: 22,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
     marginBottom: 20,
   },
   blocks: {
@@ -190,39 +205,39 @@ const styles = StyleSheet.create({
   },
   block: {
     paddingVertical: 18,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: "#031852",
     paddingHorizontal: 20,
     rowGap: 12,
     borderRadius: 16,
   },
   newMessage: {
-    position: 'absolute',
+    position: "absolute",
     width: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: COLORS.yellow,
+    backgroundColor: "#1A82ED",
     right: 2,
     top: -5,
   },
   infoRowBlock: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     columnGap: 8,
   },
   infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   icon: {
     width: 24,
     height: 24,
   },
   blockTitle: {
-    color: COLORS.yellow,
+    color: "#1A82ED",
     fontSize: 20,
   },
   subtitle: {
     fontSize: 16,
-    color: '#fff',
+    color: "#fff",
   },
 });

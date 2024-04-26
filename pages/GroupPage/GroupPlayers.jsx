@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import PrimaryText from "../../components/PrimaryText";
 import jwt from "expo-jwt";
 
-import icon from "../../assets/images/call.png";
+import CrossIcon from "../../assets/images/cross.svg";
 import { BASE_URL } from "../../axios/axios";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice/authSlice";
@@ -30,7 +30,7 @@ const GroupPlayers = ({ route }) => {
   const onShare = async () => {
     try {
       const token = jwt.encode(
-        { groupId: id, isGroup: true },
+        { groupId: id, type: "GROUP" },
         "You never can guess this k3y"
       );
       const shareOptions = {
@@ -131,7 +131,7 @@ const GroupPlayers = ({ route }) => {
               borderRadius: 40,
             }}
           >
-            <Image source={icon} />
+            <CrossIcon width={20} height={20} />
             <PrimaryText style={{ color: COLORS.darkgrey }}>
               {t("common.invite_a_player")}
             </PrimaryText>

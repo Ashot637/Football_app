@@ -36,18 +36,16 @@ const createGameSlice = createSlice({
       state.time = action.payload;
     },
     setUniforms: (state, action) => {
-      if (
-        state.uniforms.length === 2 &&
-        !state.uniforms.includes(action.payload)
-      ) {
-        state.uniforms = [state.uniforms[1], action.payload];
-      } else {
-        state.uniforms.includes(action.payload)
-          ? (state.uniforms = state.uniforms.filter(
-              (i) => i !== action.payload
-            ))
-          : (state.uniforms = [...state.uniforms, action.payload]);
-      }
+      // if (
+      //   state.uniforms.length === 2 &&
+      //   !state.uniforms.includes(action.payload)
+      // ) {
+      //   state.uniforms = [state.uniforms[1], action.payload];
+      // } else {
+      state.uniforms.includes(action.payload)
+        ? (state.uniforms = state.uniforms.filter((i) => i !== action.payload))
+        : (state.uniforms = [...state.uniforms, action.payload]);
+      // }
     },
     // addPlayer: (state, action) => {
     //   state.players = [...state.players, action.payload];

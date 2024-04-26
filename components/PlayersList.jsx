@@ -24,10 +24,8 @@ const PlayersList = ({
   maxPlayersCount,
   title,
   organizerId,
-  groupId,
   isPublic,
   gameId,
-  uniforms,
   usersWillPlayCount: propsUsersWillPlayCount,
   usersWontPlayCount: propsUsersWontPlayCount,
 }) => {
@@ -52,7 +50,6 @@ const PlayersList = ({
         status: changeTo,
         id: gameId,
         prevStatus,
-        uniforms,
       });
       if (prevStatus) {
         setUsersWillPlayCount((prev) => --prev);
@@ -63,7 +60,6 @@ const PlayersList = ({
       axios.patch("/game/changeWillPlayGameStatus", {
         status: changeTo,
         id: gameId,
-        uniforms,
       });
       if (changeTo) {
         setUsersWillPlayCount((prev) => ++prev);
@@ -146,13 +142,13 @@ const PlayersList = ({
               <View style={[styles.nameView, styles.me]}>
                 <View style={styles.userInfo}>
                   <PrimaryText style={styles.name}>
-                    {currentUser.name.length > 15
+                    {currentUser.name.length > 12
                       ? currentUser.name.slice(
                           0,
                           (typeof status === "string" ? willPlay : status) !==
                             null
-                            ? 17
-                            : 12
+                            ? 12
+                            : 10
                         ) + "..."
                       : currentUser.name}{" "}
                     ({t("common.me")})
@@ -492,7 +488,7 @@ const styles = StyleSheet.create({
   },
   poll: {
     borderRadius: 30,
-    backgroundColor: COLORS.blue,
+    backgroundColor: "#031852",
     paddingVertical: 20,
     paddingHorizontal: 14,
     rowGap: 12,

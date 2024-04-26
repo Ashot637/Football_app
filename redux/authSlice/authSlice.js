@@ -41,6 +41,7 @@ export const fetchLogin = createAsyncThunk(
 
 export const fetchCode = createAsyncThunk("auth/fetchCode", async (params) => {
   const { data } = await axios.post("/auth/verifyCode", { ...params });
+  console.log(data);
   if (data.accessToken) {
     await AsyncStorage.setItem("accessToken", data.accessToken);
   }

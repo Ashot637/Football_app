@@ -1,4 +1,5 @@
 import {
+  Image,
   RefreshControl,
   ScrollView,
   TouchableOpacity,
@@ -13,7 +14,8 @@ import { COLORS } from "../../helpers/colors";
 import { useEffect, useState } from "react";
 import axios from "../../axios/axios";
 
-import GroupSvg from "../../assets/images/group.svg";
+import groupIcon from "../../assets/images/group.png";
+import CrossIcon from "../../assets/images/cross.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import Invitation from "../../components/Invitation";
 
@@ -74,7 +76,10 @@ const GroupsPage = ({ navigation }) => {
                         backgroundColor: "#032176",
                       }}
                     >
-                      <GroupSvg width={40} height={40} />
+                      <Image
+                        source={groupIcon}
+                        style={{ width: 40, height: 40 }}
+                      />
                       <PrimaryText
                         weight={600}
                         style={{ color: COLORS.lightWhite, fontSize: 16 }}
@@ -109,7 +114,7 @@ const GroupsPage = ({ navigation }) => {
             borderRadius: 40,
           }}
         >
-          {/* <Image source={icon} /> */}
+          <CrossIcon width={20} height={20} />
           <PrimaryText style={{ color: COLORS.darkgrey }}>
             {t("group.create")}
           </PrimaryText>

@@ -71,7 +71,7 @@ const reducer = (state, action) => {
   }
 };
 
-const PersonalDetails = ({ navigation, onLogout }) => {
+const PersonalDetails = ({ onLogout }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuth);

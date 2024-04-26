@@ -6,6 +6,7 @@ import footballBallImg from "../assets/images/football.png";
 import basketballBallImg from "../assets/images/basketball.png";
 import tenisBallImg from "../assets/images/tenis.png";
 import volleyBallImg from "../assets/images/volley.png";
+import Invitation from "../components/Invitation";
 
 const sports = [
   {
@@ -32,37 +33,40 @@ const sports = [
 
 const SelectSport = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.blocks}>
-        {sports.map((sport) => {
-          if (!sport.active) {
+    <>
+      <Invitation />
+      <View style={styles.container}>
+        <View style={styles.blocks}>
+          {sports.map((sport) => {
+            if (!sport.active) {
+              return (
+                <View style={styles.block} key={sport.title}>
+                  <Image source={sport.img} style={styles.img} />
+                  <PrimaryText style={styles.text}>{sport.title}</PrimaryText>
+                </View>
+              );
+            }
             return (
-              <View style={styles.block} key={sport.title}>
+              <TouchableOpacity
+                key={sport.title}
+                onPress={() => navigation.navigate("main")}
+                style={[styles.block, styles.active]}
+              >
                 <Image source={sport.img} style={styles.img} />
-                <PrimaryText style={styles.text}>{sport.title}</PrimaryText>
-              </View>
+                <PrimaryText style={styles.text}>Football</PrimaryText>
+              </TouchableOpacity>
             );
-          }
-          return (
-            <TouchableOpacity
-              key={sport.title}
-              onPress={() => navigation.navigate("main")}
-              style={[styles.block, styles.active]}
-            >
-              <Image source={sport.img} style={styles.img} />
-              <PrimaryText style={styles.text}>Football</PrimaryText>
-            </TouchableOpacity>
-          );
-        })}
+          })}
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingHorizontal: 30,
     justifyContent: "center",
   },
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
     height: 150,
     flexBasis: "46.5%",
     alignItems: "center",
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: "#0968CA",
     borderRadius: 24,
     opacity: 0.4,
   },

@@ -26,6 +26,7 @@ import { useTranslation } from "react-i18next";
 import { COLORS } from "../../helpers/colors";
 import ChooseGroup from "./ChooseGroup";
 import RadioButton from "../../components/RadioButton";
+import ChooseUniform from "./ChooseUniform";
 
 const accordions = [ChooseGroup, ChooseStadion, ChooseDate, ChooseTime];
 
@@ -103,7 +104,7 @@ const FillInfo = ({ stadions, groups }) => {
             <TouchableOpacity onPress={onCreateMatch} style={{ flex: 1 }}>
               <View style={styles.submitbtn}>
                 <PrimaryText
-                  style={[styles.btnText, { color: COLORS.black }]}
+                  style={[styles.btnText, { color: "#fff" }]}
                   weight={600}
                 >
                   {t("common.yes")}
@@ -113,7 +114,7 @@ const FillInfo = ({ stadions, groups }) => {
           </View>
         </ConfirmationModal>
       )}
-      <View style={{ rowGap: 24, marginBottom: 32 }}>
+      <View style={{ rowGap: 24, marginBottom: 10 }}>
         {accordions.map((Accordion, index) => {
           // if (!index) {
           //   return (
@@ -166,7 +167,7 @@ const FillInfo = ({ stadions, groups }) => {
         <Input
           value={price}
           setValue={(p) => dispatch(setPrice(p))}
-          img={<PriceIcon/>}
+          img={<PriceIcon />}
           type="phone-pad"
           placeholder={
             t("common.total_price") +
@@ -188,8 +189,9 @@ const FillInfo = ({ stadions, groups }) => {
           />
         </View>
       </View>
+      <ChooseUniform />
       <PrimaryButton
-        disabled={!date || !time || !duration}
+        disabled={!date || !time || !duration || !group}
         onPress={() => setIsOpenModal(true)}
         title={t("create_game.create")}
       />
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    color: COLORS.yellow,
+    color: COLORS.cyan,
   },
   modalSubTitle: {
     fontSize: 16,
@@ -224,7 +226,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   submitbtn: {
-    backgroundColor: COLORS.yellow,
+    backgroundColor: "#0968CA",
     borderRadius: 15,
     paddingVertical: 10,
   },

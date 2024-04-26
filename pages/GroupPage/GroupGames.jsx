@@ -7,7 +7,7 @@ import Game from "../../components/Game";
 import { LinearGradient } from "expo-linear-gradient";
 import PrimaryText from "../../components/PrimaryText";
 
-import icon from "../../assets/images/call.png";
+import CrossIcon from "../../assets/images/cross.svg";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice/authSlice";
 
@@ -53,7 +53,7 @@ const GroupGames = ({ navigation, route }) => {
               borderRadius: 40,
             }}
           >
-            <Image source={icon} />
+            <CrossIcon width={20} height={20} />
             <PrimaryText style={{ color: COLORS.darkgrey }}>
               {t("create_game.create")}
             </PrimaryText>

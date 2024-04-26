@@ -65,66 +65,7 @@ const ProfilePage = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuth);
-  const [selectedImg, setSelectedImg] = useState(null);
   const [tab, setTab] = useState(0);
-  const [profileData, dispatchData] = useReducer(reducer, {
-    name: user?.name,
-    email: user?.email,
-    phone: user?.phone,
-    address: user?.address,
-  });
-
-  const handleValueChange = (title, value) => {
-    dispatchData({ type: "UPDATE_VALUE", payload: { title, value } });
-  };
-
-  const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (status === "granted") {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 0.75,
-      });
-
-      if (!result.canceled) {
-        setSelectedImg(result.assets[0]);
-      }
-    }
-  };
-
-  const onUpdateData = () => {
-    const formData = new FormData();
-    items.forEach(({ title }) => formData.append(title, profileData[title]));
-    formData.append("prevImg", user.img);
-    if (selectedImg) {
-      const uriParts = selectedImg.uri.split(".");
-      const fileType = uriParts[uriParts.length - 1];
-
-      formData.append("img", {
-        uri: selectedImg.uri,
-        type: `image/${fileType}`,
-        name: `photo.${fileType}`,
-      });
-    }
-    axios
-      .patch("/user/update", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(({ data }) => {
-        dispatch(setUser(data));
-        onRemoveSelectedImg();
-      });
-  };
-
-  const onRemoveSelectedImg = () => {
-    setSelectedImg(null);
-  };
-
 
   const onLogout = async () => {
     await axios.post("/auth/logout");
@@ -179,7 +120,7 @@ const ProfilePage = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      {tab == 0 ? <PersonalDetails onLogout={onLogout} /> : <MyActivityPage/>}
+      {tab == 0 ? <PersonalDetails onLogout={onLogout} /> : <MyActivityPage />}
     </ScrollView>
   );
 };

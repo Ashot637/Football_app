@@ -21,9 +21,12 @@ const Invitation = () => {
   const { user } = useSelector(selectAuth);
 
   const onConfirm = () => {
-    navigation.navigate("game", {
-      id: user.invitations[0].gameId,
-      invitation: user?.invitations[0],
+    navigation.navigate("main", {
+      screen: "game",
+      params: {
+        id: user.invitations[0].gameId,
+        invitation: user?.invitations[0],
+      },
     });
     dispatch(deleteFirstInvitation());
   };
@@ -34,16 +37,18 @@ const Invitation = () => {
   };
 
   useEffect(() => {
-    if (user?.invitations[0]?.hasGame) {
-      navigation.navigate("game", { id: user.invitations[0].gameId });
-      axios.post("/game/declineInvitation", { id: user.invitations[0].id });
-      dispatch(deleteFirstInvitation());
-    }
-    if (user?.invitations[0]?.isGroup && !user?.invitations[0]?.isGame) {
+    if (user?.invitations[0]?.type === "GROUP") {
       navigation.navigate("group", {
         id: user.invitations[0].groupId,
         invitation: user.invitations[0],
       });
+      dispatch(deleteFirstInvitation());
+    } else if (user?.invitations[0]?.hasGame) {
+      navigation.navigate("main", {
+        screen: "game",
+        params: { id: user.invitations[0].gameId },
+      });
+      axios.post("/game/declineInvitation", { id: user.invitations[0].id });
       dispatch(deleteFirstInvitation());
     }
   }, [user?.invitations[0]]);

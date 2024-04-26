@@ -9,19 +9,19 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import { COLORS } from '../../helpers/colors';
-import PrimaryText from '../PrimaryText';
-import SenderMessage from './SenderMessage';
-import ReceiverMessage from './ReceiverMessage';
+} from "react-native";
+import { COLORS } from "../../helpers/colors";
+import PrimaryText from "../PrimaryText";
+import SenderMessage from "./SenderMessage";
+import ReceiverMessage from "./ReceiverMessage";
 
-import sendIcon from '../../assets/images/send.png';
+import sendIcon from "../../assets/images/send.png";
 
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../../redux/authSlice/authSlice';
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice/authSlice";
 
-import useChat from './useChat';
-import { useTranslation } from 'react-i18next';
+import useChat from "./useChat";
+import { useTranslation } from "react-i18next";
 
 const Chat = ({ route }) => {
   const { user } = useSelector(selectAuth);
@@ -40,30 +40,34 @@ const Chat = ({ route }) => {
   const { t } = useTranslation();
 
   const displayDate = (date) => {
-    const dateArray = date.split(' ');
+    const dateArray = date.split(" ");
 
     return dateArray.length === 1
       ? t(`date.${date}`)
-      : dateArray[0] + ' ' + t(`date.month.${dateArray[1]}`);
+      : dateArray[0] + " " + t(`date.month.${dateArray[1]}`);
   };
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => openMenuMessageId && setOpenMenuMessageId(null)}>
+      <TouchableWithoutFeedback
+        onPress={() => openMenuMessageId && setOpenMenuMessageId(null)}
+      >
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' && 'padding'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}
-          style={styles.container}>
+          behavior={Platform.OS === "ios" && "padding"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 120 : 0}
+          style={styles.container}
+        >
           {isLoading ? (
             <View
               style={{
                 flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems: "center",
+                justifyContent: "center",
                 paddingBottom: 25,
-              }}>
+              }}
+            >
               <ActivityIndicator
-                size={'large'}
+                size={"large"}
                 style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
                 color={COLORS.yellow}
               />
@@ -93,7 +97,9 @@ const Chat = ({ route }) => {
                             setOpenMenuMessageId={setOpenMenuMessageId}
                             data={message}
                             isOpenMenu={message.id === openMenuMessageId}
-                            isNextUserSame={messages[index - 1]?.userId === message.userId}
+                            isNextUserSame={
+                              messages[index - 1]?.userId === message.userId
+                            }
                             onReactToMessage={onReactToMessage}
                             onDeleteMessage={onDeleteMessage}
                           />
@@ -105,7 +111,9 @@ const Chat = ({ route }) => {
                           setOpenMenuMessageId={setOpenMenuMessageId}
                           data={message}
                           isOpenMenu={message.id === openMenuMessageId}
-                          isNextUserSame={messages[index + 1]?.userId === message.userId}
+                          isNextUserSame={
+                            messages[index + 1]?.userId === message.userId
+                          }
                           onReactToMessage={onReactToMessage}
                         />
                       );
@@ -120,13 +128,14 @@ const Chat = ({ route }) => {
               value={text}
               onChangeText={setText}
               style={styles.input}
-              placeholder={t('chat.write_your_message')}
+              placeholder={t("chat.write_your_message")}
               placeholderTextColor={COLORS.grey}
             />
             <TouchableOpacity
               style={styles.sendBtn}
               onPress={onSendMessage}
-              disabled={!text.trim().length}>
+              disabled={!text.trim().length}
+            >
               <Image source={sendIcon} />
             </TouchableOpacity>
           </View>
@@ -138,7 +147,7 @@ const Chat = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.background_blue,
     paddingHorizontal: 16,
     flex: 1,
   },
@@ -148,14 +157,14 @@ const styles = StyleSheet.create({
   date: {
     color: COLORS.grey,
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 15,
     marginTop: 10,
   },
   inputView: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     marginBottom: 15,
     paddingTop: 3,
   },
@@ -164,7 +173,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 40,
     borderRadius: 12,
-    color: '#fff',
+    color: "#fff",
     flex: 1,
   },
   sendBtn: {
@@ -172,16 +181,16 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     backgroundColor: COLORS.lightblue,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   overlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#111613E5',
+    backgroundColor: "#111613E5",
     opacity: 0.9,
   },
 });

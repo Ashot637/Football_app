@@ -16,23 +16,24 @@ import jwt from "expo-jwt";
 const PublicGame = ({ game, invitation }) => {
   const { t } = useTranslation();
   const { user } = useSelector(selectAuth);
-  const [uniforms, setUniforms] = useState([]);
+  // const [uniforms, setUniforms] = useState([]);
   const bookedUser = useMemo(() => {
     return game.users.find((player) => player.id === user?.id);
   }, [game, user]);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (bookedUser) {
-      setUniforms(bookedUser.UserGame.uniforms);
-    }
-  }, [bookedUser]);
+  // useEffect(() => {
+  //   if (bookedUser) {
+  //     setUniforms(bookedUser.UserGame.uniforms);
+  //   }
+  // }, [bookedUser]);
 
   const onBook = () => {
     axios
-      .post("/game/register/" + game.id, {
-        uniforms: uniforms,
-      })
+      // .post("/game/register/" + game.id, {
+      //   uniforms: uniforms,
+      // })
+      .post("/game/register/" + game.id)
       .then(({ data }) => {
         if (data.success) {
           navigation.navigate("success", {
@@ -58,7 +59,7 @@ const PublicGame = ({ game, invitation }) => {
           from: user.name,
           groupId: game.groupId,
           gameId: game.id,
-          isGame: true,
+          type: "GAME",
         },
         "You never can guess this k3y"
       );
@@ -79,60 +80,59 @@ const PublicGame = ({ game, invitation }) => {
   const onConfirmInvitation = async () => {
     await axios.post("/game/acceptInvitation", {
       id: invitation.id,
-      groupId: invitation.groupId,
-      gameId: invitation.gameId,
     });
     navigation.navigate("game", { id: game.id, refresh: Math.random() });
   };
 
   return (
     <View style={{ paddingTop: 32, paddingBottom: 20, paddingHorizontal: 16 }}>
-      <View
-        style={{
-          paddingBottom: 32,
-          borderColor: "#B2BED7",
-          borderBottomWidth: 1,
-        }}
-      >
-        <PrimaryText
-          weight={600}
+      {!!game.uniforms?.indexes.length && (
+        <View
           style={{
-            color: COLORS.lightWhite,
-            fontSize: 20,
-            marginBottom: 12,
-            textAlign: "center",
+            paddingBottom: 32,
+            marginBottom: 32,
+            borderColor: "#B2BED7",
+            borderBottomWidth: 1,
           }}
         >
-          {t("game.uniforms")}
-        </PrimaryText>
-        <Uniforms
-          game={game}
-          selectedUniforms={uniforms}
-          setSelectedUniforms={setUniforms}
-          cantSelect={!!invitation}
-        />
-      </View>
-      <View
-        style={{
-          paddingVertical: 32,
-          marginBottom: 32,
-          borderColor: "#B2BED7",
-          borderBottomWidth: 1,
-        }}
-      >
-        <PrimaryText
-          weight={600}
+          <PrimaryText
+            weight={600}
+            style={{
+              color: COLORS.lightWhite,
+              marginBottom: 12,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+          >
+            {t("game.uniforms")}
+          </PrimaryText>
+          <Uniforms uniforms={game.uniforms.indexes} />
+        </View>
+      )}
+      {!!game.stadion?.facilities.length && (
+        <View
           style={{
-            color: COLORS.lightWhite,
-            marginBottom: 12,
-            fontSize: 20,
-            textAlign: "center",
+            paddingBottom: 32,
+            marginBottom: 32,
+            borderColor: "#B2BED7",
+            borderBottomWidth: 1,
           }}
         >
-          {t("game.facilities")}
-        </PrimaryText>
-        <Facilities facilities={game.stadion.facilities} />
-      </View>
+          <PrimaryText
+            weight={600}
+            style={{
+              color: COLORS.lightWhite,
+              marginBottom: 12,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+          >
+            {t("game.facilities")}
+          </PrimaryText>
+          <Facilities facilities={game.stadion.facilities} />
+        </View>
+      )}
+
       <PlayersList
         players={game.users}
         maxPlayersCount={game.maxPlayersCount}
@@ -141,7 +141,6 @@ const PublicGame = ({ game, invitation }) => {
         groupId={game.groupId}
         isPublic={game.isPublic}
         gameId={game.id}
-        uniforms={uniforms}
         usersWillPlayCount={game.usersWillPlayCount}
         usersWontPlayCount={game.usersWontPlayCount}
       />

@@ -8,7 +8,7 @@ import {
   setGroup,
 } from "../../redux/createGameSlice/createGameSlice";
 
-import icon from "../../assets/images/stadium.png";
+import icon from "../../assets/images/group.png";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
@@ -21,7 +21,6 @@ const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
   return (
     <Accordion
       icon={icon}
-      iconInverted
       title={selectedGroup?.title}
       toggleIsOpen={() => toggleAccordion(accordionId)}
       isOpen={isActive}

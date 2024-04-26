@@ -145,9 +145,8 @@ const Game = ({ game, disabled, title }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        !disabled && user.id === game.creatorId
-          ? navigation.navigate("game_details", { id: game.id, title: title })
-          : navigation.navigate("game", { id: game.id })
+        !disabled &&
+        navigation.navigate("main", { screen: "game", params: { id: game.id } })
       }
     >
       <View style={styles.container}>

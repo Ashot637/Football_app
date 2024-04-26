@@ -132,7 +132,7 @@ const Navigation = () => {
       const { data } = await axios
         .get(BASE_URL + "ip")
         .catch((err) => console.log(err));
-      dispatch(fetchAuthMe({ expoPushToken, ip: "1" }));
+      dispatch(fetchAuthMe({ expoPushToken, ip: data }));
     })();
   }, []);
 
@@ -163,6 +163,7 @@ const Navigation = () => {
             name="forgot-password-new-password"
             component={NewPasswordPage}
           />
+          <Stack.Screen name="select" component={SelectSport} />
           <Stack.Screen name="main" component={HomeStack} />
           <Stack.Screen
             name="chat"

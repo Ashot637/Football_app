@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import PrimaryText from "../../components/PrimaryText";
 import { COLORS } from "../../helpers/colors";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import PrimaryButton from "../../components/PrimaryButton";
 import Input from "../../components/Input";
 
-import GroupSvg from "../../assets/images/group.svg";
+import groupIcon from "../../assets/images/group.png";
 import Heading from "../../components/Heading";
 import axios from "../../axios/axios";
 
@@ -36,7 +36,7 @@ const CreateGroupPage = ({ navigation }) => {
           <Input
             value={title}
             setValue={setTitle}
-            img={<GroupSvg />}
+            img={<Image source={groupIcon} style={{ width: 24, height: 24 }} />}
             placeholder={t("create_group.placeholder")}
           />
           <PrimaryButton

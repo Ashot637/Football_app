@@ -50,6 +50,8 @@ const DateFilterSection = ({ onFilter }) => {
                   backgroundColor: "#fff",
                   paddingHorizontal: 16,
                   paddingBottom: 32,
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
                 }}
               >
                 <TouchableOpacity
