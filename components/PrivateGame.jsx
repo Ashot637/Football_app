@@ -81,7 +81,7 @@ const PrivateGame = ({ game, invitation }) => {
         >
           {t("game.facilities")}
         </PrimaryText>
-        <Facilities facilities={game.stadion.facilities} />
+        <Facilities facilities={game?.stadion?.facilities} />
       </View>
       <PlayersList
         players={game.users}

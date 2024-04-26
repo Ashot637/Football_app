@@ -22,7 +22,7 @@ const GroupGames = ({ navigation, route }) => {
         <Heading align="center" title={title + " " + t("common.games")} />
         <View style={{ rowGap: 16, paddingHorizontal: 16, paddingBottom: 16 }}>
           {games.map((game) => {
-            return <Game key={game.id} game={game} disabled={isViewMode} />;
+            return <Game title={title} key={game.id} game={game} disabled={isViewMode} />;
           })}
           {!games.length && (
             <PrimaryText style={{ fontSize: 18, color: COLORS.grey }}>

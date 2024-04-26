@@ -57,6 +57,8 @@ import MyGamesPage from "../pages/MyGames/MyGamesPage";
 import StadiumsPage from "../pages/StadiumsPage";
 import StadiumDetails from "../pages/StadiumDetails";
 import OpenGamesPage from "../pages/OpenGames/OpenGames";
+import MyGameDetails from "../pages/MyGameDetails";
+import EditGame from "../pages/EditGame";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -205,6 +207,22 @@ const Navigation = () => {
           <Stack.Screen
             name="group-matches"
             component={GroupGames}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+          <Stack.Screen
+            name="game_details"
+            component={MyGameDetails}
+            options={{
+              headerShown: true,
+              header: () => <Header />,
+            }}
+          />
+                <Stack.Screen
+            name="edit_game"
+            component={EditGame}
             options={{
               headerShown: true,
               header: () => <Header />,

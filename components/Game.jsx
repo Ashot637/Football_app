@@ -115,10 +115,13 @@ import stadiumIcon from "../assets/images/stadium.png";
 
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice/authSlice";
 
-const Game = ({ game, disabled }) => {
+const Game = ({ game, disabled, title }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { user } = useSelector(selectAuth);
 
   const data = [
     {
@@ -141,7 +144,11 @@ const Game = ({ game, disabled }) => {
 
   return (
     <TouchableOpacity
-      onPress={() => !disabled && navigation.navigate("game", { id: game.id })}
+      onPress={() =>
+        !disabled && user.id === game.creatorId
+          ? navigation.navigate("game_details", { id: game.id, title: title })
+          : navigation.navigate("game", { id: game.id })
+      }
     >
       <View style={styles.container}>
         <View style={styles.overlay}>
@@ -218,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(239, 9, 161, 1)",
     marginTop: 10,
   },
-  blackLine:{
+  blackLine: {
     width: "100%",
     height: 0.5,
     backgroundColor: "rgba(26, 130, 237, 0.6)",
@@ -240,23 +247,18 @@ const styles = StyleSheet.create({
   },
   price: {
     color: "rgba(12, 249, 221, 1)",
-  dataBlock:{
-    marginTop:5,
-    marginBottom:5,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
   },
-  key:{
-    color: 'rgba(178, 190, 215, 1)',
-    fontSize: 18
+  key: {
+    color: "rgba(178, 190, 215, 1)",
+    fontSize: 18,
   },
-  data:{
-    color: 'rgba(248, 238, 255, 1)',
-    fontSize: 18
+  data: {
+    color: "rgba(248, 238, 255, 1)",
+    fontSize: 18,
   },
 
-  price:{
-    color: 'rgba(12, 249, 221, 1)'
+  price: {
+    color: "rgba(12, 249, 221, 1)",
   },
 
   infoView: {
@@ -289,6 +291,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     flexWrap: "wrap",
   },
-}});
+});
 
 export default Game;

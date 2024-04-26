@@ -16,6 +16,13 @@ const createGameSlice = createSlice({
   name: "createGame",
   initialState,
   reducers: {
+    setGameData: (state, action) => {
+      state.stadion = action.payload.stadion;
+      state.date = action.payload.date;
+      state.time = action.payload.time;
+      state.price = action.payload.price;
+      state.range = action.payload.range;
+    },
     setStadion: (state, action) => {
       state.stadion = action.payload;
     },
@@ -73,6 +80,7 @@ export const selectCreateGame = (state) => state.createGame;
 export default createGameSlice.reducer;
 
 export const {
+  setGameData,
   setStadion,
   setGroup,
   setDate,
@@ -85,3 +93,4 @@ export const {
   setRange,
   setDuration,
 } = createGameSlice.actions;
+

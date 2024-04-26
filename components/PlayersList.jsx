@@ -376,15 +376,15 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   me: {
-    backgroundColor: "#0D5454",
+    backgroundColor: "#4606AF",
   },
   avatarView: {
     borderWidth: 3,
     borderRadius: 32,
-    borderColor: "#2F4F4F",
+    borderColor: "#4606AF",
   },
   myAvatar: {
-    borderColor: "#0D5454",
+    borderColor: "#4606AF",
   },
   avatar: {
     width: 58,
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
   },
   poll: {
     borderRadius: 30,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     paddingVertical: 20,
     paddingHorizontal: 14,
     rowGap: 12,
