@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useSelector } from 'react-redux';
 import { selectNotification } from '../redux/notificationSlice/notificationSlice';
@@ -10,9 +10,17 @@ import { COLORS } from '../helpers/colors';
 import PrimaryText from '../components/PrimaryText';
 
 import { useTranslation } from 'react-i18next';
+import NotificationsBlocks from '../components/NotificationsBlocks';
+import axios from '../axios/axios';
 
 const NotificationsPage = ({ navigation }) => {
   const { t } = useTranslation();
+
+  const [notifications, setNotifications] = useState([])
+
+  axios.get("/notifications/getAll").then(({ data }) => {
+    setNotifications(data);
+  });
 
   const { from } = useSelector(selectNotification);
   useFocusEffect(
@@ -36,6 +44,10 @@ const NotificationsPage = ({ navigation }) => {
       <PrimaryText style={styles.tilte} weight={600}>
         {t('notifications.title')}
       </PrimaryText>
+      {notifications.map((el)=>{
+        return <NotificationsBlocks key={el.id} data={el}/>
+      })}
+    
     </ScrollView>
   );
 };

@@ -60,12 +60,7 @@
           "color": "#ffffff"
         }
       ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "eb785808-ad7c-4a7c-b976-be600a3dd403"
-      }
-    }
+    ]
   },
   "usesCleartextTraffic": true
 }

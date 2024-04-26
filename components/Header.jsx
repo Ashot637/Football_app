@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setFrom } from "../redux/notificationSlice/notificationSlice";
@@ -55,18 +55,27 @@ const Header = () => {
     <>
       <View style={styles.background}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('home')}>
-            <LogoImg width={60} height={60}/>
+          <TouchableOpacity onPress={() => navigation.navigate("home")}>
+            <LogoImg width={60} height={60} />
           </TouchableOpacity>
           <View style={styles.actions}>
             {/* <TouchableOpacity onPress={onOpenSearch}>
               <Image source={searchIcon} style={styles.icon} />
             </TouchableOpacity> */}
-            <TouchableOpacity onPress={onOpenNotifcations}>
-              <NotificationIcon width={30} height={30}/>
-            </TouchableOpacity>
+            <View>
+              {user.notifications > 0 && (
+                <View style={styles.count}>
+                  <Text style={{ color: "white", fontSize: 9 }}>
+                    {user.notifications}
+                  </Text>
+                </View>
+              )}
+              <TouchableOpacity onPress={onOpenNotifcations}>
+                <NotificationIcon width={30} height={30} />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={onOpenChats}>
-              <MessangerIcon width={30} height={30}/>
+              <MessangerIcon width={30} height={30} />
               {user?.hasMessage && <View style={styles.newMessage} />}
             </TouchableOpacity>
             {/* <View style={styles.actions}>
@@ -115,6 +124,21 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: -3,
+  },
+
+  count: {
+    zIndex: 3,
+    position: "absolute",
+    width: 15,
+    height: 15,
+    left: 15,
+    top: -3,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: "#F8EEFF",
+    backgroundColor: "#0968CA",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
