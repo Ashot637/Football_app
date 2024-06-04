@@ -1,53 +1,59 @@
-import { useCallback, useEffect, useState } from 'react';
-import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from "react";
+import { BackHandler, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { useSelector } from 'react-redux';
-import { selectNotification } from '../redux/notificationSlice/notificationSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { selectNotification } from "../redux/notificationSlice/notificationSlice";
 
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
-import { COLORS } from '../helpers/colors';
-import PrimaryText from '../components/PrimaryText';
+import { COLORS } from "../helpers/colors";
+import PrimaryText from "../components/PrimaryText";
 
-import { useTranslation } from 'react-i18next';
-import NotificationsBlocks from '../components/NotificationsBlocks';
-import axios from '../axios/axios';
+import { useTranslation } from "react-i18next";
+import NotificationsBlocks from "../components/NotificationsBlocks";
+import axios from "../axios/axios";
+import { changeNotificationsCount } from "../redux/authSlice/authSlice";
+import InvitationNotification from "../components/InvitationNotification";
 
 const NotificationsPage = ({ navigation }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState([]);
 
-  axios.get("/notifications/getAll").then(({ data }) => {
-    setNotifications(data);
-  });
+  useEffect(() => {
+    axios.get("/notifications/getAll").then(({ data }) => {
+      setNotifications(data);
+      dispatch(changeNotificationsCount(0));
+    });
+  }, []);
 
-  const { from } = useSelector(selectNotification);
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        navigation.navigate(from === 'game' ? 'home' : from);
+  // const { from } = useSelector(selectNotification);
 
-        return true;
-      };
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const onBackPress = () => {
+  //       navigation.navigate(from === "game" ? "home" : from);
 
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  //       return true;
+  //     };
 
-      return () => {
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-      };
-    }),
-  );
+  //     BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+  //     return () => {
+  //       BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+  //     };
+  //   })
+  // );
 
   return (
     <ScrollView style={styles.container}>
       <PrimaryText style={styles.tilte} weight={600}>
-        {t('notifications.title')}
+        {t("notifications.title")}
       </PrimaryText>
-      {notifications.map((el)=>{
-        return <NotificationsBlocks key={el.id} data={el}/>
+      {notifications.map((notification) => {
+        return <InvitationNotification data={notification} />;
       })}
-    
     </ScrollView>
   );
 };
@@ -60,8 +66,8 @@ const styles = StyleSheet.create({
   },
   tilte: {
     fontSize: 22,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
   },
 });
 

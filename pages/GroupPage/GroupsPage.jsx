@@ -18,14 +18,17 @@ import groupIcon from "../../assets/images/group.png";
 import CrossIcon from "../../assets/images/cross.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import Invitation from "../../components/Invitation";
+import { useSelector } from "react-redux";
+import { selectCreateGame } from "../../redux/createGameSlice/createGameSlice";
 
 const GroupsPage = ({ navigation }) => {
   const { t } = useTranslation();
   const [groups, setGroups] = useState([]);
+  const { needRefresh } = useSelector(selectCreateGame);
 
   useEffect(() => {
     onRefresh();
-  }, []);
+  }, [needRefresh]);
 
   const onRefresh = () => {
     axios.get("/group/getAll").then(({ data }) => setGroups(data));
@@ -40,7 +43,7 @@ const GroupsPage = ({ navigation }) => {
           <RefreshControl refreshing={false} onRefresh={onRefresh} />
         }
       >
-        <Heading title={t("groups.my")} align="center" />
+        <Heading title={t("group.my")} align="center" />
         <View style={{ rowGap: 16, paddingHorizontal: 16, paddingBottom: 16 }}>
           {groups &&
             groups.map((group) => {
@@ -94,6 +97,7 @@ const GroupsPage = ({ navigation }) => {
         </View>
       </ScrollView>
       <TouchableOpacity
+        testID="create-team"
         onPress={() => navigation.navigate("create-group")}
         style={{
           position: "absolute",

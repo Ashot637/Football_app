@@ -23,7 +23,7 @@ import Input from "../components/Input";
 
 import BackIcon from "../assets/images/Arrow - Right.svg";
 import ProfileIcon from "../assets/images/Profile_Grey.svg";
-import PhoneIcon from "../assets/images/Call.svg";
+import phoneIcon from "../assets/images/call.png";
 import PrimaryText from "../components/PrimaryText";
 
 import { useTranslation } from "react-i18next";
@@ -44,7 +44,7 @@ const SignUpPage = ({ navigation }) => {
   }, [isSignUpDataValid, navigation]);
 
   const onSignup = () => {
-    dispatch(fetchSignup({ name: name.trim(), phone: phone.trim() })).then(
+    dispatch(fetchSignup({ name: name.trim(), phone: "374" + phone })).then(
       () => {
         setName("");
         setPhone("");
@@ -59,7 +59,7 @@ const SignUpPage = ({ navigation }) => {
           <View style={styles.top}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               {/* <Image source={backIcon} width={24} height={24} /> */}
-              <BackIcon/>
+              <BackIcon />
             </TouchableOpacity>
             <PrimaryText
               style={[styles.title, i18n.language === "en" && styles.titleBig]}
@@ -72,21 +72,23 @@ const SignUpPage = ({ navigation }) => {
           <View style={styles.inputs}>
             <Input
               value={name}
+              testId="name-input"
               setValue={(str) => {
                 if (!/[\d.@#$^&*!]/.test(str)) {
                   setName(str);
                 }
               }}
-              img={<ProfileIcon/>}
+              img={<ProfileIcon />}
               placeholder={t("user.name")}
             />
             <Input
               type="phone-pad"
               value={phone}
+              testId="phone-input"
               setValue={setPhone}
-              img={<PhoneIcon/>}
-              placeholder={t("user.phone")}
-              maxLength={13}
+              img={<Image source={phoneIcon} />}
+              maxLength={8}
+              isPhoneNumber
             />
           </View>
           {errorMessage && (
@@ -97,7 +99,7 @@ const SignUpPage = ({ navigation }) => {
           <PrimaryButton
             title={t("form.signup")}
             onPress={() => onSignup()}
-            disabled={phone.trim().length < 9 || !name.trim().length}
+            disabled={phone.trim().length < 8 || !name.trim().length}
           />
         </BackgroundImageLayout>
       </TouchableWithoutFeedback>

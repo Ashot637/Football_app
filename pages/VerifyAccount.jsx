@@ -49,7 +49,14 @@ const VerifyAccount = ({ navigation }) => {
     const expoPushToken = await AsyncStorage.getItem("expoPushToken");
     const { data } = await axios.get(BASE_URL + "ip");
     dispatch(
-      fetchCode({ code: value, name, phone, password, expoPushToken, ip: data })
+      fetchCode({
+        code: value,
+        name,
+        phone,
+        password,
+        expoPushToken,
+        ip: data,
+      })
     );
   };
 

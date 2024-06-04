@@ -41,7 +41,6 @@ export const fetchLogin = createAsyncThunk(
 
 export const fetchCode = createAsyncThunk("auth/fetchCode", async (params) => {
   const { data } = await axios.post("/auth/verifyCode", { ...params });
-  console.log(data);
   if (data.accessToken) {
     await AsyncStorage.setItem("accessToken", data.accessToken);
   }
@@ -92,6 +91,9 @@ const authSlice = createSlice({
     },
     changeNewMessagesStatus: (state, action) => {
       state.user = { ...state.user, hasMessage: action.payload };
+    },
+    changeNotificationsCount: (state, action) => {
+      state.user = { ...state.user, notifications: action.payload };
     },
     toggleRememberMe: (state) => {
       state.rememberMe = !state.rememberMe;
@@ -175,4 +177,5 @@ export const {
   changeNewMessagesStatus,
   deleteFirstInvitation,
   setExpoPushToken,
+  changeNotificationsCount,
 } = authSlice.actions;

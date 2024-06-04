@@ -38,7 +38,7 @@ const weekDays = [
   "Saturday",
   "Sunday",
 ];
-const Calendar = memo(({ date, setDate }) => {
+const Calendar = memo(({ date, setDate, events }) => {
   const { t } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -92,6 +92,10 @@ const Calendar = memo(({ date, setDate }) => {
     setCurrentDate((currentDate) => addYears(currentDate, 1));
   };
 
+  const hasEvent = (day) => {
+    return events?.some((event) => isSameDay(new Date(event), day));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -140,7 +144,9 @@ const Calendar = memo(({ date, setDate }) => {
           columnWrapperStyle={styles.row}
           renderItem={({ item }) => {
             const disabled =
-              !isSameMonth(item, currentDate) || isBefore(item, new Date());
+              !isSameMonth(item, currentDate) ||
+              isBefore(addDays(item, 1), new Date());
+            const isEventDay = hasEvent(item);
             return (
               <TouchableOpacity
                 disabled={disabled}
@@ -160,6 +166,17 @@ const Calendar = memo(({ date, setDate }) => {
                   >
                     {format(item, "d")}
                   </PrimaryText>
+                  {isEventDay && (
+                    <View
+                      style={{
+                        marginTop: 2,
+                        width: 5,
+                        height: 5,
+                        borderRadius: 2.5,
+                        backgroundColor: "#EF09A1",
+                      }}
+                    />
+                  )}
                 </View>
               </TouchableOpacity>
             );

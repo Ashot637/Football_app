@@ -13,8 +13,10 @@ import { useEffect, useState } from "react";
 
 import stadiumIcon from "../assets/images/stadium.png";
 import SearchIcon from "../assets/images/Search.svg";
+import { useTranslation } from "react-i18next";
 
 const StadiumsPage = ({ navigation }) => {
+  const { t } = useTranslation();
   const [stadiums, setStadiums] = useState([]);
 
   useEffect(() => {
@@ -35,10 +37,11 @@ const StadiumsPage = ({ navigation }) => {
             marginBottom: 20,
           }}
         >
-          Դաշտեր
+          {t("common.stadiums")}
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
           <TouchableOpacity
+            testID="stadiums-search-icon"
             onPress={() => {
               navigation.navigate("stadiums_search");
             }}
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
   block: {
     width: "100%",
     backgroundColor: "#032176",
-    height: 80,
+    paddingVertical: 20,
     marginTop: 20,
     borderRadius: 6,
     flexDirection: "row",

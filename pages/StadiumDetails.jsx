@@ -2,6 +2,7 @@ import {
   Button,
   Image,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -12,11 +13,13 @@ import axios, { BASE_URL } from "../axios/axios";
 import LocationIcon from "../assets/images/Location-1.svg";
 import Facilities from "../components/Facilities";
 import PrimaryButton from "../components/PrimaryButton";
+import { useTranslation } from "react-i18next";
 
 const StadiumDetails = ({ route, navigation }) => {
   const { id } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [stadium, setStadium] = useState([]);
+  const { t } = useTranslation();
   useLayoutEffect(() => {
     onRefresh();
   }, [route]);
@@ -31,7 +34,7 @@ const StadiumDetails = ({ route, navigation }) => {
 
   return (
     <>
-      <View style={styles.background}>
+      <ScrollView style={styles.background}>
         <ImageBackground
           imageStyle={{ opacity: 0.5 }}
           source={{ uri: BASE_URL + stadium.img }}
@@ -74,7 +77,7 @@ const StadiumDetails = ({ route, navigation }) => {
                 marginBottom: 25,
               }}
             >
-              Հարմարություններ
+              {t("game.facilities")}
             </Text>
             {stadium.facilities.map((item) => {
               return (
@@ -122,10 +125,10 @@ const StadiumDetails = ({ route, navigation }) => {
             onPress={() => {
               navigation.navigate("create-game", { stadumId: id });
             }}
-            title={"Ամրագրել հիմա"}
+            title={t("game.book_now")}
           ></PrimaryButton>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };

@@ -12,6 +12,7 @@ const OpenGamesPage = () => {
   const { t } = useTranslation();
   const [games, setGames] = useState([]);
   const [date, setDate] = useState(null);
+  const [events, setEvents] = useState(null);
 
   useEffect(() => {
     onRefresh();
@@ -25,6 +26,9 @@ const OpenGamesPage = () => {
     } else {
       axios.get("/game/openGames").then(({ data }) => {
         setGames(data);
+        if (!events) {
+          setEvents(data.map((game) => game.startTime));
+        }
       });
     }
   };
@@ -38,7 +42,7 @@ const OpenGamesPage = () => {
     >
       <View style={{ paddingHorizontal: 16 }}>
         <Heading title={t("home.open_games")} align="center" />
-        <DateFilterSection onFilter={setDate} />
+        <DateFilterSection onFilter={setDate} events={events} />
         <View style={{ rowGap: 16, addingBottom: 16 }}>
           {games.map((game) => {
             return <Game key={game.id} game={game} />;

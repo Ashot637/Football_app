@@ -1,7 +1,6 @@
 import {
   Image,
   Modal,
-  StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -15,7 +14,7 @@ import closeIcon from "../assets/images/close.png";
 import Calendar from "./Calendar";
 import PrimaryButton from "./PrimaryButton";
 
-const DateFilterSection = ({ onFilter }) => {
+const DateFilterSection = ({ onFilter, events }) => {
   const [date, setDate] = useState(null);
   const { t } = useTranslation();
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -54,13 +53,32 @@ const DateFilterSection = ({ onFilter }) => {
                   borderTopRightRadius: 16,
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => setIsOpenModal(false)}
-                  style={{ alignItems: "flex-end", paddingTop: 14 }}
+                <View
+                  style={{
+                    justifyContent: "space-between",
+                    paddingTop: 14,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
                 >
-                  <Image source={closeIcon} />
-                </TouchableOpacity>
-                <Calendar date={date} setDate={setDate} />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setDate(null);
+                      onFilter(null);
+                    }}
+                  >
+                    <PrimaryText
+                      weight={600}
+                      style={{ color: date ? "#032176" : "#B2BED7" }}
+                    >
+                      {t("common.clear")}
+                    </PrimaryText>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => setIsOpenModal(false)}>
+                    <Image source={closeIcon} />
+                  </TouchableOpacity>
+                </View>
+                <Calendar date={date} setDate={setDate} events={events} />
                 <PrimaryButton
                   onPress={() => {
                     onFilter(date);
@@ -78,5 +96,3 @@ const DateFilterSection = ({ onFilter }) => {
 };
 
 export default DateFilterSection;
-
-const styles = StyleSheet.create({});

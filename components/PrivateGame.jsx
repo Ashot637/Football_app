@@ -14,17 +14,11 @@ import { useNavigation } from "@react-navigation/native";
 
 import axios from "../axios/axios";
 import Uniforms from "./Uniforms";
-const PrivateGame = ({ game, invitation }) => {
+const PrivateGame = ({ game, invitation, fromNotification }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [isGame, setIsGame] = useState(false);
   const { user } = useSelector(selectAuth);
-
-  //   const onLeave = () => {
-  // axios.post("/game/cancel/" + game.id).then(() => {
-  //   navigation.navigate("cancel");
-  // });
-  //   };
 
   const onShare = async () => {
     try {
@@ -33,7 +27,7 @@ const PrivateGame = ({ game, invitation }) => {
           from: user.name,
           groupId: game.groupId,
           gameId: game.id,
-          type: isGame ? "PRIVATE_GAME" : "GROUP",
+          type: !isGame ? "PRIVATE_GAME" : "GROUP",
         },
         "You never can guess this k3y"
       );
@@ -47,14 +41,24 @@ const PrivateGame = ({ game, invitation }) => {
   };
 
   const onCancelInvitation = () => {
-    axios.post("/game/declineInvitation", { id: invitation.id });
+    if (!fromNotification) {
+      axios.post("/game/declineInvitation", { id: invitation.id });
+    }
     navigation.navigate("home");
   };
 
   const onConfirmInvitation = async () => {
-    await axios.post("/game/acceptInvitation", {
-      id: invitation.id,
-    });
+    if (fromNotification) {
+      await axios.post("/game/joinToPrivateGame", {
+        id: game.id,
+        withGroup: fromNotification.withGroup,
+        notificationId: fromNotification.notificationId,
+      });
+    } else {
+      await axios.post("/game/acceptInvitation", {
+        id: invitation.id,
+      });
+    }
     navigation.navigate("game", { id: game.id, refresh: Math.random() });
   };
 
@@ -73,7 +77,7 @@ const PrivateGame = ({ game, invitation }) => {
             weight={600}
             style={{
               color: COLORS.lightWhite,
-              marginBottom: 12,
+              marginBottom: 20,
               fontSize: 20,
               textAlign: "center",
             }}
@@ -117,7 +121,7 @@ const PrivateGame = ({ game, invitation }) => {
         usersWillPlayCount={game.usersWillPlayCount}
         usersWontPlayCount={game.usersWontPlayCount}
       />
-      {invitation ? (
+      {invitation || fromNotification ? (
         <View
           style={{
             paddingHorizontal: 16,
@@ -131,25 +135,28 @@ const PrivateGame = ({ game, invitation }) => {
             onPress={onCancelInvitation}
             style={{
               flex: 1,
-              backgroundColor: "#acad28",
+              backgroundColor: "#E1D4F766",
               borderWidth: 1.5,
-              borderColor: COLORS.yellow,
+              borderColor: COLORS.lightWhite,
               borderRadius: 15,
               height: 60,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <PrimaryText weight={600} style={{ fontSize: 20 }}>
-              {t("common.decline")}
+            <PrimaryText
+              weight={600}
+              style={{ fontSize: 20, color: COLORS.lightWhite }}
+            >
+              {t("common.cancel")}
             </PrimaryText>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onConfirmInvitation}
             style={{
               flex: 1,
-              backgroundColor: "#acad28",
-              borderColor: COLORS.yellow,
+              backgroundColor: COLORS.cyan,
+              borderColor: COLORS.cyan,
               borderRadius: 15,
               alignItems: "center",
               justifyContent: "center",
@@ -181,7 +188,6 @@ const PrivateGame = ({ game, invitation }) => {
             style={{
               borderRadius: 15,
               flex: 1,
-              //   marginBottom: 24,
               borderWidth: 1,
               borderColor: "#E1D4F7",
               paddingVertical: 20,
@@ -196,17 +202,6 @@ const PrivateGame = ({ game, invitation }) => {
               {t("game.invite_players")}
             </PrimaryText>
           </TouchableOpacity>
-          {/* <TouchableOpacity onPress={onLeave}>
-            <PrimaryText
-              style={{
-                color: COLORS.cyan,
-                fontSize: 18,
-                textAlign: "center",
-              }}
-            >
-              {t("game.leave")}
-            </PrimaryText>
-          </TouchableOpacity> */}
         </>
       )}
     </View>

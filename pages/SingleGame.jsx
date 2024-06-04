@@ -7,6 +7,8 @@ import {
   Image,
   RefreshControl,
   ActivityIndicator,
+  TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import PrimaryText from "../components/PrimaryText";
 
@@ -27,12 +29,17 @@ import { selectAuth } from "../redux/authSlice/authSlice";
 import PublicGame from "../components/PublicGame";
 import PrivateGame from "../components/PrivateGame";
 
+import InfoIcon from "../assets/images/info.svg";
+
+const { width } = Dimensions.get("screen");
+
 const SingleGame = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const { id, invitation } = route.params;
+  const { id, invitation, fromNotification } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [game, setGame] = useState(null);
   const { user } = useSelector(selectAuth);
+  const [isOpenInfo, setIsOpenInfo] = useState(false);
 
   useLayoutEffect(() => {
     onRefresh();
@@ -72,6 +79,65 @@ const SingleGame = ({ route, navigation }) => {
               source={{ uri: BASE_URL + game.stadion.img }}
               style={styles.image}
             >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  paddingRight: 10,
+                  width: "100%",
+                  position: "absolute",
+                  top: 10,
+                }}
+              >
+                {userAlreadyBooked && isOpenInfo && (
+                  <View
+                    style={{
+                      position: "absolute",
+                      backgroundColor: "#0968CA",
+                      left: 23,
+                      top: -5,
+                      width: width * 0.75,
+                      borderRadius: 15,
+                      padding: 10,
+                      zIndex: 1,
+                      alignItems: "center",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <View style={{ width: "100%" }}>
+                      <PrimaryText
+                        style={{
+                          fontSize: 12,
+                          color: "#fff",
+                          textAlign: "center",
+                        }}
+                        weight={600}
+                      >
+                        {t("common.booking_number")}
+                      </PrimaryText>
+                      <PrimaryText
+                        style={{
+                          fontSize: 12,
+                          color: "#fff",
+                          textAlign: "center",
+                        }}
+                        weight={600}
+                      >
+                        {game.users.find((u) => u.id === user.id).UserGame.id}
+                      </PrimaryText>
+                    </View>
+                    <View style={styles.triangle}></View>
+                  </View>
+                )}
+                {userAlreadyBooked && (
+                  <TouchableOpacity
+                    onPress={() => setIsOpenInfo((prev) => !prev)}
+                  >
+                    <InfoIcon width={36} height={36} />
+                  </TouchableOpacity>
+                )}
+              </View>
               <View style={styles.info}>
                 {!!game.price && (
                   <View style={styles.priceView}>
@@ -95,11 +161,15 @@ const SingleGame = ({ route, navigation }) => {
             {game.isPublic ? (
               <PublicGame game={game} invitation={invitation} />
             ) : (
-              <PrivateGame game={game} invitation={invitation} />
+              <PrivateGame
+                game={game}
+                invitation={invitation}
+                fromNotification={fromNotification}
+              />
             )}
           </ScrollView>
           {(userAlreadyBooked || !game.isPublic) && (
-            <View
+            <TouchableOpacity
               style={{
                 position: "absolute",
                 right: 14,
@@ -115,7 +185,7 @@ const SingleGame = ({ route, navigation }) => {
               onPress={() =>
                 navigation.navigate("chat", {
                   groupId: game.groupId,
-                  groupTitle: game.stadion.title_en,
+                  groupTitle: game.group?.title,
                 })
               }
             >
@@ -123,7 +193,7 @@ const SingleGame = ({ route, navigation }) => {
                 source={require("../assets/images/chat-icon.png")}
                 style={{ width: 36, height: 36 }}
               />
-            </View>
+            </TouchableOpacity>
           )}
         </>
       )}
@@ -147,7 +217,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   priceView: {
-    backgroundColor: COLORS.green,
+    backgroundColor: "#0968CA",
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 20,
@@ -179,6 +249,23 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 20,
+    right: -10,
+    transform: [
+      {
+        rotate: "90deg",
+      },
+    ],
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#0968CA",
   },
 });
 

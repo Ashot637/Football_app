@@ -48,7 +48,7 @@ const Groups = () => {
 
         array.unshift({
           ...obj,
-          isNewMessage: true,
+          newMessagesCount: +obj.newMessagesCount + 1,
         });
 
         return array;
@@ -59,7 +59,7 @@ const Groups = () => {
   useEffect(() => {
     if (chats.length) {
       const chatsWithNewMessages = chats.filter(
-        (chat) => chat.isNewMessage
+        (chat) => +chat.newMessagesCount > 0
       ).length;
       if (!chatsWithNewMessages) {
         dispatch(changeNewMessagesStatus(false));
@@ -79,23 +79,23 @@ const Groups = () => {
       });
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        navigation.navigate(
-          from === "game" || from === "notifications" ? "home" : from
-        );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const onBackPress = () => {
+  //       navigation.navigate(
+  //         from === "game" || from === "notifications" ? "home" : from
+  //       );
 
-        return true;
-      };
+  //       return true;
+  //     };
 
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+  //     BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-      return () => {
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-      };
-    })
-  );
+  //     return () => {
+  //       BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+  //     };
+  //   })
+  // );
 
   useEffect(() => {
     socket.on("read-message-in-group", (groupId) => {
@@ -104,7 +104,7 @@ const Groups = () => {
           if (chat.id === groupId) {
             return {
               ...chat,
-              isNewMessage: false,
+              newMessagesCount: 0,
             };
           }
           return chat;
@@ -129,7 +129,7 @@ const Groups = () => {
             {t("chat.title")}
           </PrimaryText>
           <View style={styles.blocks}>
-            {chats.map(({ id, isNewMessage, title }) => {
+            {chats.map(({ id, newMessagesCount, title }) => {
               return (
                 <TouchableOpacity
                   key={id}
@@ -139,7 +139,7 @@ const Groups = () => {
                         if (chat.id === id) {
                           return {
                             ...chat,
-                            isNewMessage: false,
+                            newMessagesCount: 0,
                           };
                         }
                         return chat;
@@ -152,10 +152,19 @@ const Groups = () => {
                   }}
                 >
                   <View style={styles.block}>
-                    {isNewMessage && <View style={styles.newMessage} />}
                     <PrimaryText weight={700} style={styles.blockTitle}>
                       {title}
                     </PrimaryText>
+                    {!!+newMessagesCount && (
+                      <View style={styles.newMessage}>
+                        <PrimaryText
+                          weight={600}
+                          style={{ fontSize: 17, color: "#041440" }}
+                        >
+                          {newMessagesCount}
+                        </PrimaryText>
+                      </View>
+                    )}
                     {/* <View style={styles.infoRow}>
                       <View style={styles.infoRowBlock}>
                         <Image source={calendarIcon} style={styles.icon} />
@@ -209,15 +218,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     rowGap: 12,
     borderRadius: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    columnGap: 20,
   },
   newMessage: {
-    position: "absolute",
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    backgroundColor: "#1A82ED",
-    right: 2,
-    top: -5,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: COLORS.cyan,
+    alignItems: "center",
+    justifyContent: "center",
   },
   infoRowBlock: {
     flexDirection: "row",
@@ -235,6 +247,7 @@ const styles = StyleSheet.create({
   blockTitle: {
     color: "#1A82ED",
     fontSize: 20,
+    width: "75%",
   },
   subtitle: {
     fontSize: 16,

@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
-import { BASE_URL } from "../axios/axios";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/authSlice/authSlice";
+import { BASE_URL } from "../axios/axios";
 
-export let socket = io(BASE_URL);
+export let socket = io("https://ballhola.app");
 
 const useSocket = () => {
   const { user } = useSelector(selectAuth);
   useEffect(() => {
     if (user) {
-      socket = io(BASE_URL);
+      // socket = io("https://ballhola.app");
       socket.on("connect", () => {});
 
       socket.emit("user-connected", user.id);

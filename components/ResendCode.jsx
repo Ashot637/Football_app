@@ -1,11 +1,11 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import PrimaryText from './PrimaryText';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { COLORS } from '../helpers/colors';
-import axios from '../axios/axios';
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../redux/authSlice/authSlice';
+import { StyleSheet, TouchableOpacity } from "react-native";
+import PrimaryText from "./PrimaryText";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { COLORS } from "../helpers/colors";
+import axios from "../axios/axios";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice/authSlice";
 
 const TIMER_MAX_VALUE = 60;
 
@@ -39,15 +39,15 @@ const ResendCode = ({ phone: propsPhone }) => {
 
   const onResend = () => {
     setIsLoading(true);
-    axios.post('/auth/resend', { phone: propsPhone ?? phone });
+    axios.post("/auth/resend", { phone: propsPhone ?? phone });
   };
 
   return (
     <>
       {!isLoading ? (
-        <TouchableOpacity onPress={onResend}>
+        <TouchableOpacity onPress={onResend} testID="send-again">
           <PrimaryText style={styles.title} weight={600}>
-            {t('verify.resend')}
+            {t("verify.resend")}
           </PrimaryText>
         </TouchableOpacity>
       ) : (
@@ -62,7 +62,7 @@ const ResendCode = ({ phone: propsPhone }) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.lightblue,
   },
 });

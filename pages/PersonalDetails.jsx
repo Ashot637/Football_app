@@ -14,7 +14,7 @@ import LanguageSelect from "../components/LanguageSelect";
 import ContactUs from "../components/ContactUs";
 
 import { useDispatch, useSelector } from "react-redux";
-import { logout, selectAuth, setUser } from "../redux/authSlice/authSlice";
+import { selectAuth, setUser } from "../redux/authSlice/authSlice";
 
 import * as ImagePicker from "expo-image-picker";
 
@@ -29,8 +29,6 @@ import ProfileIcon from "../assets/images/Profile.svg";
 import ProfileIcon2 from "../assets/images/Profile-1.svg";
 import MessageIcon from "../assets/images/Message.svg";
 import MessageIcon2 from "../assets/images/Message-1.svg";
-import CallIcon from "../assets/images/Call.svg";
-import CallIcon2 from "../assets/images/Call-1.svg";
 import LocationIcon from "../assets/images/Location.svg";
 import LocationIcon2 from "../assets/images/Location-1.svg";
 import LogoutIcon from "../assets/images/log out.svg";
@@ -45,21 +43,16 @@ const items = [
     openIcon: <ProfileIcon2 />,
     title: "name",
   },
-  {
-    icon: <MessageIcon />,
-    openIcon: <MessageIcon2 />,
-    title: "email",
-  },
-  {
-    icon: <CallIcon />,
-    openIcon: <CallIcon2 />,
-    title: "phone",
-  },
-  {
-    icon: <LocationIcon />,
-    openIcon: <LocationIcon2 />,
-    title: "address",
-  },
+  // {
+  //   icon: <MessageIcon />,
+  //   openIcon: <MessageIcon2 />,
+  //   title: "email",
+  // },
+  // {
+  //   icon: <LocationIcon />,
+  //   openIcon: <LocationIcon2 />,
+  //   title: "address",
+  // },
 ];
 
 const reducer = (state, action) => {
@@ -78,9 +71,9 @@ const PersonalDetails = ({ onLogout }) => {
   const [selectedImg, setSelectedImg] = useState(null);
   const [profileData, dispatchData] = useReducer(reducer, {
     name: user?.name,
-    email: user?.email,
-    phone: user?.phone,
-    address: user?.address,
+    // email: user?.email,
+    // phone: user?.phone,
+    // address: user?.address,
   });
 
   const handleValueChange = (title, value) => {
@@ -179,8 +172,10 @@ const PersonalDetails = ({ onLogout }) => {
               );
             })}
             <LanguageSelect />
+            <ContactUs />
             <DeleteAccount />
             <TouchableOpacity
+              testID="logout-button"
               style={{ alignSelf: "flex-start" }}
               onPress={() => onLogout()}
             >
@@ -198,12 +193,10 @@ const PersonalDetails = ({ onLogout }) => {
               onPress={() => onUpdateData()}
               disabled={
                 (user["name"] === profileData["name"] &&
-                  user["phone"] === profileData["phone"] &&
-                  user["email"] === profileData["email"] &&
-                  user["address"] === profileData["address"] &&
+                  // user["email"] === profileData["email"] &&
+                  // user["address"] === profileData["address"] &&
                   !selectedImg) ||
-                !profileData["name"].trim() ||
-                profileData["phone"].trim().length < 9
+                !profileData["name"].trim()
               }
             />
           </View>

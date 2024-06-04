@@ -25,8 +25,10 @@ const YourActivity = () => {
         {t("activity.individual_activity")}
       </PrimaryText>
       {games.length == 0 ? (
-        <PrimaryText style={{ color: "#B2BED7", fontSize: 18, textAlign: 'center' }}>
-          Դուք ներկայումս որևէ ակտիվություն չունեք:
+        <PrimaryText
+          style={{ color: "#B2BED7", fontSize: 18, textAlign: "center" }}
+        >
+          {t("activity.empty")}
         </PrimaryText>
       ) : (
         <View style={styles.blocks}>
@@ -60,20 +62,20 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 22,
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: "center",
   },
   blocks: {
     rowGap: 20,
   },
   block: {
     paddingVertical: 18,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     paddingHorizontal: 16,
     rowGap: 10,
     borderRadius: 16,
   },
   blockTitle: {
-    color: COLORS.yellow,
+    color: "#1A82ED",
     fontSize: 20,
   },
   subtitle: {

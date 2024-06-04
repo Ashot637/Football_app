@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { COLORS } from "../helpers/colors";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +14,7 @@ import {
   setStadion,
   setRange,
   setPrice,
+  reset,
 } from "../redux/createGameSlice/createGameSlice";
 
 import ChooseTime from "./CreateGamePage/ChooseTime";
@@ -22,6 +29,7 @@ import { stringToDate } from "../helpers/stringToDate";
 import { differenceInMinutes, format } from "date-fns";
 import Input from "../components/Input";
 import ConfirmationModal from "../components/ConfirmationModal";
+import ChooseUniform from "./CreateGamePage/ChooseUniform";
 
 const EditGame = ({ route, navigation }) => {
   const accordions = [ChooseStadion, ChooseDate, ChooseTime];
@@ -40,18 +48,18 @@ const EditGame = ({ route, navigation }) => {
     accordionId === active ? setActive(null) : setActive(accordionId);
   };
 
-  console.log(game);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const timeDifferenceMs = new Date(game.endTime) - new Date(game.startTime);
     dispatch(
       setGameData({
         date: game.startTime,
         time: format(game.startTime, "HH:mm"),
-        price: game.price,
+        price: game.price || "0",
         stadion: game.stadion.id,
-        duration: duration,
+        duration: timeDifferenceMs / (1000 * 60 * 60),
+        uniforms: game.uniforms.indexes ?? [],
       })
     );
     axios.get("/stadion/getAllForUser").then(({ data }) => {
@@ -62,6 +70,10 @@ const EditGame = ({ route, navigation }) => {
       }
       dispatch(setStadion(data[index]));
     });
+
+    return () => {
+      dispatch(reset());
+    };
   }, []);
 
   const onEditMatch = () => {
@@ -78,8 +90,8 @@ const EditGame = ({ route, navigation }) => {
         startTime: startTime,
         endTime: endTime,
         stadionId: stadion.id,
-        uniforms: [],
         maxPlayersCount: game.maxPlayersCount,
+        uniforms,
       })
       .then(() => {
         setSuccessPopup(true);
@@ -87,7 +99,7 @@ const EditGame = ({ route, navigation }) => {
           setSuccessPopup(false);
           navigation.reset({
             index: 0,
-            routes: [{ name: "main" }],
+            routes: [{ name: "home" }],
           });
         }, 2000);
       });
@@ -113,7 +125,7 @@ const EditGame = ({ route, navigation }) => {
         </ConfirmationModal>
       )}
 
-      <View style={styles.background}>
+      <ScrollView style={styles.background}>
         <Text
           style={{
             color: "white",
@@ -156,9 +168,11 @@ const EditGame = ({ route, navigation }) => {
           type="phone-pad"
           placeholder={"price"}
         />
+        <ChooseUniform />
         <View style={{ height: 30 }}></View>
         <PrimaryButton title={"Պահպանել"} onPress={onEditMatch} />
-      </View>
+        <View style={{ height: 50 }} />
+      </ScrollView>
     </>
   );
 };
@@ -170,7 +184,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: COLORS.background_blue,
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
   },
   cancelButton: {
     width: 120,

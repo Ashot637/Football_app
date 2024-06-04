@@ -9,6 +9,7 @@ const initialState = {
   price: null,
   duration: null,
   range: 1,
+  needRefresh: false,
   // players: [],
 };
 
@@ -16,12 +17,16 @@ const createGameSlice = createSlice({
   name: "createGame",
   initialState,
   reducers: {
+    setNeedRefresh: (state) => {
+      state.needRefresh = Math.random();
+    },
     setGameData: (state, action) => {
       state.stadion = action.payload.stadion;
       state.date = action.payload.date;
       state.time = action.payload.time;
       state.price = action.payload.price;
-      state.range = action.payload.range;
+      state.uniforms = action.payload.uniforms;
+      state.duration = action.payload.duration;
     },
     setStadion: (state, action) => {
       state.stadion = action.payload;
@@ -36,16 +41,9 @@ const createGameSlice = createSlice({
       state.time = action.payload;
     },
     setUniforms: (state, action) => {
-      // if (
-      //   state.uniforms.length === 2 &&
-      //   !state.uniforms.includes(action.payload)
-      // ) {
-      //   state.uniforms = [state.uniforms[1], action.payload];
-      // } else {
       state.uniforms.includes(action.payload)
         ? (state.uniforms = state.uniforms.filter((i) => i !== action.payload))
         : (state.uniforms = [...state.uniforms, action.payload]);
-      // }
     },
     // addPlayer: (state, action) => {
     //   state.players = [...state.players, action.payload];
@@ -67,6 +65,8 @@ const createGameSlice = createSlice({
       state.date = null;
       state.price = null;
       state.uniforms = [];
+      state.group = null;
+      state.range = 1;
       state.time = null;
       // state.players = [];
     },
@@ -86,9 +86,9 @@ export const {
   setUniforms,
   reset,
   setPrice,
+  setNeedRefresh,
   // addPlayer,
   // removePlayer,
   setRange,
   setDuration,
 } = createGameSlice.actions;
-

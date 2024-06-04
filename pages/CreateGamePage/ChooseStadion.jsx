@@ -1,13 +1,22 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import Accordion from '../../components/Accordion';
-import PrimaryText from '../../components/PrimaryText';
-import { COLORS } from '../../helpers/colors';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCreateGame, setStadion } from '../../redux/createGameSlice/createGameSlice';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import Accordion from "../../components/Accordion";
+import PrimaryText from "../../components/PrimaryText";
+import { COLORS } from "../../helpers/colors";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCreateGame,
+  setStadion,
+} from "../../redux/createGameSlice/createGameSlice";
 
-import icon from '../../assets/images/stadium.png';
+import icon from "../../assets/images/stadium.png";
 
-const ChooseStadion = ({ accordionId, toggleAccordion, isActive, stadions }) => {
+const ChooseStadion = ({
+  accordionId,
+  toggleAccordion,
+  isActive,
+  stadions,
+  cantChange,
+}) => {
   const dispatch = useDispatch();
   const { stadion: selectedStadion } = useSelector(selectCreateGame);
 
@@ -17,7 +26,10 @@ const ChooseStadion = ({ accordionId, toggleAccordion, isActive, stadions }) => 
       iconInverted
       title={selectedStadion?.title}
       toggleIsOpen={() => toggleAccordion(accordionId)}
-      isOpen={isActive}>
+      isOpen={isActive}
+      canOpen={!cantChange}
+      testId="select-stadium"
+    >
       <View style={styles.stadions}>
         <ScrollView nestedScrollEnabled>
           {stadions.map((stadion, index) => {
@@ -28,7 +40,11 @@ const ChooseStadion = ({ accordionId, toggleAccordion, isActive, stadions }) => 
                   toggleAccordion(accordionId);
                 }}
                 key={stadion.id}
-                style={[styles.stadion, index === stadions.length - 1 && { borderBottomWidth: 0 }]}>
+                style={[
+                  styles.stadion,
+                  index === stadions.length - 1 && { borderBottomWidth: 0 },
+                ]}
+              >
                 <PrimaryText style={{ color: COLORS.grey }} weight={600}>
                   {stadion.title}
                 </PrimaryText>

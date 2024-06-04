@@ -5,10 +5,10 @@ import { COLORS } from "../helpers/colors";
 import doneIcon from "../assets/images/done.png";
 import PrimaryText from "./PrimaryText";
 
-const CheckBox = ({ title, state, setState }) => {
+const CheckBox = ({ title, state, setState, testId }) => {
   return (
     <View style={{ alignItems: "flex-start" }}>
-      <TouchableOpacity onPress={setState}>
+      <TouchableOpacity onPress={setState} testID={testId}>
         <View style={styles.container}>
           <View style={[styles.box, state && styles.boxActive]}>
             {state && <Image style={styles.done} source={doneIcon} />}

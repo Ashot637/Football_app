@@ -25,9 +25,18 @@
     "resend": "Resend"
   },
   "home": {
+    "my_games": "My games",
+    "my_groups": "My groups",
+    "open_games": "Public games",
     "choose_date": "Choose date",
     "choose_variant": "Which variant?",
     "available_stadiums": "Available stadiums"
+  },
+  "group": {
+    "create": "Create a group",
+    "my": "My groups",
+    "leave": "Leave from group",
+    "delete": "Delete group"
   },
   "date": {
     "today": "Today",
@@ -95,7 +104,19 @@
     "extended_title": "The same match has been successfully extended.",
     "extend": "Extend",
     "invite_players": "Invite players",
-    "group_games": "Group games"
+    "group_games": "Group games",
+    "empty_games": "Games not found",
+    "invite_a_player": "Invite a player",
+    "invite_to_group": "Invite a player to group",
+    "choose_uniform_color": "Choose uniform color",
+    "leave": "Leave from game",
+    "uniforms": "Uniform color"
+  },
+  "colors": {
+    "red": "Red",
+    "blue": "Blue",
+    "black": "Black",
+    "white": "White"
   },
   "user": {
     "name": "Name",
@@ -111,7 +132,8 @@
   "activity": {
     "your_activity": "Your activity",
     "upcoming_bookings": "Upcoming bookings",
-    "individual_activity": "Your individual activity"
+    "individual_activity": "Your individual activity",
+    "empty": "You currently have no activity"
   },
   "notifications": {
     "title": "Notifications"
@@ -128,8 +150,13 @@
   },
   "chat": {
     "title": "Chats",
+    "single_title": "Chat",
     "write_your_message": "Write your message",
     "delete_from_everyone": "Delete from everyone"
+  },
+  "create_group": {
+    "title": "Create a group",
+    "placeholder": "Name"
   },
   "roles": {
     "title": "Your role",
@@ -141,11 +168,17 @@
     "asking": "Have you already made a booking by calling, same day, same time, same place?",
     "once": "Create once",
     "month": "Next 4 weeks",
-    "create": "Create a match"
+    "create": "Create a match",
+    "info": "Before creating a game, make sure that you have booked a room in advance and the stadium knows about it.",
+    "price_info": "If the payment will be made by the organization, you may not specify the amount."
   },
   "invitation": {
     "title": "Invitation for private match",
-    "info": "Dear {{name}}, you have a private match playing invitation from {{from}}, for {{date}}, at the {{stadion}}."
+    "info": "Dear {{name}}, you have a private match playing invitation from {{from}}, for {{date}}, at the {{stadion}}.",
+    "game": "Invitation for match",
+    "game_info": "You have an invitation to a football match on {{date}}, at {{startTime}}-{{endTime}} in the {{title}}",
+    "group": "Invitation to the group",
+    "group_info": "You have an invitation to the group {{title}}."
   },
   "poll": {
     "title": "Poll statistics",
@@ -154,6 +187,11 @@
   },
   "forgot_password": {
     "title": "Forgot password"
+  },
+  "contact-us": {
+    "title": "Contact us",
+    "mail": "Email us",
+    "call": "Call us"
   },
   "common": {
     "amd": "AMD",
@@ -175,6 +213,17 @@
     "dear": "Dear",
     "yes": "Yes",
     "no": "No",
-    "understand": "Understand"
+    "understand": "Understand",
+    "stadiums": "Stadiums",
+    "submit": "Submit",
+    "see_more": "See more",
+    "clear": "Clear",
+    "sold-out": "Sold out",
+    "time": "Time",
+    "personal": "Personal",
+    "history": "History",
+    "booking_number": "Booking confirmation number",
+    "readed": "Read",
+    "not_readed": "Unread"
   }
 }

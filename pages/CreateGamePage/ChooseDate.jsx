@@ -10,6 +10,7 @@ import PrimaryText from "../../components/PrimaryText";
 import { COLORS } from "../../helpers/colors";
 import { useTranslation } from "react-i18next";
 import {
+  add,
   addDays,
   addMonths,
   addYears,
@@ -108,11 +109,15 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
       title={date ? format(date, "dd MMMM yyyy") : t("home.choose_date")}
       toggleIsOpen={() => toggleAccordion(accordionId)}
       isOpen={isActive}
+      testId="select-date"
     >
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.block}>
-            <TouchableOpacity onPress={onPrevMonth}>
+            <TouchableOpacity
+              onPress={onPrevMonth}
+              testID="nav-icon-left-month"
+            >
               <Image
                 source={arrowIcon}
                 style={{ transform: [{ rotate: "180deg" }] }}
@@ -121,12 +126,15 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
             <PrimaryText style={styles.title} weight={600}>
               {t(`date.month.${format(currentDate, "MMMM")}`)}
             </PrimaryText>
-            <TouchableOpacity onPress={onNextMonth}>
+            <TouchableOpacity
+              onPress={onNextMonth}
+              testID="nav-icon-rgiht-month"
+            >
               <Image source={arrowIcon} />
             </TouchableOpacity>
           </View>
           <View style={styles.block}>
-            <TouchableOpacity onPress={onPrevYear}>
+            <TouchableOpacity onPress={onPrevYear} testID="nav-icon-left-year">
               <Image
                 source={arrowIcon}
                 style={{ transform: [{ rotate: "180deg" }] }}
@@ -135,7 +143,7 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
             <PrimaryText style={styles.title} weight={600}>
               {format(currentDate, "yyyy")}
             </PrimaryText>
-            <TouchableOpacity onPress={onNextYear}>
+            <TouchableOpacity onPress={onNextYear} testID="nav-icon-right-year">
               <Image source={arrowIcon} />
             </TouchableOpacity>
           </View>
@@ -156,7 +164,8 @@ const ChooseDate = memo(({ accordionId, toggleAccordion, isActive }) => {
             columnWrapperStyle={styles.row}
             renderItem={({ item }) => {
               const disabled =
-                !isSameMonth(item, currentDate) || isBefore(item, new Date());
+                !isSameMonth(item, currentDate) ||
+                isBefore(addDays(item, 1), new Date());
               return (
                 <TouchableOpacity
                   disabled={disabled}

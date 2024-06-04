@@ -23,6 +23,8 @@ import PrivateGame from "../components/PrivateGame";
 import EditIcon from "../assets/images/Edit_game.svg";
 import DeleteIcon from "../assets/images/delete.svg";
 import ConfirmationModal from "../components/ConfirmationModal";
+import CheckBox from "../components/CheckBox";
+import PrimaryText from "../components/PrimaryText";
 
 const MyGameDetails = ({ route, navigation }) => {
   const { id } = route?.params;
@@ -31,6 +33,7 @@ const MyGameDetails = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   const [game, setGame] = useState([]);
+  const [deleteReplaying, setDeleteReplaying] = useState(false);
   const [stadions, setStadions] = useState([]);
   const { stadion } = useSelector(selectCreateGame);
   const [groups, setGroups] = useState([]);
@@ -71,17 +74,19 @@ const MyGameDetails = ({ route, navigation }) => {
   }, [groupId, stadumId]);
 
   const deleteGame = () => {
-    console.log(id);
-    axios.delete("/game/delete", {
-      data: {
-        ids: [id],
-      },
-    }).then(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "main" }],
+    axios
+      .delete("/game/delete", {
+        data: {
+          ids: [id],
+          deleteReplaying,
+        },
+      })
+      .then(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "home" }],
+        });
       });
-    });
   };
 
   return (
@@ -95,8 +100,14 @@ const MyGameDetails = ({ route, navigation }) => {
                 fontSize: 17,
                 width: "100%",
                 textAlign: "center",
+                marginBottom: 24,
               }}
             >{`Դուք համոզվա՞ծ եք, որ ցանկանում եք ջնջել խաղը։`}</Text>
+            <CheckBox
+              state={deleteReplaying}
+              setState={() => setDeleteReplaying((prev) => !prev)}
+              title={"Ջնջել բոլոր կրկնվող խաղերը"}
+            />
             <View
               style={{
                 flexDirection: "row",
@@ -110,7 +121,10 @@ const MyGameDetails = ({ route, navigation }) => {
               >
                 <Text style={{ color: "white", fontSize: 18 }}>Ոչ</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={deleteGame} style={styles.acceptButton}>
+              <TouchableOpacity
+                onPress={deleteGame}
+                style={styles.acceptButton}
+              >
                 <Text style={{ color: "white", fontSize: 18 }}>Այո</Text>
               </TouchableOpacity>
             </View>
@@ -121,47 +135,47 @@ const MyGameDetails = ({ route, navigation }) => {
         <View style={styles.loader}>
           <ActivityIndicator
             size={"large"}
-            style={styles.loader}
+            style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
             color={COLORS.yellow}
           />
         </View>
       )}
       {!isLoading && game && (
         <>
-          <ScrollView>
-            <View style={styles.background}>
+          <ScrollView style={styles.background}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                paddingVertical: 20,
+              }}
+            >
               <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+                style={{ gap: 20, flexDirection: "row", paddingHorizontal: 16 }}
               >
-                <Heading title={title} />
-                <View style={{ gap: 20, flexDirection: "row" }}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("edit_game", {
-                        game: game,
-                        title: title,
-                        stadumId: game.stadion.id,
-                      })
-                    }
-                  >
-                    <EditIcon />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => setDeleteGamePopup(true)}>
-                    <DeleteIcon />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("edit_game", {
+                      game: game,
+                      title: title,
+                      stadumId: game.stadion.id,
+                    })
+                  }
+                >
+                  <EditIcon />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setDeleteGamePopup(true)}>
+                  <DeleteIcon />
+                </TouchableOpacity>
               </View>
-              {game.length !== 0 && (
-                <>
-                  <GameFixedDetails game={game} title={title} />
-                  <PrivateGame game={game} />
-                </>
-              )}
             </View>
+            {game.length !== 0 && (
+              <>
+                <GameFixedDetails game={game} title={title} />
+                <PrivateGame game={game} />
+              </>
+            )}
           </ScrollView>
         </>
       )}
@@ -176,8 +190,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background_blue,
     width: "100%",
     height: "100%",
-    paddingLeft: 15,
-    paddingRight: 15,
   },
   block: {
     width: "100%",

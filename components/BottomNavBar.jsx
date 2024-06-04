@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../helpers/colors";
 import {
   getFocusedRouteNameFromRoute,
@@ -16,32 +16,31 @@ import ShopActive from "../assets/images/shop-1.svg";
 import Profile from "../assets/images/Profile-1.svg";
 import ProfileActive from "../assets/images/ProfileCyan.svg";
 
-import { useTranslation } from "react-i18next";
-import PrimaryText from "./PrimaryText";
-
 const items = [
   {
     title: "home",
-    routes: ["home", "game", "create"],
+    routes: ["home"],
     icon: <Home />,
     iconActive: <HomeActive />,
+    testId: "home-page",
   },
   {
     title: "store",
     routes: ["shop"],
     icon: <Shop />,
     iconActive: <ShopActive />,
+    testId: "shop-page",
   },
   {
     title: "profile",
     routes: ["profile"],
     icon: <Profile />,
     iconActive: <ProfileActive />,
+    testId: "profile-page",
   },
 ];
 
 const BottomNavBar = () => {
-  const { t } = useTranslation();
   const navigation = useNavigation();
   const route = useRoute();
   const [activeRoute, setActiveRoute] = useState(items[0].routes[0]);
@@ -63,13 +62,15 @@ const BottomNavBar = () => {
       {items.map((item) => {
         return (
           <TouchableOpacity
+            testID={item.testId}
             key={item.title}
             onPress={() => navigation.navigate(item.routes[0])}
+            style={{ flex: 1 }}
           >
             <View style={styles.item}>
               {item.routes.includes(activeRoute) ? (
                 <>
-                <View>{item.iconActive}</View>
+                  <View>{item.iconActive}</View>
                 </>
               ) : (
                 <View>{item.icon}</View>
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkgrey,
     backgroundColor: COLORS.navyBlue,
     paddingHorizontal: 30,
-    paddingVertical: 24,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   item: {
     alignItems: "center",
     rowGap: 5,
-    width: 100,
+    paddingVertical: 24,
+    // width: 100,
   },
   title: {
     color: COLORS.yellow,

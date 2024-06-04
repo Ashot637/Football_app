@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -9,7 +9,7 @@ import {
   setExpoPushToken,
 } from "../redux/authSlice/authSlice";
 
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -58,14 +58,16 @@ import StadiumsPage from "../pages/StadiumsPage";
 import StadiumDetails from "../pages/StadiumDetails";
 import OpenGamesPage from "../pages/OpenGames/OpenGames";
 import MyGameDetails from "../pages/MyGameDetails";
-import EditGame from "../pages/EditGame";
+// import * as Linking from "expo-linking";
 
+import EditGame from "../pages/EditGame";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const HomeStack = () => {
   return (
     <Tab.Navigator
+      backBehavior="history"
       tabBar={() => <BottomNavBar />}
       screenOptions={{
         header: () => <Header />,
@@ -79,15 +81,80 @@ const HomeStack = () => {
       <Tab.Screen name="personal_details" component={PersonalDetails} />
       <Tab.Screen name="profile" component={ProfilePage} />
       <Tab.Screen name="shop" component={ShopPage} />
+      <Tab.Screen name="game_details" component={MyGameDetails} />
       <Tab.Screen name="notifications" component={NotificationsPage} />
+      <Tab.Screen name="groups" component={GroupsPage} />
+      <Tab.Screen name="group" component={GroupPage} />
+      <Tab.Screen name="create-game" component={CreateGamePage} />
+      <Tab.Screen name="create-group" component={CreateGroupPage} />
+      <Tab.Screen name="group-matches" component={GroupGames} />
+      <Tab.Screen name="edit_game" component={EditGame} />
+      <Tab.Screen name="group-players" component={GroupPlayers} />
+      <Tab.Screen name="stadiums_main" component={StadiumsPage} />
+      <Tab.Screen name="stadiums_search" component={StadiumsSearch} />
+      <Tab.Screen name="stadium_details" component={StadiumDetails} />
       <Tab.Screen name="chats" component={Groups} />
     </Tab.Navigator>
   );
 };
 
+// const NavigateTo = () => {
+//   const navigation = useNavigation();
+//   const { user } = useSelector(selectAuth);
+
+//   useEffect(() => {
+//     const handleDynamicLink = async () => {
+//       const initialUrl = await Linking.getInitialURL();
+//       if (initialUrl) {
+//         const urlParts = initialUrl.split("?");
+
+//         const queryString = urlParts[1];
+
+//         const queryParams = queryString.split("&");
+
+//         const params = {};
+
+//         queryParams.forEach((param) => {
+//           const [key, value] = param.split("=");
+
+//           const decodedKey = decodeURIComponent(key);
+//           const decodedValue = decodeURIComponent(value);
+
+//           params[decodedKey] = decodedValue;
+//         });
+
+//         const page = params["page"];
+//         const id = params["id"];
+//         // const invitation = params["invitation"];
+
+//         navigation.replace(
+//           "main",
+//           { screen: page },
+//           {
+//             id,
+//             // invitation: invitation && JSON.parse(invitation),
+//           }
+//         );
+//       }
+//     };
+//     if (user) {
+//       handleDynamicLink();
+
+//       Linking.addEventListener?.("url", handleDynamicLink);
+//     }
+
+//     return () => {
+//       Linking.removeEventListener?.("url", handleDynamicLink);
+//     };
+//   }, [user]);
+
+//   return null;
+// };
+
 const Navigation = () => {
   const dispatch = useDispatch();
   const { status, user } = useSelector(selectAuth);
+  // const [navigateTo, setNavigateTo] = useState(false);
 
   useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
@@ -118,7 +185,7 @@ const Navigation = () => {
           await Notifications.getExpoPushTokenAsync({
             projectId: Constants.expoConfig.extra.eas.projectId,
           })
-        ).data;
+        )?.data;
         await AsyncStorage.setItem("expoPushToken", token);
       } else {
         alert("Must use physical device for Push Notifications");
@@ -136,6 +203,46 @@ const Navigation = () => {
     })();
   }, []);
 
+  // useEffect(() => {
+  //   const handleDynamicLink = async () => {
+  //     const initialUrl = await Linking.getInitialURL();
+  //     console.log("====================================");
+  //     console.log(initialUrl);
+  //     console.log("====================================");
+  //     if (initialUrl) {
+  //       const urlParts = initialUrl.split("?");
+
+  //       const queryString = urlParts[1];
+
+  //       const queryParams = queryString.split("&");
+
+  //       const params = {};
+
+  //       queryParams.forEach((param) => {
+  //         const [key, value] = param.split("=");
+
+  //         const decodedKey = decodeURIComponent(key);
+  //         const decodedValue = decodeURIComponent(value);
+
+  //         params[decodedKey] = decodedValue;
+  //       });
+
+  //       const page = params["page"];
+
+  //       setNavigateTo(page);
+  //     }
+  //   };
+  //   if (user) {
+  //     handleDynamicLink();
+
+  //     Linking.addEventListener?.("url", handleDynamicLink);
+  //   }
+
+  //   return () => {
+  //     Linking.removeEventListener?.("url", handleDynamicLink);
+  //   };
+  // }, [user]);
+
   useSocket(user);
 
   if (status === "loading" || status === "waiting") {
@@ -146,13 +253,14 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={status === "success" ? "select" : "landing"}
+          initialRouteName={status === "success" ? "home" : "landing"}
           screenOptions={{
             headerShown: false,
             animation: "slide_from_right",
           }}
         >
           <Stack.Screen name="landing" component={LandingPage} />
+          {/* <Stack.Screen name="navigate-to" component={NavigateTo} /> */}
           <Stack.Screen name="login" component={LoginPage} />
           <Stack.Screen name="signup" component={SignUpPage} />
           <Stack.Screen name="create-password" component={CreatePasswordPage} />
@@ -163,92 +271,11 @@ const Navigation = () => {
             name="forgot-password-new-password"
             component={NewPasswordPage}
           />
-          <Stack.Screen name="select" component={SelectSport} />
+          {/* <Stack.Screen name="select" component={SelectSport} /> */}
           <Stack.Screen name="main" component={HomeStack} />
           <Stack.Screen
             name="chat"
             component={Chat}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="groups"
-            component={GroupsPage}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="group"
-            component={GroupPage}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="create-game"
-            component={CreateGamePage}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="create-group"
-            component={CreateGroupPage}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="group-matches"
-            component={GroupGames}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="game_details"
-            component={MyGameDetails}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-                <Stack.Screen
-            name="edit_game"
-            component={EditGame}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="group-players"
-            component={GroupPlayers}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen
-            name="stadiums_main"
-            component={StadiumsPage}
-            options={{
-              headerShown: true,
-              header: () => <Header />,
-            }}
-          />
-          <Stack.Screen name="stadiums_search" component={StadiumsSearch} />
-          <Stack.Screen
-            name="stadium_details"
-            component={StadiumDetails}
             options={{
               headerShown: true,
               header: () => <Header />,

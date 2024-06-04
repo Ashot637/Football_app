@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../../redux/authSlice/authSlice';
-import { useCallback, useEffect, useState } from 'react';
-import { socket } from '../../hooks/useSocket';
-import axios from '../../axios/axios';
-import { format, isToday } from 'date-fns';
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice/authSlice";
+import { useCallback, useEffect, useState } from "react";
+import { socket } from "../../hooks/useSocket";
+import axios from "../../axios/axios";
+import { format, isToday } from "date-fns";
 
 const PAGE = 2;
 
@@ -12,7 +12,7 @@ const useChat = (params) => {
   const { user, expoPushToken } = useSelector(selectAuth);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [openMenuMessageId, setOpenMenuMessageId] = useState(null);
   const [page, setPage] = useState(PAGE);
   const [isFetchingMoreData, setIsFetchingMoreData] = useState(false);
@@ -21,7 +21,9 @@ const useChat = (params) => {
     if (!isFetchingMoreData) {
       setIsFetchingMoreData(true);
       axios
-        .get('/message/getGroupMessages', { params: { groupId, limit: 20, page } })
+        .get("/message/getGroupMessages", {
+          params: { groupId, limit: 20, page },
+        })
         .then(({ data }) => {
           if (data.length) {
             const groupedMessages = data.reduce((acc, message) => {
@@ -29,9 +31,9 @@ const useChat = (params) => {
               let formattedDate;
 
               if (isToday(messageDate)) {
-                formattedDate = 'today';
+                formattedDate = "today";
               } else {
-                formattedDate = format(messageDate, 'dd MMMM');
+                formattedDate = format(messageDate, "dd MMMM");
               }
 
               if (!acc[formattedDate]) {
@@ -46,7 +48,7 @@ const useChat = (params) => {
               ([date, messages]) => ({
                 date,
                 messages,
-              }),
+              })
             );
 
             const mergedMessagesArray = [...messages];
@@ -54,7 +56,7 @@ const useChat = (params) => {
 
             groupedMessagesArray.forEach(({ date, messages }) => {
               const existingGroupIndex = mergedMessagesArray.findIndex(
-                (group) => group.date === date,
+                (group) => group.date === date
               );
 
               if (existingGroupIndex !== -1) {
@@ -84,16 +86,16 @@ const useChat = (params) => {
     setIsLoading(true);
     onReadMessages();
     axios
-      .get('/message/getGroupMessages', { params: { groupId, limit: 20 } })
+      .get("/message/getGroupMessages", { params: { groupId, limit: 20 } })
       .then(({ data }) => {
         const groupedMessages = data.reduce((acc, message) => {
           const messageDate = new Date(message.createdAt);
           let formattedDate;
 
           if (isToday(messageDate)) {
-            formattedDate = 'today';
+            formattedDate = "today";
           } else {
-            formattedDate = format(messageDate, 'dd MMMM');
+            formattedDate = format(messageDate, "dd MMMM");
           }
 
           if (!acc[formattedDate]) {
@@ -103,10 +105,12 @@ const useChat = (params) => {
           acc[formattedDate].push(message);
           return acc;
         }, {});
-        const groupedMessagesArray = Object.entries(groupedMessages).map(([date, messages]) => ({
-          date,
-          messages: messages.reverse(),
-        }));
+        const groupedMessagesArray = Object.entries(groupedMessages).map(
+          ([date, messages]) => ({
+            date,
+            messages: messages.reverse(),
+          })
+        );
         setMessages(groupedMessagesArray);
       })
       .finally(() => {
@@ -115,19 +119,19 @@ const useChat = (params) => {
   }, []);
 
   const onReadMessages = () => {
-    axios.post('/message/readGroupMessages', { groupId });
+    axios.post("/message/readGroupMessages", { groupId });
   };
 
   useEffect(() => {
-    socket.emit('join-group', { groupId, userId: user.id });
-    socket.on('new-message', (newMessage) => {
+    socket.emit("join-group", { groupId, userId: user.id });
+    socket.on("new-message", (newMessage) => {
       if (newMessage.user.id !== user.id) {
         setMessages((prev) => {
-          const isThereToday = prev.find((group) => group['date'] === 'today');
+          const isThereToday = prev.find((group) => group["date"] === "today");
           const updatedMessages = prev.map((group) => {
-            if (group['date'] === 'today') {
+            if (group["date"] === "today") {
               return {
-                date: 'today',
+                date: "today",
                 messages: [...(group.messages || []), newMessage],
               };
             }
@@ -139,7 +143,7 @@ const useChat = (params) => {
             ? updatedMessages
             : [
                 {
-                  date: 'today',
+                  date: "today",
                   messages: [newMessage],
                 },
                 ...updatedMessages,
@@ -148,13 +152,15 @@ const useChat = (params) => {
       }
       onReadMessages();
     });
-    socket.on('react-to-message', ({ messageId, user }) => {
+    socket.on("react-to-message", ({ messageId, user }) => {
       setMessages((prev) => {
         const updatedMessages = prev.map((group) => {
           if (group.messages.some((message) => +message.id === +messageId)) {
             const updatedGroupMessages = group.messages.map((message) => {
               if (+message.id === +messageId) {
-                let alreadyLiked = message.likedUsers?.find((u) => u.id === user.id);
+                let alreadyLiked = message.likedUsers?.find(
+                  (u) => u.id === user.id
+                );
                 return {
                   ...message,
                   likedUsers: alreadyLiked
@@ -177,12 +183,12 @@ const useChat = (params) => {
         return updatedMessages;
       });
     });
-    socket.on('delete-message', (messageId) =>
+    socket.on("delete-message", (messageId) =>
       setMessages((prev) => {
         const updatedMessages = prev.map((group) => {
           if (group.messages.some((message) => +message.id === +messageId)) {
             const updatedGroupMessages = group.messages.filter(
-              (message) => +message.id !== +messageId,
+              (message) => +message.id !== +messageId
             );
 
             return {
@@ -195,16 +201,16 @@ const useChat = (params) => {
         });
 
         return updatedMessages;
-      }),
+      })
     );
     return () => {
-      socket.emit('leave-group', { groupId, userId: user.id });
+      socket.emit("leave-group", { groupId, userId: user.id });
     };
   }, []);
 
   const onSendMessage = () => {
     const id = Date.now();
-    axios.post('/message/send', {
+    axios.post("/message/send", {
       text,
       groupId,
       id,
@@ -222,11 +228,11 @@ const useChat = (params) => {
     };
 
     setMessages((prev) => {
-      const isThereToday = prev.find((group) => group['date'] === 'today');
+      const isThereToday = prev.find((group) => group["date"] === "today");
       const updatedMessages = prev.map((group) => {
-        if (group['date'] === 'today') {
+        if (group["date"] === "today") {
           return {
-            date: 'today',
+            date: "today",
             messages: [...(group.messages || []), newMessage],
           };
         }
@@ -238,24 +244,26 @@ const useChat = (params) => {
         ? updatedMessages
         : [
             {
-              date: 'today',
+              date: "today",
               messages: [newMessage],
             },
             ...updatedMessages,
           ];
     });
 
-    setText('');
+    setText("");
     setOpenMenuMessageId(null);
   };
 
   const onDeleteMessage = useCallback(
     (id) => {
-      axios.post('/message/delete', { messageId: id, groupId });
+      axios.post("/message/delete", { messageId: id, groupId });
       setMessages((prev) => {
         const updatedMessages = prev.map((group) => {
           if (group.messages.some((message) => +message.id === +id)) {
-            const updatedGroupMessages = group.messages.filter((message) => message.id !== id);
+            const updatedGroupMessages = group.messages.filter(
+              (message) => message.id !== id
+            );
 
             return {
               ...group,
@@ -271,12 +279,12 @@ const useChat = (params) => {
       // setMessages((prev) => prev.filter((message) => message.id !== id));
       setOpenMenuMessageId(null);
     },
-    [groupId],
+    [groupId]
   );
 
   const onReactToMessage = useCallback(
     (id, messageOwnerId) => {
-      axios.post('/message/react', {
+      axios.post("/message/react", {
         messageId: id,
         groupId,
         messageOwnerId,
@@ -288,7 +296,9 @@ const useChat = (params) => {
           if (group.messages.some((message) => message.id === id)) {
             const updatedGroupMessages = group.messages.map((message) => {
               if (message.id === id) {
-                let alreadyLiked = message.likedUsers?.find((u) => u.id === user.id);
+                let alreadyLiked = message.likedUsers?.find(
+                  (u) => u.id === user.id
+                );
                 return {
                   ...message,
                   likedUsers: alreadyLiked
@@ -325,7 +335,7 @@ const useChat = (params) => {
       // );
       setOpenMenuMessageId(null);
     },
-    [groupId],
+    [groupId]
   );
 
   return {

@@ -125,30 +125,64 @@ const Game = ({ game, disabled, title }) => {
 
   const data = [
     {
-      key: "Date",
+      key: t("common.date"),
       value: new Date(game.startTime).toLocaleDateString(
         "hy-AM",
         (options = { month: "2-digit", day: "2-digit", year: "numeric" })
       ),
     },
     {
-      key: "Hour",
+      key: t("common.time"),
       value: `${format(game.startTime, "HH:mm")}-${format(
         game.endTime,
         "HH:mm"
       )}`,
     },
-    { key: "Players", value: `${game.playersCount}/${game.maxPlayersCount}` },
-    { key: "Price", value: `${game.price} AMD` },
+    {
+      key: t("common.players"),
+      value:
+        game.maxPlayersCount > 98
+          ? `${game.playersCount}`
+          : `${game.playersCount}/${game.maxPlayersCount}`,
+    },
+    { key: t("common.total_price"), value: `${game.price} AMD` },
   ];
+
+  const isDisabled = +game.playersCount === +game.maxPlayersCount || disabled;
 
   return (
     <TouchableOpacity
       onPress={() =>
-        !disabled &&
-        navigation.navigate("main", { screen: "game", params: { id: game.id } })
+        user?.id === game.creatorId
+          ? navigation.navigate("game_details", { id: game.id, title: title })
+          : navigation.navigate("main", {
+              screen: "game",
+              params: { id: game.id },
+            })
       }
+      disabled={user?.id === game.creatorId ? false : isDisabled}
+      style={{ position: "relative" }}
     >
+      {+game.playersCount === +game.maxPlayersCount && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "#031852",
+            opacity: 0.8,
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1,
+          }}
+        >
+          <PrimaryText style={{ fontSize: 20, color: COLORS.lightWhite }}>
+            {t("common.sold-out")}
+          </PrimaryText>
+        </View>
+      )}
       <View style={styles.container}>
         <View style={styles.overlay}>
           <View style={styles.info}>
@@ -213,9 +247,8 @@ const styles = StyleSheet.create({
   },
   info: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    height: 25,
-    gap: 20,
+    paddingRight: 15,
+    gap: 12,
     alignItems: "center",
   },
   redLine: {

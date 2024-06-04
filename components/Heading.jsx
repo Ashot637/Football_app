@@ -1,14 +1,25 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import PrimaryText from "./PrimaryText";
 import { COLORS } from "../helpers/colors";
 
-const Heading = ({ title, align = "left" }) => {
+import BackIcon from "../assets/images/Arrow - Right.svg";
+import { useNavigation } from "@react-navigation/native";
+
+const Heading = ({ title, align = "left", goBackButton }) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.titleView}>
-      <PrimaryText weight={600} style={{ ...styles.title, textAlign: align }}>
-        {title}
-      </PrimaryText>
+      {goBackButton && (
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <BackIcon />
+        </TouchableOpacity>
+      )}
+      <View style={{ flex: 1, paddingRight: 16 }}>
+        <PrimaryText weight={600} style={{ ...styles.title, textAlign: align }}>
+          {title}
+        </PrimaryText>
+      </View>
     </View>
   );
 };
@@ -18,6 +29,8 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     backgroundColor: COLORS.background_blue,
     paddingHorizontal: 16,
+    alignItems: "center",
+    flexDirection: "row",
   },
   title: {
     fontSize: 22,

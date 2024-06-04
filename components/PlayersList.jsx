@@ -142,12 +142,12 @@ const PlayersList = ({
               <View style={[styles.nameView, styles.me]}>
                 <View style={styles.userInfo}>
                   <PrimaryText style={styles.name}>
-                    {currentUser.name.length > 12
+                    {currentUser.name.length > 15
                       ? currentUser.name.slice(
                           0,
                           (typeof status === "string" ? willPlay : status) !==
                             null
-                            ? 12
+                            ? 15
                             : 10
                         ) + "..."
                       : currentUser.name}{" "}
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     borderRadius: 29,
   },
   nameView: {
-    backgroundColor: "#2F4F4F",
+    backgroundColor: "#4606AF",
     borderRadius: 14,
     paddingVertical: 8,
     width: "90%",

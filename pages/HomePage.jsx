@@ -14,10 +14,10 @@ import { COLORS } from "../helpers/colors";
 
 import { useNavigation } from "@react-navigation/native";
 
-import myGamesImg from "../assets/images/my-games.png";
-import myGroupsImg from "../assets/images/my-groups.png";
-import openGamesImg from "../assets/images/open-games.png";
-import stadiumsImg from "../assets/images/stadiums.png";
+import myGamesImg from "../assets/images/my-games2.png";
+import myGroupsImg from "../assets/images/my-groups2.png";
+import openGamesImg from "../assets/images/public-games2.png";
+import stadiumsImg from "../assets/images/stadiums2.png";
 import { LinearGradient } from "expo-linear-gradient";
 
 import CrossIcon from "../assets/images/cross.svg";
@@ -29,21 +29,25 @@ const blocks = [
     img: myGamesImg,
     title: "home.my_games",
     link: "my-games",
+    testId: "my-games",
   },
   {
     img: myGroupsImg,
     title: "home.my_groups",
     link: "groups",
+    testId: "my-groups",
   },
   {
     img: openGamesImg,
     title: "home.open_games",
     link: "open-games",
+    testId: "public-games",
   },
   {
     img: stadiumsImg,
     title: "common.stadiums",
     link: "stadiums_main",
+    testId: "stadiums",
   },
 ];
 
@@ -57,7 +61,7 @@ const HomePage = () => {
       <Invitation />
       <View style={styles.container}>
         <View style={styles.blocks}>
-          {blocks.map((block) => {
+          {blocks.map((block, index) => {
             return (
               <LinearGradient
                 colors={["#EF09A1", "rgba(239, 78, 9, 0)"]}
@@ -67,12 +71,31 @@ const HomePage = () => {
                 key={block.title}
               >
                 <TouchableWithoutFeedback
+                  // testID={block.testId}
                   onPress={() => navigation.navigate(block.link)}
                 >
                   <View style={styles.block}>
-                    <Image source={block.img} style={styles.img} />
+                    <View
+                      style={{
+                        width: 117,
+                        height: 90,
+                        marginTop: 16,
+                        marginBottom: 2,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Image
+                        source={block.img}
+                        // resizeMode="contain"
+                        style={{
+                          width: index === 3 ? 117 : 90,
+                          height: index === 3 ? 71 : 90,
+                        }}
+                      />
+                    </View>
                     <PrimaryText style={styles.text} weight={600}>
-                      {block.title}
+                      {t(block.title)}
                     </PrimaryText>
                   </View>
                 </TouchableWithoutFeedback>
@@ -86,7 +109,7 @@ const HomePage = () => {
           <LinearGradient
             colors={["rgba(11, 230, 204, 0.3)", "rgba(3, 24, 82, 0.1)"]}
             start={[0, 0]}
-            end={[1, 1]}
+            end={[0.65, 0.65]}
             style={{
               position: "absolute",
               bottom: 0,
@@ -110,6 +133,7 @@ const HomePage = () => {
         {isOpenActions && (
           <View style={{ rowGap: 15, marginBottom: 13 }}>
             <TouchableOpacity
+              testID="create-game"
               onPress={() => navigation.navigate("create-game")}
             >
               <LinearGradient
@@ -134,6 +158,7 @@ const HomePage = () => {
               </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity
+              testID="create-group"
               onPress={() => navigation.navigate("create-group")}
             >
               <LinearGradient
@@ -170,6 +195,7 @@ const HomePage = () => {
           }}
         >
           <TouchableOpacity
+            testID="add-button"
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
             onPress={() => setisOpenActions((prev) => !prev)}
           >
@@ -196,7 +222,7 @@ const styles = StyleSheet.create({
   },
   bg: {
     height: 151,
-    flexBasis: "45%",
+    width: "45%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 24,
@@ -210,9 +236,7 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   img: {
-    width: 75,
-    height: 75,
-    marginTop: 22,
+    marginTop: 15,
     marginBottom: 10,
   },
   text: {

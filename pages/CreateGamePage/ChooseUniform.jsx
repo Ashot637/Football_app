@@ -22,18 +22,22 @@ const icons = [
   {
     img: redUniformIcon,
     title: "colors.red",
+    testId: "red-uniform",
   },
   {
     img: blueUniformIcon,
     title: "colors.blue",
+    testId: "blue-uniform",
   },
   {
     img: blackUniformIcon,
     title: "colors.black",
+    testId: "black-uniform",
   },
   {
     img: whiteUniformIcon,
     title: "colors.white",
+    testId: "white-uniform",
   },
 ];
 const ChooseUniform = () => {
@@ -60,6 +64,7 @@ const ChooseUniform = () => {
         }
         toggleIsOpen={() => setIsActive((prev) => !prev)}
         isOpen={isActive}
+        testId="select-uniforms"
       >
         <View
           style={{
@@ -89,6 +94,7 @@ const ChooseUniform = () => {
                 </PrimaryText>
                 <View style={{ marginLeft: "auto" }}>
                   <CheckBox
+                    testId={icon.testId}
                     state={uniforms.includes(index)}
                     setState={() => onSelectUniform(index)}
                   />

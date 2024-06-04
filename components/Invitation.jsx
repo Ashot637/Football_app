@@ -37,21 +37,29 @@ const Invitation = () => {
   };
 
   useEffect(() => {
-    if (user?.invitations[0]?.type === "GROUP") {
-      navigation.navigate("group", {
-        id: user.invitations[0].groupId,
-        invitation: user.invitations[0],
-      });
-      dispatch(deleteFirstInvitation());
-    } else if (user?.invitations[0]?.hasGame) {
-      navigation.navigate("main", {
-        screen: "game",
-        params: { id: user.invitations[0].gameId },
-      });
-      axios.post("/game/declineInvitation", { id: user.invitations[0].id });
+    if (user?.invitations) {
+      if (user?.invitations[0]?.type === "GROUP") {
+        if (user?.invitations[0]?.hasGroup) {
+          navigation.navigate("group", {
+            id: user.invitations[0].groupId,
+          });
+          axios.post("/game/declineInvitation", { id: user.invitations[0].id });
+        } else {
+          navigation.navigate("group", {
+            id: user.invitations[0].groupId,
+            invitation: user.invitations[0],
+          });
+        }
+      } else if (user?.invitations[0]?.hasGame) {
+        navigation.navigate("main", {
+          screen: "game",
+          params: { id: user.invitations[0].gameId },
+        });
+        axios.post("/game/declineInvitation", { id: user.invitations[0].id });
+      }
       dispatch(deleteFirstInvitation());
     }
-  }, [user?.invitations[0]]);
+  }, [user?.invitations?.[0]]);
 
   return (
     !!user?.invitations?.length &&
@@ -74,17 +82,17 @@ const Invitation = () => {
               })}
             </PrimaryText>
             <View style={styles.modalBtns}>
-              <TouchableOpacity onPress={onCancel} style={{ flex: 1 }}>
+              <TouchableOpacity onPress={onCancel} style={{ flex: 6 }}>
                 <View style={styles.cancelBtn}>
                   <PrimaryText style={styles.btnText} weight={600}>
                     {t("common.cancel")}
                   </PrimaryText>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={onConfirm} style={{ flex: 1 }}>
+              <TouchableOpacity onPress={onConfirm} style={{ flex: 8 }}>
                 <View style={styles.submitbtn}>
                   <PrimaryText
-                    style={[styles.btnText, { color: COLORS.black }]}
+                    style={[styles.btnText, { color: "#fff" }]}
                     weight={600}
                   >
                     {t("common.see_more")}
@@ -131,7 +139,7 @@ const styles = StyleSheet.create({
   },
   modalBtns: {
     flexDirection: "row",
-    columnGap: 25,
+    columnGap: 15,
     marginHorizontal: 20,
   },
   cancelBtn: {
@@ -142,12 +150,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   submitbtn: {
-    backgroundColor: COLORS.yellow,
+    backgroundColor: "#0968CA",
     borderRadius: 15,
     paddingVertical: 10,
   },
   btnText: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
     color: COLORS.lightWhite,
   },

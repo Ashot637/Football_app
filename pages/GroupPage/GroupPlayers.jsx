@@ -45,7 +45,11 @@ const GroupPlayers = ({ route }) => {
   return (
     <>
       <ScrollView style={{ backgroundColor: COLORS.background_blue, flex: 1 }}>
-        <Heading align="center" title={title + " " + t("common.players")} />
+        <Heading
+          align="center"
+          title={title + " " + t("common.players")}
+          goBackButton
+        />
         <View style={{ rowGap: 10, paddingHorizontal: 16, paddingBottom: 16 }}>
           {currentUser && (
             <View style={styles.player}>
@@ -70,7 +74,7 @@ const GroupPlayers = ({ route }) => {
             </View>
           )}
           {players.map((player) => {
-            if (player.id === user.id) {
+            if (player.id === user?.id) {
               return null;
             }
             return (
@@ -111,6 +115,7 @@ const GroupPlayers = ({ route }) => {
       </ScrollView>
       {!isViewMode && (
         <TouchableOpacity
+          testID="invite-players-button"
           onPress={onShare}
           style={{
             position: "absolute",
@@ -133,7 +138,7 @@ const GroupPlayers = ({ route }) => {
           >
             <CrossIcon width={20} height={20} />
             <PrimaryText style={{ color: COLORS.darkgrey }}>
-              {t("common.invite_a_player")}
+              {t("game.invite_a_player")}
             </PrimaryText>
           </LinearGradient>
         </TouchableOpacity>

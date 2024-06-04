@@ -55,7 +55,10 @@ const Header = () => {
     <>
       <View style={styles.background}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("home")}>
+          <TouchableOpacity
+            testID="home-page"
+            onPress={() => navigation.navigate("home")}
+          >
             <LogoImg width={60} height={60} />
           </TouchableOpacity>
           <View style={styles.actions}>
@@ -63,18 +66,21 @@ const Header = () => {
               <Image source={searchIcon} style={styles.icon} />
             </TouchableOpacity> */}
             <View>
-              {user.notifications > 0 && (
+              {user?.notifications > 0 && (
                 <View style={styles.count}>
                   <Text style={{ color: "white", fontSize: 9 }}>
                     {user.notifications}
                   </Text>
                 </View>
               )}
-              <TouchableOpacity onPress={onOpenNotifcations}>
+              <TouchableOpacity
+                testID="notifications"
+                onPress={onOpenNotifcations}
+              >
                 <NotificationIcon width={30} height={30} />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={onOpenChats}>
+            <TouchableOpacity testID="chat" onPress={onOpenChats}>
               <MessangerIcon width={30} height={30} />
               {user?.hasMessage && <View style={styles.newMessage} />}
             </TouchableOpacity>
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: COLORS.yellow,
+    backgroundColor: "#1A82ED",
     position: "absolute",
     right: 0,
     top: -3,

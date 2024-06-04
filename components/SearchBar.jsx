@@ -31,7 +31,7 @@ const { height } = Dimensions.get("window");
 import Arrow from "../assets/images/Arrow.svg";
 import Game from "./Game";
 
-const SearchBar = ({ setOpen, navigation}) => {
+const SearchBar = ({ setOpen, navigation }) => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
@@ -86,13 +86,11 @@ const SearchBar = ({ setOpen, navigation}) => {
 
   return (
     <>
-      <LinearGradient
-        colors={['#041443', '#032176']}
-        style={styles.gradient}
-      >
+      <LinearGradient colors={["#041443", "#032176"]} style={styles.gradient}>
         <View style={styles.header}>
           <View style={styles.container}>
             <TextInput
+              testID="stadiums-search-input"
               ref={inputRef}
               value={searchValue}
               onChangeText={(value) => {
@@ -122,13 +120,7 @@ const SearchBar = ({ setOpen, navigation}) => {
           </View>
         ) : (
           data.map((item) => {
-            return (
-              <Item
-              navigation={navigation}
-                item={item}
-                key={item.id}
-              />
-            );
+            return <Item navigation={navigation} item={item} key={item.id} />;
           })
         )}
       </ScrollView>
@@ -138,7 +130,11 @@ const SearchBar = ({ setOpen, navigation}) => {
 
 const Item = ({ item, navigation }) => {
   return (
-    <TouchableOpacity onPress={()=> {navigation.navigate('stadium_details', {id: item.id})}}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("stadium_details", { id: item.id });
+      }}
+    >
       <View
         style={{
           paddingVertical: 15,
@@ -151,7 +147,7 @@ const Item = ({ item, navigation }) => {
         <PrimaryText style={styles.itemText} weight={600} numberOfLines={1}>
           {item.title}
         </PrimaryText>
-        <Arrow/>
+        <Arrow />
       </View>
     </TouchableOpacity>
   );

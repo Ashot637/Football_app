@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -6,30 +6,30 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-} from 'react-native';
-import PrimaryText from '../../components/PrimaryText';
+} from "react-native";
+import PrimaryText from "../../components/PrimaryText";
 
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
-} from 'react-native-confirmation-code-field';
-import BackgroundImageLayout from '../../components/BackgroundImageLayout';
-import PrimaryButton from '../../components/PrimaryButton';
+} from "react-native-confirmation-code-field";
+import BackgroundImageLayout from "../../components/BackgroundImageLayout";
+import PrimaryButton from "../../components/PrimaryButton";
 
-import { COLORS } from '../../helpers/colors';
+import { COLORS } from "../../helpers/colors";
 
-import backIcon from '../../assets/images/back.png';
+import backIcon from "../../assets/images/back.png";
 
-import { useTranslation } from 'react-i18next';
-import i18n from '../../languages/i18n';
-import ResendCode from '../../components/ResendCode';
-import axios from '../../axios/axios';
+import { useTranslation } from "react-i18next";
+import i18n from "../../languages/i18n";
+import ResendCode from "../../components/ResendCode";
+import axios from "../../axios/axios";
 
 const VerifyPhone = ({ navigation, route }) => {
   const { t } = useTranslation();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [isInvalidCode, setIsInvalidCode] = useState(false);
 
   const { phone } = route.params;
@@ -42,32 +42,36 @@ const VerifyPhone = ({ navigation, route }) => {
 
   const onVerify = async () => {
     axios
-      .post('/auth/checkCode', { phone, code: value })
+      .post("/auth/checkCode", { phone, code: value })
       .then(() => {
-        navigation.navigate('forgot-password-new-password', { phone, code: value });
+        navigation.navigate("forgot-password-new-password", {
+          phone: phone,
+          code: value,
+        });
         setIsInvalidCode(false);
       })
       .catch(() => setIsInvalidCode(true));
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" && "padding"}>
       <BackgroundImageLayout>
         <View style={styles.top}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image source={backIcon} width={24} height={24} />
           </TouchableOpacity>
           <PrimaryText
-            style={[styles.title, i18n.language === 'en' && styles.titleBig]}
-            weight={600}>
-            {t('verify.verify_your_account')}
+            style={[styles.title, i18n.language === "en" && styles.titleBig]}
+            weight={600}
+          >
+            {t("verify.verify_your_account")}
           </PrimaryText>
           <View style={{ width: 42 }} />
         </View>
         <PrimaryText style={styles.enterOTP} weight={600}>
-          {t('verify.enter_otp', { number: phone })}
+          {t("verify.enter_otp", { number: phone })}
         </PrimaryText>
-        <View style={styles.pinView}>
+        <View style={styles.pinView} testID="otp-holder">
           <CodeField
             ref={ref}
             {...props}
@@ -82,19 +86,27 @@ const VerifyPhone = ({ navigation, route }) => {
                 weight={600}
                 key={index}
                 style={[styles.cell, isFocused && styles.focusCell]}
-                onLayout={getCellOnLayoutHandler(index)}>
+                onLayout={getCellOnLayoutHandler(index)}
+              >
                 {symbol || (isFocused ? <Cursor /> : null)}
               </PrimaryText>
             )}
           />
         </View>
-        {isInvalidCode && <PrimaryText style={styles.error}>{t('errors.INVALID_OTP')}</PrimaryText>}
+        {isInvalidCode && (
+          <PrimaryText style={styles.error}>
+            {t("errors.INVALID_OTP")}
+          </PrimaryText>
+        )}
         <View style={{ marginBottom: 24 }}>
-          <PrimaryButton title={t('verify.verify_and_continue')} onPress={() => onVerify()} />
+          <PrimaryButton
+            title={t("verify.verify_and_continue")}
+            onPress={() => onVerify()}
+          />
         </View>
         <View style={styles.bottomTextView}>
           <PrimaryText style={styles.leftText} weight={600}>
-            {t('verify.didnt_receive_otp')}
+            {t("verify.didnt_receive_otp")}
           </PrimaryText>
           <ResendCode phone={phone} />
         </View>
@@ -105,26 +117,26 @@ const VerifyPhone = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   top: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
     paddingLeft: 18,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 37,
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 21,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   titleBig: {
     fontSize: 24,
   },
   enterOTP: {
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.grey,
     marginBottom: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   pinView: {
     marginBottom: 40,
@@ -134,13 +146,13 @@ const styles = StyleSheet.create({
   cell: {
     width: 64,
     height: 80,
-    backgroundColor: COLORS.darkgrey,
-    overflow: 'hidden',
-    color: '#fff',
+    backgroundColor: "#031852",
+    overflow: "hidden",
+    color: "#fff",
     borderRadius: 16,
     fontSize: 32,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
     paddingVertical: 16,
   },
   focusCell: {
@@ -148,19 +160,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   bottomTextView: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
     columnGap: 5,
   },
   leftText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.grey,
   },
   error: {
-    color: 'red',
-    textAlign: 'center',
+    color: "red",
+    textAlign: "center",
     marginBottom: 10,
   },
 });

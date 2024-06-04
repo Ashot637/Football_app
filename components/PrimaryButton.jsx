@@ -1,14 +1,21 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { COLORS } from '../helpers/colors';
-import PrimaryText from './PrimaryText';
+import { COLORS } from "../helpers/colors";
+import PrimaryText from "./PrimaryText";
 
-const PrimaryButton = ({ title, onPress, disabled }) => {
+const PrimaryButton = ({
+  title,
+  onPress,
+  disabled,
+  testId = "primary-button",
+}) => {
   return (
     <TouchableOpacity
       disabled={disabled}
       onPress={onPress}
-      style={[styles.button, disabled && styles.disabled]}>
+      testID={testId}
+      style={[styles.button, disabled && styles.disabled]}
+    >
       <PrimaryText style={styles.title} weight={600}>
         {title}
       </PrimaryText>
@@ -18,7 +25,7 @@ const PrimaryButton = ({ title, onPress, disabled }) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
+    width: "100%",
     backgroundColor: COLORS.cyan,
     borderRadius: 16,
     paddingTop: 20,
@@ -26,7 +33,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
   },
   disabled: {
     opacity: 0.5,

@@ -158,25 +158,28 @@ const PublicGame = ({ game, invitation }) => {
             onPress={onCancelInvitation}
             style={{
               flex: 1,
-              backgroundColor: "#acad28",
+              backgroundColor: "#E1D4F766",
               borderWidth: 1.5,
-              borderColor: COLORS.yellow,
+              borderColor: COLORS.lightWhite,
               borderRadius: 15,
               height: 60,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <PrimaryText weight={600} style={{ fontSize: 20 }}>
-              {t("common.decline")}
+            <PrimaryText
+              weight={600}
+              style={{ fontSize: 20, color: COLORS.lightWhite }}
+            >
+              {t("common.cancel")}
             </PrimaryText>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onConfirmInvitation}
             style={{
               flex: 1,
-              backgroundColor: "#acad28",
-              borderColor: COLORS.yellow,
+              backgroundColor: COLORS.cyan,
+              borderColor: COLORS.cyan,
               borderRadius: 15,
               alignItems: "center",
               justifyContent: "center",
@@ -221,7 +224,11 @@ const PublicGame = ({ game, invitation }) => {
           </TouchableOpacity>
         </>
       ) : (
-        <PrimaryButton onPress={onBook} title={t("game.book_now")} />
+        <PrimaryButton
+          disabled={game.playersCount === game.maxPlayersCount}
+          onPress={onBook}
+          title={t("game.book_now")}
+        />
       )}
     </View>
   );

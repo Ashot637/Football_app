@@ -52,6 +52,7 @@ const DeleteAccount = () => {
         </PrimaryText>
         <View style={styles.modalBtns}>
           <TouchableOpacity
+            testID="delete-account-button"
             onPress={() => setIsOpenModal(false)}
             style={{ flex: 1 }}
           >

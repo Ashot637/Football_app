@@ -1,13 +1,13 @@
-import { memo, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import PrimaryText from '../PrimaryText';
+import { memo, useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import PrimaryText from "../PrimaryText";
 
-import avatarImg from '../../assets/images/avatar.png';
-import { COLORS } from '../../helpers/colors';
-import { format } from 'date-fns';
-import { BASE_URL } from '../../axios/axios';
+import avatarImg from "../../assets/images/avatar.png";
+import { COLORS } from "../../helpers/colors";
+import { format } from "date-fns";
+import { BASE_URL } from "../../axios/axios";
 
-import likeImg from '../../assets/images/heart.png';
+import likeImg from "../../assets/images/heart.png";
 
 let timer = null;
 const TIMEOUT = 250;
@@ -26,11 +26,17 @@ const debounce = (onSingle, onDouble) => {
 };
 
 const Message = memo(
-  ({ data, isNextUserSame, setOpenMenuMessageId, isOpenMenu, onReactToMessage }) => {
+  ({
+    data,
+    isNextUserSame,
+    setOpenMenuMessageId,
+    isOpenMenu,
+    onReactToMessage,
+  }) => {
     const onPress = () => {
       debounce(
         () => setOpenMenuMessageId(null),
-        () => onReactToMessage(data.id, data.userId),
+        () => onReactToMessage(data.id, data.userId)
       );
     };
 
@@ -40,7 +46,9 @@ const Message = memo(
           {!isNextUserSame ? (
             <Image
               style={styles.avatar}
-              source={data.user.img ? { uri: BASE_URL + data.user.img } : avatarImg}
+              source={
+                data.user.img ? { uri: BASE_URL + data.user.img } : avatarImg
+              }
             />
           ) : (
             <View style={{ width: 46 }} />
@@ -52,7 +60,8 @@ const Message = memo(
                   onPress={(e) => {
                     e.stopPropagation();
                     onReactToMessage(data.id, data.userId);
-                  }}>
+                  }}
+                >
                   <Image source={likeImg} />
                 </TouchableOpacity>
               </View>
@@ -61,18 +70,28 @@ const Message = memo(
               onPress={onPress}
               onLongPress={(e) => {
                 setOpenMenuMessageId(data.id, data.userId);
-              }}>
+              }}
+            >
               <View style={[styles.block]}>
                 <PrimaryText style={[styles.message]}>{data.text}</PrimaryText>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                     columnGap: 15,
-                  }}>
-                  <PrimaryText style={[styles.time]}>{format(data.createdAt, 'HH:mm')}</PrimaryText>
+                  }}
+                >
+                  <PrimaryText style={[styles.time]}>
+                    {format(data.createdAt, "HH:mm")}
+                  </PrimaryText>
                   {!!data.likedUsers?.length && (
-                    <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 2 }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        columnGap: 2,
+                      }}
+                    >
                       <Image style={styles.reaction} source={likeImg} />
                       <PrimaryText style={styles.reactionCount}>
                         {data.likedUsers.length}
@@ -83,18 +102,20 @@ const Message = memo(
               </View>
             </TouchableOpacity>
             {!isNextUserSame && (
-              <PrimaryText style={[styles.username]}>{data.user.name}</PrimaryText>
+              <PrimaryText style={[styles.username]}>
+                {data.user.name}
+              </PrimaryText>
             )}
           </View>
         </View>
       </View>
     );
-  },
+  }
 );
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     columnGap: 5,
   },
   closeMenu: {
@@ -107,11 +128,11 @@ const styles = StyleSheet.create({
     width: 46,
     height: 46,
     borderWidth: 2,
-    borderColor: COLORS.darkBlue,
+    borderColor: "#5E00F9",
     borderRadius: 23,
   },
   block: {
-    backgroundColor: COLORS.darkBlue,
+    backgroundColor: "#5E00F9",
     paddingBottom: 6,
     paddingTop: 8,
     paddingHorizontal: 13,
@@ -121,7 +142,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 18,
-    color: COLORS.lightblue,
+    color: COLORS.lightWhite,
     marginBottom: 4,
   },
   time: {
@@ -130,55 +151,55 @@ const styles = StyleSheet.create({
   },
   username: {
     color: COLORS.grey,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     marginBottom: 5,
   },
   containerFromUser: {
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
   },
   fromUserTextAlign: {
-    textAlign: 'right',
+    textAlign: "right",
   },
   overlay: {
-    backgroundColor: 'rgba(17, 22, 19, 0.9)',
-    height: '100%',
+    backgroundColor: "rgba(17, 22, 19, 0.9)",
+    height: "100%",
   },
   actionsMenu: {
-    position: 'absolute',
-    backgroundColor: '#2F4131',
+    position: "absolute",
+    backgroundColor: "#032176",
     paddingVertical: 14,
     borderRadius: 15,
     flex: 1,
-    top: '100%',
+    top: "100%",
     width: 230,
     left: 0,
     zIndex: 2,
   },
   inTopOfMessage: {
-    top: '-100%',
+    top: "-100%",
   },
   inTopOfMenu: {
-    bottom: '205%',
+    bottom: "205%",
   },
   emojisMenu: {
-    position: 'absolute',
-    backgroundColor: '#2F4131',
+    position: "absolute",
+    backgroundColor: "#032176",
     paddingVertical: 6,
     paddingHorizontal: 9,
     borderRadius: 15,
-    bottom: '100%',
+    bottom: "100%",
     marginBottom: 2,
     flex: 1,
     zIndex: 2,
     left: 0,
   },
   overUserName: {
-    top: '75%',
+    top: "75%",
   },
   action: {
     fontSize: 22,
     color: COLORS.lightWhite,
-    textAlign: 'center',
+    textAlign: "center",
   },
   reaction: {
     width: 18,

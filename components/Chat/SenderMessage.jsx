@@ -1,14 +1,14 @@
-import { memo, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import PrimaryText from '../PrimaryText';
+import { memo, useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import PrimaryText from "../PrimaryText";
 
-import avatarImg from '../../assets/images/avatar.png';
-import { COLORS } from '../../helpers/colors';
-import { format } from 'date-fns';
-import { BASE_URL } from '../../axios/axios';
+import avatarImg from "../../assets/images/avatar.png";
+import { COLORS } from "../../helpers/colors";
+import { format } from "date-fns";
+import { BASE_URL } from "../../axios/axios";
 
-import likeImg from '../../assets/images/heart.png';
-import { useTranslation } from 'react-i18next';
+import likeImg from "../../assets/images/heart.png";
+import { useTranslation } from "react-i18next";
 
 let timer = null;
 const TIMEOUT = 250;
@@ -27,12 +27,18 @@ const debounce = (onSingle, onDouble) => {
 };
 
 const SenderMessage = memo(
-  ({ data, setOpenMenuMessageId, isOpenMenu, onDeleteMessage, onReactToMessage }) => {
+  ({
+    data,
+    setOpenMenuMessageId,
+    isOpenMenu,
+    onDeleteMessage,
+    onReactToMessage,
+  }) => {
     const { t } = useTranslation();
     const onPress = () => {
       debounce(
         () => setOpenMenuMessageId(null),
-        () => onReactToMessage(data.id, data.userId),
+        () => onReactToMessage(data.id, data.userId)
       );
     };
 
@@ -55,7 +61,8 @@ const SenderMessage = memo(
                     onPress={(e) => {
                       e.stopPropagation();
                       onReactToMessage(data.id, data.userId);
-                    }}>
+                    }}
+                  >
                     <Image source={likeImg} />
                   </TouchableOpacity>
                 </View>
@@ -64,9 +71,10 @@ const SenderMessage = memo(
                     onPress={(e) => {
                       e.stopPropagation();
                       onDeleteMessage(data.id, data.userId);
-                    }}>
+                    }}
+                  >
                     <PrimaryText style={styles.action}>
-                      {t('chat.delete_from_everyone')}
+                      {t("chat.delete_from_everyone")}
                     </PrimaryText>
                   </TouchableOpacity>
                 </View>
@@ -76,24 +84,36 @@ const SenderMessage = memo(
               onPress={onPress}
               onLongPress={(e) => {
                 setOpenMenuMessageId(data.id);
-              }}>
+              }}
+            >
               <View style={styles.block}>
                 <PrimaryText
                   style={[
                     styles.message,
-                    data.text.length < 5 && !data?.likedUsers?.length && { textAlign: 'right' },
-                  ]}>
+                    data.text.length < 5 &&
+                      !data?.likedUsers?.length && { textAlign: "right" },
+                  ]}
+                >
                   {data.text}
                 </PrimaryText>
                 <View
                   style={{
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'space-between',
+                    flexDirection: "row-reverse",
+                    justifyContent: "space-between",
                     columnGap: 15,
-                  }}>
-                  <PrimaryText style={styles.time}>{format(data.createdAt, 'HH:mm')}</PrimaryText>
+                  }}
+                >
+                  <PrimaryText style={styles.time}>
+                    {format(data.createdAt, "HH:mm")}
+                  </PrimaryText>
                   {!!data.likedUsers?.length && (
-                    <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 2 }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        columnGap: 2,
+                      }}
+                    >
                       <Image style={styles.reaction} source={likeImg} />
                       <PrimaryText style={styles.reactionCount}>
                         {data.likedUsers.length}
@@ -108,12 +128,12 @@ const SenderMessage = memo(
         </View>
       </View>
     );
-  },
+  }
 );
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
     columnGap: 5,
   },
   closeMenu: {
@@ -130,7 +150,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
   },
   block: {
-    backgroundColor: '#405742',
+    backgroundColor: "#2A59D2",
     paddingBottom: 6,
     paddingTop: 8,
     paddingHorizontal: 13,
@@ -140,43 +160,43 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 18,
-    color: COLORS.lightblue,
+    color: COLORS.lightWhite,
     marginBottom: 4,
   },
   time: {
     color: COLORS.lightWhite,
     fontSize: 12,
-    textAlign: 'right',
+    textAlign: "right",
   },
   username: {
     color: COLORS.grey,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     marginBottom: 5,
-    textAlign: 'right',
+    textAlign: "right",
   },
   overlay: {
-    backgroundColor: 'rgba(17, 22, 19, 0.9)',
-    height: '100%',
+    backgroundColor: "rgba(17, 22, 19, 0.9)",
+    height: "100%",
   },
   actionsMenu: {
-    position: 'absolute',
-    backgroundColor: '#2F4131',
+    position: "absolute",
+    backgroundColor: "#032176",
     paddingVertical: 14,
     borderRadius: 15,
     flex: 1,
-    bottom: '100%',
+    bottom: "100%",
     marginBottom: 2,
     width: 240,
     right: 0,
     zIndex: 2,
   },
   emojisMenu: {
-    position: 'absolute',
-    backgroundColor: '#2F4131',
+    position: "absolute",
+    backgroundColor: "#032176",
     paddingVertical: 6,
     paddingHorizontal: 9,
     borderRadius: 15,
-    bottom: '100%',
+    bottom: "100%",
     marginBottom: 59,
     flex: 1,
     zIndex: 2,
@@ -185,7 +205,7 @@ const styles = StyleSheet.create({
   action: {
     fontSize: 22,
     color: COLORS.lightWhite,
-    textAlign: 'center',
+    textAlign: "center",
   },
   reaction: {
     width: 18,

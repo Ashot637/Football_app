@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   reset,
   selectCreateGame,
+  setNeedRefresh,
   setPrice,
   setRange,
 } from "../../redux/createGameSlice/createGameSlice";
@@ -27,15 +28,15 @@ import { COLORS } from "../../helpers/colors";
 import ChooseGroup from "./ChooseGroup";
 import RadioButton from "../../components/RadioButton";
 import ChooseUniform from "./ChooseUniform";
+import CheckBox from "../../components/CheckBox";
 
 const accordions = [ChooseGroup, ChooseStadion, ChooseDate, ChooseTime];
 
-const FillInfo = ({ stadions, groups }) => {
+const FillInfo = ({ stadions, groups, cantChangeStadium }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [active, setActive] = useState(null);
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const { group, stadion, date, time, duration, uniforms, price, range } =
     useSelector(selectCreateGame);
   const { user } = useSelector(selectAuth);
@@ -70,16 +71,17 @@ const FillInfo = ({ stadions, groups }) => {
             confirmationNumber: data.game.id,
           });
           dispatch(reset());
+          dispatch(setNeedRefresh());
         } else {
           console.error("Something went wrong");
         }
       });
-    setIsOpenModal(false);
+    // setIsOpenModal(false);
   };
 
   return (
     <View style={styles.container}>
-      {isOpenModal && (
+      {/* {isOpenModal && (
         <ConfirmationModal
           state={isOpenModal}
           dismiss={() => setIsOpenModal(false)}
@@ -92,6 +94,7 @@ const FillInfo = ({ stadions, groups }) => {
           </PrimaryText>
           <View style={styles.modalBtns}>
             <TouchableOpacity
+              testID="yes"
               onPress={() => setIsOpenModal(false)}
               style={{ flex: 1 }}
             >
@@ -101,7 +104,11 @@ const FillInfo = ({ stadions, groups }) => {
                 </PrimaryText>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onCreateMatch} style={{ flex: 1 }}>
+            <TouchableOpacity
+              onPress={onCreateMatch}
+              style={{ flex: 1 }}
+              testID="no"
+            >
               <View style={styles.submitbtn}>
                 <PrimaryText
                   style={[styles.btnText, { color: "#fff" }]}
@@ -113,7 +120,7 @@ const FillInfo = ({ stadions, groups }) => {
             </TouchableOpacity>
           </View>
         </ConfirmationModal>
-      )}
+      )} */}
       <View style={{ rowGap: 24, marginBottom: 10 }}>
         {accordions.map((Accordion, index) => {
           // if (!index) {
@@ -158,41 +165,50 @@ const FillInfo = ({ stadions, groups }) => {
             <Accordion
               key={index}
               accordionId={index}
+              cantChange={cantChangeStadium}
               isActive={active === index}
               {...(index ? { stadions } : { groups })}
               toggleAccordion={toggleAccordion}
             />
           );
         })}
-        <Input
-          value={price}
-          setValue={(p) => dispatch(setPrice(p))}
-          img={<PriceIcon />}
-          type="phone-pad"
-          placeholder={
-            t("common.total_price") +
-            " " +
-            t("common.amd") +
-            t("game.per_person")
-          }
-        />
-        <View style={{ paddingLeft: 16, rowGap: 24 }}>
-          <RadioButton
-            state={range === 1}
-            setState={() => dispatch(setRange(1))}
-            title={t("create_game.once")}
+        <View style={{ rowGap: 10 }}>
+          <Input
+            value={price}
+            testId="game-price"
+            setValue={(p) => dispatch(setPrice(p))}
+            img={<PriceIcon />}
+            type="phone-pad"
+            placeholder={
+              t("common.total_price") +
+              " " +
+              t("common.amd") +
+              t("game.per_person")
+            }
           />
-          <RadioButton
+          <PrimaryText style={{ color: "#B2BED7", fontSize: 13 }}>
+            {t("create_game.price_info")}
+          </PrimaryText>
+        </View>
+        <View style={{ paddingLeft: 16, rowGap: 24 }}>
+          <CheckBox
+            testId="repeat-checkbox"
             state={range === 4}
-            setState={() => dispatch(setRange(4))}
-            title={t("create_game.month")}
+            title={"Կրկնվող"}
+            setState={() => {
+              if (range === 1) {
+                dispatch(setRange(4));
+              } else {
+                dispatch(setRange(1));
+              }
+            }}
           />
         </View>
       </View>
       <ChooseUniform />
       <PrimaryButton
         disabled={!date || !time || !duration || !group}
-        onPress={() => setIsOpenModal(true)}
+        onPress={onCreateMatch}
         title={t("create_game.create")}
       />
     </View>

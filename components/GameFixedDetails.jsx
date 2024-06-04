@@ -13,13 +13,12 @@ import {
   format,
 } from "date-fns";
 
-const GameFixedDetails = ({ game, title }) => {
-  console.log(game);
+const GameFixedDetails = ({ game }) => {
   return (
-    <>
-      <View style={styles.block}>
+    <View style={{ paddingHorizontal: 16 }}>
+      <View style={[styles.block, { height: "auto" }]}>
         <StadiumIcon />
-        <Text style={styles.text}>{game?.stadion?.address}</Text>
+        <Text style={styles.text}>{game?.stadion?.title}</Text>
       </View>
       <View style={styles.block}>
         <CalendarIcon />
@@ -41,11 +40,13 @@ const GameFixedDetails = ({ game, title }) => {
         <View style={[styles.block, { width: "48%" }]}>
           <DurationIcon />
           <Text style={styles.text}>
-            {`${differenceInMinutes(game?.endTime, game?.startTime) == 90
-              ? 1.5
-              : differenceInMinutes(game?.endTime, game?.startTime) == 60
-              ? 1
-              : 2} ժամ`}
+            {`${
+              differenceInMinutes(game?.endTime, game?.startTime) == 90
+                ? 1.5
+                : differenceInMinutes(game?.endTime, game?.startTime) == 60
+                ? 1
+                : 2
+            } ժամ`}
           </Text>
         </View>
       </View>
@@ -53,7 +54,7 @@ const GameFixedDetails = ({ game, title }) => {
         <MoneyIcon />
         <Text style={styles.text}>{`${game.price} AMD`}</Text>
       </View>
-    </>
+    </View>
   );
 };
 

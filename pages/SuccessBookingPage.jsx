@@ -13,9 +13,12 @@ import locationIcon from "../assets/images/location.png";
 
 import { useTranslation } from "react-i18next";
 import i18n from "../languages/i18n";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice/authSlice";
 
 const SuccessBookingPage = ({ route, navigation }) => {
   const { t } = useTranslation();
+  const { user } = useSelector(selectAuth);
   const { game, confirmationNumber } = route.params;
 
   return (
@@ -31,13 +34,13 @@ const SuccessBookingPage = ({ route, navigation }) => {
           <View style={styles.stadionInfoView}>
             <View style={styles.stadionInfoRow}>
               <Image source={stadionIcon} style={styles.icon} />
-              <PrimaryText style={styles.stadionInfoText}>
+              <PrimaryText style={[styles.stadionInfoText, { flex: 1 }]}>
                 {game.stadion.title}
               </PrimaryText>
             </View>
             <View style={styles.stadionInfoRow}>
               <Image source={locationIcon} style={styles.icon} />
-              <PrimaryText style={styles.stadionInfoText}>
+              <PrimaryText style={[styles.stadionInfoText, { flex: 1 }]}>
                 {game.stadion.address}
               </PrimaryText>
             </View>
@@ -99,9 +102,12 @@ const SuccessBookingPage = ({ route, navigation }) => {
           </PrimaryText>
         </View>
         <PrimaryButton
-          title={t("common.go_to_home")}
+          title={t("common.accept")}
           onPress={() => {
             if (confirmationNumber) {
+              if (game.creatorId === user?.id) {
+                return navigation.navigate("game_details", { id: game.id });
+              }
               return navigation.navigate("game", { id: game.id });
             }
             navigation.navigate("group", {

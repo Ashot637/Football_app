@@ -24,6 +24,7 @@ const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
       title={selectedGroup?.title}
       toggleIsOpen={() => toggleAccordion(accordionId)}
       isOpen={isActive}
+      testId="select-team"
     >
       <View style={styles.groups}>
         <ScrollView nestedScrollEnabled>
@@ -44,7 +45,9 @@ const ChooseGroup = ({ accordionId, toggleAccordion, isActive, groups }) => {
             );
           })}
           <TouchableOpacity
-            onPress={() => navigation.navigate("create-group")}
+            onPress={() =>
+              navigation.navigate("create-group", { backUrl: "create-game" })
+            }
             style={[styles.group, { borderBottomWidth: 0 }]}
           >
             <PrimaryText style={{ color: COLORS.grey }} weight={600}>
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
     height: 230,
     paddingHorizontal: 9,
     paddingRight: 5,
-    backgroundColor: "#2F4131",
+    backgroundColor: COLORS.blue,
     borderRadius: 16,
   },
   group: {

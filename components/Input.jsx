@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TextInput, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { COLORS } from "../helpers/colors";
 
@@ -10,21 +10,33 @@ const Input = ({
   type = "default",
   secureTextEntry,
   maxLength = 30,
+  isPhoneNumber,
+  testId,
 }) => {
   return (
     <View style={styles.inputView}>
       <View>{img}</View>
-      <TextInput
-        value={value}
-        onChangeText={setValue}
-        keyboardType={type}
-        style={styles.input}
-        secureTextEntry={secureTextEntry}
-        placeholder={placeholder}
-        placeholderTextColor={COLORS.grey}
-        selectionColor={"#fff"}
-        maxLength={maxLength}
-      />
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {isPhoneNumber && (
+          <TextInput
+            value="+374"
+            editable={false}
+            style={{ color: "#fff", fontWeight: "600" }}
+          />
+        )}
+        <TextInput
+          testID={testId}
+          value={value}
+          onChangeText={setValue}
+          keyboardType={type}
+          style={styles.input}
+          secureTextEntry={secureTextEntry}
+          placeholder={placeholder}
+          placeholderTextColor={COLORS.grey}
+          selectionColor={"#fff"}
+          maxLength={maxLength}
+        />
+      </View>
     </View>
   );
 };

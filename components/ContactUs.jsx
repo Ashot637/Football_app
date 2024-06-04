@@ -4,14 +4,16 @@ import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import { COLORS } from "../helpers/colors";
 
 import feedbackIcon from "../assets/images/feedback.png";
-import callIcon from "../assets/images/call_yellow.png";
-import messageIcon from "../assets/images/message.png";
 import arrowIcon from "../assets/images/arrow.png";
 
 import { useTranslation } from "react-i18next";
 import PrimaryText from "./PrimaryText";
 
 import { Linking } from "react-native";
+
+import CallIcon from "../assets/images/Call.svg";
+import MessageIcon from "../assets/images/Message.svg";
+import ProfileIcon from "../assets/images/Profile.svg";
 
 const ContactUs = () => {
   const { t } = useTranslation();
@@ -22,7 +24,7 @@ const ContactUs = () => {
       <TouchableOpacity onPress={() => setIsOpen((prev) => !prev)}>
         <View style={styles.item}>
           <View style={styles.icon}>
-            <Image source={feedbackIcon} style={{ width: 24, height: 24 }} />
+            <ProfileIcon />
           </View>
           <View style={styles.text}>
             <PrimaryText style={styles.title} weight={600}>
@@ -44,20 +46,20 @@ const ContactUs = () => {
         <View style={styles.options}>
           <TouchableOpacity
             style={styles.option}
-            onPress={() => Linking.openURL(`tel:${3749999999}`)}
+            onPress={() => Linking.openURL("tel:+37496882308")}
           >
-            <Image source={callIcon} style={{ width: 32, height: 32 }} />
+            <CallIcon width={32} height={32} />
             <PrimaryText weight={700} style={{ color: COLORS.lightWhite }}>
               {t("contact-us.call")}
             </PrimaryText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.option}
-            onPress={() => Linking.openURL("mailto:support@example.com")}
+            onPress={() => Linking.openURL("mailto:contact@ballhola.app")}
           >
-            <Image source={messageIcon} style={{ width: 32, height: 32 }} />
+            <MessageIcon width={32} height={32} />
             <PrimaryText weight={700} style={{ color: COLORS.lightWhite }}>
-              {t("contact-us.email")}
+              {t("contact-us.mail")}
             </PrimaryText>
           </TouchableOpacity>
         </View>
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     width: 32,
     aspectRatio: 1,
     borderRadius: 16,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -95,10 +97,10 @@ const styles = StyleSheet.create({
   },
   desc: {
     fontWeight: "600",
-    color: COLORS.grey,
+    color: COLORS.lightWhite,
   },
   line: {
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     height: 1,
     position: "absolute",
     width: "100%",
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     rowGap: 12,
-    backgroundColor: COLORS.darkgrey,
+    backgroundColor: COLORS.blue,
     paddingVertical: 15,
     borderRadius: 16,
   },

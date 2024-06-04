@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -10,41 +11,53 @@ import { useTranslation } from "react-i18next";
 
 import Heading from "../../components/Heading";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import axios from "../../axios/axios";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice/authSlice";
+import { selectCreateGame } from "../../redux/createGameSlice/createGameSlice";
 
 const GroupPage = ({ navigation, route }) => {
-  const { id, invitation, refresh } = route.params;
+  const { id, invitation, refresh, fromNotification } = route.params;
   const { t } = useTranslation();
   const { user } = useSelector(selectAuth);
+  const { needRefresh } = useSelector(selectCreateGame);
   const [isLoading, setIsLoading] = useState(true);
   const [group, setGroup] = useState(null);
 
-  useEffect(() => {
+  console.log(needRefresh);
+  useLayoutEffect(() => {
     setIsLoading(true);
     axios.get("/group/getOne/" + id).then(({ data }) => {
       setGroup(data);
       setIsLoading(false);
     });
-  }, [id, refresh]);
+  }, [id, refresh, needRefresh]);
 
-  const onConfirm = () => {
-    axios.post("/game/acceptInvitation", {
-      id: invitation.id,
-    });
+  const onConfirm = async () => {
+    if (fromNotification) {
+      await axios.post("/group/joinToGroup", {
+        id: group.id,
+        notificationId: fromNotification.notificationId,
+      });
+    } else {
+      await axios.post("/game/acceptInvitation", {
+        id: invitation.id,
+      });
+    }
     navigation.navigate("group", { id, refresh: Math.random() });
   };
 
   const onCancel = () => {
-    axios.post("/game/declineInvitation", { id: invitation.id });
-    navigation.navigate("main");
+    if (!fromNotification) {
+      axios.post("/game/declineInvitation", { id: invitation.id });
+    }
+    navigation.navigate("home");
   };
 
   return (
     <>
-      <View style={[styles.container, { justifyContent: "space-between" }]}>
+      <ScrollView style={[styles.container]}>
         <View style={{ flex: 1 }}>
           {isLoading && (
             <View
@@ -67,6 +80,7 @@ const GroupPage = ({ navigation, route }) => {
               <Heading title={group.title} align="center" />
               <View style={{ paddingVertical: 24, paddingHorizontal: 16 }}>
                 <TouchableOpacity
+                  testID="games"
                   onPress={() =>
                     navigation.navigate("group-matches", {
                       games: group.game,
@@ -86,10 +100,11 @@ const GroupPage = ({ navigation, route }) => {
                       textAlign: "center",
                     }}
                   >
-                    {t("group.matches")}
+                    {t("common.games")}
                   </PrimaryText>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  testID="players"
                   onPress={() =>
                     navigation.navigate("group-players", {
                       players: group.Users,
@@ -108,11 +123,12 @@ const GroupPage = ({ navigation, route }) => {
                       textAlign: "center",
                     }}
                   >
-                    {t("group.players")}
+                    {t("common.players")}
                   </PrimaryText>
                 </TouchableOpacity>
                 {!invitation && (
                   <TouchableOpacity
+                    testID="chat"
                     style={styles.block}
                     onPress={() => {
                       navigation.navigate("chat", {
@@ -129,7 +145,7 @@ const GroupPage = ({ navigation, route }) => {
                         textAlign: "center",
                       }}
                     >
-                      {t("chat.title")}
+                      {t("chat.single_title")}
                     </PrimaryText>
                   </TouchableOpacity>
                 )}
@@ -137,7 +153,7 @@ const GroupPage = ({ navigation, route }) => {
             </>
           )}
         </View>
-        {isLoading ? null : invitation ? (
+        {isLoading ? null : invitation || fromNotification ? (
           <View
             style={{
               paddingHorizontal: 16,
@@ -151,25 +167,28 @@ const GroupPage = ({ navigation, route }) => {
               onPress={onCancel}
               style={{
                 flex: 1,
-                backgroundColor: "#acad28",
+                backgroundColor: "#E1D4F766",
                 borderWidth: 1.5,
-                borderColor: COLORS.yellow,
+                borderColor: COLORS.lightWhite,
                 borderRadius: 15,
                 height: 60,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <PrimaryText weight={600} style={{ fontSize: 20 }}>
-                {t("common.decline")}
+              <PrimaryText
+                weight={600}
+                style={{ fontSize: 20, color: COLORS.lightWhite }}
+              >
+                {t("common.cancel")}
               </PrimaryText>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={onConfirm}
               style={{
                 flex: 1,
-                backgroundColor: "#acad28",
-                borderColor: COLORS.yellow,
+                backgroundColor: COLORS.cyan,
+                borderColor: COLORS.cyan,
                 borderRadius: 15,
                 alignItems: "center",
                 justifyContent: "center",
@@ -181,30 +200,34 @@ const GroupPage = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         ) : (
-          group?.ownerId !== user?.id && (
-            <TouchableOpacity
-              onPress={() => {
+          <TouchableOpacity
+            onPress={() => {
+              if (group?.ownerId === user?.id) {
+                axios.delete("/group/delete/" + id);
+              } else {
                 axios.delete("/group/leave/" + id);
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: "select" }, { name: "main" }],
-                });
+              }
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "home" }],
+              });
+            }}
+          >
+            <PrimaryText
+              style={{
+                fontSize: 17,
+                color: "#68F4E4",
+                textAlign: "center",
+                marginBottom: 23,
               }}
             >
-              <PrimaryText
-                style={{
-                  fontSize: 17,
-                  color: "#68F4E4",
-                  textAlign: "center",
-                  marginBottom: 23,
-                }}
-              >
-                {t("group.leave")}
-              </PrimaryText>
-            </TouchableOpacity>
-          )
+              {group?.ownerId === user?.id
+                ? t("group.delete")
+                : t("group.leave")}
+            </PrimaryText>
+          </TouchableOpacity>
         )}
-      </View>
+      </ScrollView>
     </>
   );
 };

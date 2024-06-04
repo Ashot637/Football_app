@@ -31,10 +31,14 @@ const ForgotPasswordPage = ({ navigation }) => {
     const expoPushToken = await AsyncStorage.getItem("expoPushToken");
     const { data } = await axios.get(BASE_URL + "ip");
     axios
-      .post("/auth/checkPhone", { phone, expoPushToken, ip: data })
+      .post("/auth/checkPhone", {
+        phone: "374" + phone,
+        expoPushToken,
+        ip: data,
+      })
       .then(() => {
         setErrorMessage("");
-        navigation.navigate("forgot-password-phone", { phone });
+        navigation.navigate("forgot-password-phone", { phone: "374" + phone });
       })
       .catch(() => {
         setErrorMessage(t("errors.INVALID_PHONE"));
@@ -61,8 +65,9 @@ const ForgotPasswordPage = ({ navigation }) => {
             value={phone}
             setValue={setPhone}
             type="phone-pad"
-            img={phoneIcon}
-            placeholder={t("user.phone")}
+            img={<Image source={phoneIcon} />}
+            isPhoneNumber
+            maxLength={8}
           />
         </View>
         {errorMessage && (

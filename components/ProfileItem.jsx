@@ -1,19 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-import PrimaryText from './PrimaryText';
-import Input from './Input';
+import PrimaryText from "./PrimaryText";
+import Input from "./Input";
 
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../redux/authSlice/authSlice';
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice/authSlice";
 
-import { COLORS } from '../helpers/colors';
+import { COLORS } from "../helpers/colors";
 
-import arrowIcon from '../assets/images/arrow.png';
+import arrowIcon from "../assets/images/arrow.png";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-const ProfileItem = ({ icon, title, initialValue, value, setValue, openIcon }) => {
+const ProfileItem = ({
+  icon,
+  title,
+  initialValue,
+  value,
+  setValue,
+  openIcon,
+}) => {
   const { user } = useSelector(selectAuth);
   const [isOpen, setIsOpen] = useState(false);
   const isMounted = useRef(false);
@@ -44,7 +51,7 @@ const ProfileItem = ({ icon, title, initialValue, value, setValue, openIcon }) =
         <View>
           <Image
             source={arrowIcon}
-            style={[isOpen && { transform: [{ rotate: '90deg' }] }]}
+            style={[isOpen && { transform: [{ rotate: "90deg" }] }]}
             width={18}
             height={18}
           />
@@ -55,7 +62,8 @@ const ProfileItem = ({ icon, title, initialValue, value, setValue, openIcon }) =
           img={openIcon}
           value={value}
           setValue={setValue}
-          type={title !== 'user.phone' ? 'default' : 'phone-pad'}
+          type={title !== "user.phone" ? "default" : "phone-pad"}
+          isPhoneNumber={title === "user.phone"}
         />
       )}
     </TouchableOpacity>
@@ -64,9 +72,9 @@ const ProfileItem = ({ icon, title, initialValue, value, setValue, openIcon }) =
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     columnGap: 20,
     paddingLeft: 18,
   },
@@ -75,29 +83,29 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 16,
     backgroundColor: COLORS.blue,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     flex: 1,
-    position: 'relative',
+    position: "relative",
   },
   title: {
-    color: '#fff',
-    fontWeight: '600',
+    color: "#fff",
+    fontWeight: "600",
     marginBottom: 5,
     fontSize: 16,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   desc: {
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.grey,
   },
   line: {
     backgroundColor: COLORS.blue,
     height: 1,
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
   },
 });
 

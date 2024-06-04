@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   input: {
-    backgroundColor: COLORS.darkBlue,
+    backgroundColor: "#5E00F9",
     paddingHorizontal: 20,
     height: 40,
     borderRadius: 12,
