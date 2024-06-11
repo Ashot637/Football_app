@@ -57,7 +57,9 @@ const GroupPlayers = ({ route }) => {
                 <Image
                   style={styles.avatar}
                   source={
-                    currentUser.img ? { uri: BASE_URL + player.img } : avatarImg
+                    currentUser.img
+                      ? { uri: BASE_URL + currentUser.img }
+                      : avatarImg
                   }
                 />
               </View>

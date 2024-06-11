@@ -25,7 +25,6 @@ const GroupPage = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [group, setGroup] = useState(null);
 
-  console.log(needRefresh);
   useLayoutEffect(() => {
     setIsLoading(true);
     axios.get("/group/getOne/" + id).then(({ data }) => {
