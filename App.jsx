@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 
 import { I18nextProvider } from "react-i18next";
 import i18n from "./languages/i18n";
+import {Settings} from "react-native-fbsdk-next";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -34,6 +35,11 @@ export default function App() {
 
     setLanguage();
   }, []);
+
+  useEffect(() => {
+    Settings.initializeSDK();
+  }, []);
+
 
   if (!fontsLoaded) {
     return null;
