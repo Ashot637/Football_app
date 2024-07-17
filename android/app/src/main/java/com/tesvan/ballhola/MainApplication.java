@@ -18,6 +18,16 @@ import expo.modules.ReactNativeHostWrapper;
 
 import java.util.List;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+@Override
+public void onCreate() {
+    super.onCreate();
+    FacebookSdk.sdkInitialize(getApplicationContext());
+    AppEventsLogger.activateApp(this);
+}
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
