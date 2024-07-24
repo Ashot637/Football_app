@@ -86,7 +86,7 @@ android {
         applicationId 'com.tesvan.ballhola'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 33
+        versionCode 34
         versionName "1.0.12"
 
         buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
@@ -140,8 +140,10 @@ android {
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
-    implementation("com.facebook.react:react-android")
-    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+    implementation "com.facebook.react:react-android:+"
+    implementation 'com.facebook.android:facebook-android-sdk:8.2.0'
+//     implementation("com.facebook.react:react-android")
+//     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

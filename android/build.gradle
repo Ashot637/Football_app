@@ -35,13 +35,27 @@ allprojects {
         }
         google()
         mavenCentral()
+//         jcenter()
         maven { url 'https://www.jitpack.io' }
+        maven {
+                url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
+      configurations.all {
+            resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+            resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+        }
+
+        tasks.withType(org.gradle.api.tasks.testing.Test) {
+            testLogging {
+                exceptionFormat 'full'
+            }
+        }
 }
 
-// tasks.named('packageDebugAssets') {
-//     dependsOn tasks.named('copyReleaseExpoConfig')
-// }
+tasks.withType(org.gradle.api.tasks.testing.Test) {
+    maxParallelForks = 1
+}
 
 
 

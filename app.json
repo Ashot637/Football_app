@@ -36,7 +36,7 @@
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 33,
+      "versionCode": 34,
       "runtimeVersion": "1.0.0"
     },
     "web": {
