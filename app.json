@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ballhola",
     "slug": "ballhola",
-    "version": "1.0.12",
+    "version": "1.0.15",
     "orientation": "portrait",
     "icon": "./assets/images/icon1024.png",
     "owner": "ballhola",
@@ -18,7 +18,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tesvan.ballhola",
-      "buildNumber": "1.0.24",
+      "buildNumber": "1.0.34",
       "googleServicesFile": "./GoogleService-Info.plist",
       "runtimeVersion": {
         "policy": "appVersion"
@@ -36,7 +36,7 @@
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 34,
+      "versionCode": 35,
       "runtimeVersion": "1.0.0"
     },
     "web": {
@@ -61,6 +61,17 @@
         "expo-notifications",
         {
           "color": "#ffffff"
+        }
+      ],
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "970073587901143",
+          "clientToken": "6371f9d1e4e51d7e6501477cff238e22",
+          "displayName": "Ballhola",
+          "advertiserIDCollectionEnabled": true,
+          "autoLogAppEventsEnabled": true,
+          "isAutoInitEnabled": true
         }
       ]
     ],
