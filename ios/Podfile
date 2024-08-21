@@ -57,6 +57,8 @@ target 'Ballhola' do
     :flipper_configuration => flipper_config
   )
 
+  pod 'react-native-fbsdk-next', :path => '../node_modules/react-native-fbsdk-next'
+
   post_install do |installer|
     react_native_post_install(
       installer,

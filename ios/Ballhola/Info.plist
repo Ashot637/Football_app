@@ -19,7 +19,7 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.12</string>
+    <string>1.0.15</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -31,10 +31,10 @@
         </array>
       </dict>
       <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb970073587901143</string>
-      </array>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb970073587901143</string>
+        </array>
       </dict>
     </array>
     <key>FacebookAppID</key>
@@ -42,7 +42,7 @@
     <key>FacebookDisplayName</key>
     <string>Ballhola</string>
     <key>CFBundleVersion</key>
-    <string>1.0.24</string>
+    <string>1.0.34</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
