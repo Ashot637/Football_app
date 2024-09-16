@@ -9,11 +9,11 @@ export const minutesDifference = (start, end) => {
   const getHoursTitle = (lang) => {
     switch (lang) {
       case 'am':
-        return 'րոպե';
+        return 'Ժամ';
       case 'ru':
-        return 'минута';
+        return 'Ժամ ';
       default:
-        return 'minute';
+        return 'Ժամ';
     }
   };
 

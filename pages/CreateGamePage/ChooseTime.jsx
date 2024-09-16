@@ -127,7 +127,7 @@ const ChooseTime = ({ accordionId, toggleAccordion, isActive }) => {
 
         {isOpenDurationPopup && (
           <View style={styles.singleDuration}>
-            {[60, 90, 120].map((d, index) => {
+            {[1, 1.5, 2].map((d, index) => {
               return (
                 <TouchableOpacity
                   onPress={() => {
