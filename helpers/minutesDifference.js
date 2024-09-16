@@ -11,9 +11,9 @@ export const minutesDifference = (start, end) => {
       case 'am':
         return 'Ժամ';
       case 'ru':
-        return 'Ժամ ';
+        return 'час ';
       default:
-        return 'Ժամ';
+        return 'hour';
     }
   };
 
