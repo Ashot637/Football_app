@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { StatusBar } from "react-native";
 import Navigation from "./components/Navigation";
+import Constants from 'expo-constants';
 
 import { useFonts } from "expo-font";
 
@@ -36,10 +37,16 @@ export default function App() {
     setLanguage();
   }, []);
 
-  useEffect(() => {
-    Settings.initializeSDK();
-  }, []);
 
+  // useEffect(() => {
+  //   Settings.initializeSDK();
+  // }, []);
+  useEffect(() => {
+    const isRunningInExpoGo = typeof Constants !== 'undefined' && Constants.appOwnership === 'expo';
+  if (!isRunningInExpoGo) {
+  Settings.initializeSDK();
+}
+  }, []);
 
   if (!fontsLoaded) {
     return null;

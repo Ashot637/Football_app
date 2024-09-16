@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 5,
     fontSize: 16,
-    textTransform: "capitalize",
+    // textTransform: "capitalize",
   },
   desc: {
     fontWeight: "600",

@@ -9,11 +9,11 @@ export const minutesDifference = (start, end) => {
   const getHoursTitle = (lang) => {
     switch (lang) {
       case 'am':
-        return 'ժամ';
+        return 'րոպե';
       case 'ru':
-        return 'часа';
+        return 'минута';
       default:
-        return 'hours';
+        return 'minute';
     }
   };
 
@@ -28,7 +28,18 @@ export const minutesDifference = (start, end) => {
     }
   };
 
-  return hours
-    ? `${hours}.${minutes} ${getHoursTitle(i18n.language)}`
-    : `${minutes} ${getMinutesTitle(i18n.language)}`;
+//   return hours
+//     ? `${hours}.${minutes} ${getHoursTitle(i18n.language)}`
+//     : `${minutes} ${getMinutesTitle(i18n.language)}`;
+// };
+
+
+ 
+  if (hours) {
+    return minutes > 0
+      ? `${hours} ${getHoursTitle(i18n.language)} ${minutes} ${getMinutesTitle(i18n.language)}`
+      : `${hours} ${getHoursTitle(i18n.language)}`;
+  }
+
+  return `${minutes} ${getMinutesTitle(i18n.language)}`;
 };

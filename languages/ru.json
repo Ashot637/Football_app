@@ -146,7 +146,8 @@
     "title": "Чаты",
     "single_title": "Чат",
     "write_your_message": "Напишите свое сообщение",
-    "delete_from_everyone": "Удалить у всех"
+    "delete_from_everyone": "Удалить у всех",
+    "currentUser": "Я"
   },
   "create_group": {
     "title": "Создать группу",
@@ -158,6 +159,8 @@
     "once": "Создайте один раз",
     "month": "Следующие 4 недели",
     "create": "Создать матч",
+    "minute":"минута",
+    "time":"час",
     "info": "Перед созданием игры убедитесь, что вы забронировали номер заранее и стадион знает об этом.",
     "price_info": "Если оплата будет произведена организацией,вы можете не указывать сумму."
   },
@@ -190,6 +193,7 @@
   },
   "common": {
     "amd": "AMD",
+    "repeatable": "Повторяемый",
     "go_to_home": "На главную",
     "save": "Сохранить",
     "search": "Поиск...",
@@ -219,5 +223,72 @@
     "booking_number": "Номер подтверждения бронирования",
     "readed": "Прочитано",
     "not_readed": "Не прочитано"
-  }
+  },
+  "shop": {
+    "soon": "Скоро"
+  },
+  "terms_and_conditions":{
+    "title":"Условия использования",
+    "p":"Добро пожаловать в Ballhola! Настоящие Условия использования («Условия») регулируют ваше использование нашего мобильного приложения («Ballhola» или «Приложение»). Загружая, устанавливая или используя Приложение, вы соглашаетесь соблюдать эти Условия. Если вы не согласны с этими Условиями, пожалуйста, не используйте Приложение.",
+      "title2":"Использование Приложения",
+      "p1":"Возрастные ограничения: Вы должны быть не моложе 13 лет, чтобы использовать Ballhola. Используя Приложение, вы подтверждаете, что соответствуете этому возрастному требованию.",
+      "p2":"Регистрация аккаунта: Для доступа к некоторым функциям может потребоваться создать учетную запись. Вы соглашаетесь предоставлять точную и актуальную информацию и поддерживать безопасность вашей учетной записи.",
+      "p3":"Запрещенные действия: Вы соглашаетесь не:",
+      "p3-1":"1. Использовать Приложение для незаконных или несанкционированных целей.",
+      "p3-2":"2. Вмешиваться в безопасность или функциональность Приложения.",
+      "p3-3":"3. Нарушать права других пользователей, в том числе участвуя в оскорбительном или вредоносном поведении.",
+      "title3":"Интеллектуальная собственность",
+      "title3-item":"Все содержимое и материалы в Приложении, включая, но не ограничиваясь текстами, графикой, логотипами и программным обеспечением, являются собственностью Ballhola или ее лицензиаров. Вам предоставляется ограниченная, неисключительная и непередаваемая лицензия на использование Приложения для личных некоммерческих целей. Любое несанкционированное использование контента Приложения может привести к прекращению вашего доступа к Приложению.",
+      "title4":"Контент пользователей",
+      "title4-item":"Если вы размещаете контент (например, комментарии, фотографии или видео) через Приложение, вы предоставляете Ballhola неисключительную, всемирную, безвозмездную лицензию на использование, изменение и распространение вашего контента. Вы несете ответственность за контент, который вы размещаете, и он не должен нарушать законы или права третьих лиц.",
+      "title5":"Прекращение использования",
+      "title5-item":"Мы оставляем за собой право приостановить или прекратить ваш доступ к Приложению в любое время и по любой причине, включая нарушение этих Условий. После прекращения действия вашего права на использование Приложения немедленно прекращаются.",
+      "title6":"Ограничение ответственности",
+      "title6-item":"В максимально допустимой законом степени Ballhola и ее аффилированные лица не несут ответственности за любые косвенные, случайные или последующие убытки, связанные с использованием вами Приложения. Наша совокупная ответственность перед вами по любым претензиям, связанным с использованием Приложения, не будет превышать сумму, которую вы заплатили за использование Приложения, если такая имела место.",
+      "title7":"Отказ от гарантий",
+      "title7-item":"Приложение предоставляется на условиях «как есть» и «по мере доступности». Мы не гарантируем, что Приложение будет работать бесперебойно, без ошибок или вирусов. Вы используете Приложение на свой страх и риск.",
+      "title8":"Применимое право",
+      "title8-item":"Настоящие Условия регулируются законодательством Армении. Любые споры, возникающие в связи с настоящими Условиями, будут рассматриваться исключительно в судах Армении.",
+       "title9":"Изменения в Условиях",
+      "title9-item":"Мы можем время от времени вносить изменения в настоящие Условия. Любые изменения вступают в силу с момента их публикации в Приложении. Продолжение использования Приложения после внесения изменений означает ваше согласие с обновленными Условиями.",
+      "title10":"Свяжитесь с нами",
+      "title10-item":"Если у вас есть вопросы по поводу этих Условий, свяжитесь с нами по электронной почте   "
+
+
+  },
+ "privacy_policy":{
+  "title":"Политика конфиденциальности",
+  "p":"At Ballhola, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share your personal information when you use our mobile application (\"Ballhola\" or the \"App\"). By using the App, you agree to the collection and use of information in accordance with this policy.",
+    "title2":"Information We Collect",
+    "title2_p":"We collect various types of information to provide and improve our services:",
+    "p1":"Personal Information: When you register or interact with our App, we may collect personally identifiable information such as your name, email address, phone number, and location.",
+    "p2":"Usage Data: We automatically collect information about your usage of the App, such as pages viewed, features used, and time spent on the app.",
+    "p3":"Device Information: We collect information about the device you use to access the App, including device type, operating system, and unique device identifiers.",
+    "p4":"Cookies and Tracking Technologies: We may use cookies and similar technologies to collect information about how you use the App and to improve the user experience.",
+    "title3":"How We Use Your Information",
+    "title3-item":"We use the collected data for the following purposes:",
+    "p3-1":"To provide and maintain our services.",
+    "p3-2":"To notify you about changes to our App",
+    "p3-3":"To allow you to participate in interactive features.",
+    "p3-4":"To provide customer support.",
+    "p3-5":"To analyze usage and improve our services.",
+    "p3-6":"To communicate with you for promotional purposes (with your consent).",
+    "p3-7":"To prevent fraud and ensure security.",
+    "title4":"Data Sharing and Disclosure",
+    "title4-item":"We do not sell your personal information to third parties. However, we may share your data with trusted third-party service providers to help us provide our services, including:",
+    "title4-p1":"Service providers (e.g., hosting, analytics).",
+    "title4-p2":"Business partners in connection with joint services.",
+    "title4-p3":"Legal authorities, if required by law or to protect our rights.",
+    "title5":"Data Security",
+    "title5-item":"We take the security of your data seriously and use reasonable measures to protect it. However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to protect your data, we cannot guarantee its absolute security.",
+    "title6":"Data Retention",
+    "title6-item":"We will retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, or as required by law.",
+    "title7":"Your Rights",
+    "title7-item":"Depending on your location, you may have certain rights regarding your personal data, including the right to access, correct, or delete your information. To exercise your rights, please contact us at ",
+    "title8":"Changes to This Privacy Policy",
+    "title8-item":"We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after changes constitutes your consent to the new policy.",
+     "title9":"Contact Us",
+    "title9-item":"If you have any questions or concerns about this Privacy Policy, please contact us at "
+  
+ }
 }

@@ -21,6 +21,12 @@ import arrowIcon from "../../assets/images/arrow.png";
 import { useTranslation } from "react-i18next";
 
 const times = [
+  "07:00",
+  "07:30",
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
   "10:00",
   "10:30",
   "11:00",
@@ -121,7 +127,7 @@ const ChooseTime = ({ accordionId, toggleAccordion, isActive }) => {
 
         {isOpenDurationPopup && (
           <View style={styles.singleDuration}>
-            {[1, 1.5, 2].map((d, index) => {
+            {[60, 90, 120].map((d, index) => {
               return (
                 <TouchableOpacity
                   onPress={() => {

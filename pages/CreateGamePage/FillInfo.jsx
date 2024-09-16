@@ -194,7 +194,7 @@ const FillInfo = ({ stadions, groups, cantChangeStadium }) => {
           <CheckBox
             testId="repeat-checkbox"
             state={range === 4}
-            title={"Կրկնվող"}
+            title={t("common.repeatable")}
             setState={() => {
               if (range === 1) {
                 dispatch(setRange(4));

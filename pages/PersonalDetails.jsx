@@ -36,6 +36,10 @@ import LogoutIcon from "../assets/images/log out.svg";
 import { useTranslation } from "react-i18next";
 import DeleteAccount from "../components/DeleteAccount";
 import ChangeRole from "../components/ChangeRole";
+// import TermsAndConditions from "../components/TermsAndConditions";
+// import PrivacyPolicy from "../components/PrivacyPolicy";
+import TermsAndConditions from "../components/TermsAndConditions";
+import PrivacyPolicy from "../components/PrivacyPolicy";
 
 const items = [
   {
@@ -43,16 +47,16 @@ const items = [
     openIcon: <ProfileIcon2 />,
     title: "name",
   },
-  // {
-  //   icon: <MessageIcon />,
-  //   openIcon: <MessageIcon2 />,
-  //   title: "email",
-  // },
-  // {
-  //   icon: <LocationIcon />,
-  //   openIcon: <LocationIcon2 />,
-  //   title: "address",
-  // },
+  {
+    icon: <MessageIcon />,
+    openIcon: <MessageIcon2 />,
+    title: "email",
+  },
+  {
+    icon: <LocationIcon />,
+    openIcon: <LocationIcon2 />,
+    title: "address",
+  },
 ];
 
 const reducer = (state, action) => {
@@ -71,9 +75,9 @@ const PersonalDetails = ({ onLogout }) => {
   const [selectedImg, setSelectedImg] = useState(null);
   const [profileData, dispatchData] = useReducer(reducer, {
     name: user?.name,
-    // email: user?.email,
-    // phone: user?.phone,
-    // address: user?.address,
+    email: user?.email,
+    phone: user?.phone,
+    address: user?.address,
   });
 
   const handleValueChange = (title, value) => {
@@ -174,6 +178,8 @@ const PersonalDetails = ({ onLogout }) => {
             <LanguageSelect />
             <ContactUs />
             <DeleteAccount />
+            <TermsAndConditions />
+            <PrivacyPolicy />
             <TouchableOpacity
               testID="logout-button"
               style={{ alignSelf: "flex-start" }}
@@ -193,8 +199,8 @@ const PersonalDetails = ({ onLogout }) => {
               onPress={() => onUpdateData()}
               disabled={
                 (user["name"] === profileData["name"] &&
-                  // user["email"] === profileData["email"] &&
-                  // user["address"] === profileData["address"] &&
+                  user["email"] === profileData["email"] &&
+                  user["address"] === profileData["address"] &&
                   !selectedImg) ||
                 !profileData["name"].trim()
               }

@@ -12,8 +12,11 @@ import {
   differenceInMinutes,
   format,
 } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 const GameFixedDetails = ({ game }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={{ paddingHorizontal: 16 }}>
       <View style={[styles.block, { height: "auto" }]}>
@@ -39,14 +42,17 @@ const GameFixedDetails = ({ game }) => {
         </View>
         <View style={[styles.block, { width: "48%" }]}>
           <DurationIcon />
-          <Text style={styles.text}>
+          {/* <Text style={styles.text}>
             {`${
               differenceInMinutes(game?.endTime, game?.startTime) == 90
                 ? 1.5
                 : differenceInMinutes(game?.endTime, game?.startTime) == 60
                 ? 1
                 : 2
-            } ժամ`}
+            } ${t("create_game.minute")}`}
+          </Text> */}
+          <Text style={styles.text}>
+            {`${(differenceInMinutes(game?.endTime, game?.startTime) / 60)} ${t("create_game.minute")}`}
           </Text>
         </View>
       </View>

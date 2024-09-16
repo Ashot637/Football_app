@@ -58,6 +58,12 @@ import StadiumsPage from "../pages/StadiumsPage";
 import StadiumDetails from "../pages/StadiumDetails";
 import OpenGamesPage from "../pages/OpenGames/OpenGames";
 import MyGameDetails from "../pages/MyGameDetails";
+import TermsAndConditionsPage from "../pages/PPandTC/TermsAndConditionsPage"; 
+import PrivacyPolicyPage from "../pages/PPandTC/PrivacyPolicyPage";
+
+
+
+
 // import * as Linking from "expo-linking";
 
 import EditGame from "../pages/EditGame";
@@ -94,6 +100,10 @@ const HomeStack = () => {
       <Tab.Screen name="stadiums_search" component={StadiumsSearch} />
       <Tab.Screen name="stadium_details" component={StadiumDetails} />
       <Tab.Screen name="chats" component={Groups} />
+      <Tab.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
+      <Tab.Screen name="privacy_policy" component={PrivacyPolicyPage} />
+
+
     </Tab.Navigator>
   );
 };
@@ -267,10 +277,14 @@ const Navigation = () => {
           <Stack.Screen name="verify" component={VerifyAccount} />
           <Stack.Screen name="forgot-password" component={ForgotPasswordPage} />
           <Stack.Screen name="forgot-password-phone" component={VerifyPhone} />
+          <Stack.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
+        <Stack.Screen name="privacy_policy" component={PrivacyPolicyPage} />
+        
           <Stack.Screen
             name="forgot-password-new-password"
             component={NewPasswordPage}
           />
+
           {/* <Stack.Screen name="select" component={SelectSport} /> */}
           <Stack.Screen name="main" component={HomeStack} />
           <Stack.Screen
@@ -283,6 +297,29 @@ const Navigation = () => {
           />
           <Stack.Screen name="success" component={SuccessBookingPage} />
           <Stack.Screen name="cancel" component={CancelBookingPage} />
+          
+        {/* <Stack.Screen
+          name="TermsAndConditions"
+          component={TermsAndConditions}
+          options={{ title: "Terms and Conditions" }}
+        />
+     <Stack.Screen
+          name="TermsAndConditions"
+          component={TermsAndConditionsPage}
+          options={{ title: "Terms and Conditions Page" }}
+    />
+
+  <Stack.Screen
+          name="PrivacyPolicy"
+          component={PrivacyPolicy}
+          options={{ title: "Privacy Policy" }}
+        />
+     <Stack.Screen
+          name="PrivacyPolicyPage"
+          component={PrivacyPolicyPage}
+          options={{ title: "Privacy Policy Page" }}
+    /> */}
+        
         </Stack.Navigator>
       </NavigationContainer>
     </>

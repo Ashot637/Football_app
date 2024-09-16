@@ -1,12 +1,15 @@
 import { Button, Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import shopImage from "../assets/images/shop.jpg";
 import { COLORS } from "../helpers/colors";
+import { useTranslation } from "react-i18next";
 
 const ShopPage = () => {
+  const { t } = useTranslation();
+
   return (
     <>
         <View style={styles.background}>
-            <Text style={styles.title}>Շուտով</Text>
+            <Text style={styles.title}>{t('shop.soon')}</Text>
         </View>
     </>
   );
