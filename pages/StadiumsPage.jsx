@@ -132,7 +132,9 @@ import { useEffect, useState } from "react";
 import stadiumIcon from "../assets/images/stadium.png";
 import SearchIcon from "../assets/images/Search.svg";
 import { useTranslation } from "react-i18next";
+import { logger } from 'react-native-logs';
 
+const log = logger.createLogger();
 const StadiumsPage = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const [stadiums, setStadiums] = useState([]);
@@ -157,11 +159,12 @@ const StadiumsPage = ({ navigation }) => {
   //   };
   // }, [i18n]);
 
-
+  
   useEffect(() => {
     const fetchStadiums = async () => {
       try {
-        const { data } = await axios.get(`/stadion/search?lang=${i18n.language}`);
+        const { data } = await axios.get(`/stadion/search`);
+        console.log("API Response:", data);
         setStadiums(data);
       } catch (error) {
         console.error("Error fetching stadiums:", error);
@@ -169,11 +172,11 @@ const StadiumsPage = ({ navigation }) => {
     };
   
     if (i18n.language) {
-      fetchStadiums();
+      fetchStadiums(i18n.language);
     }
   
-    const handleLanguageChange = () => {
-      fetchStadiums();
+    const handleLanguageChange = (newLang) => {
+      fetchStadiums(newLang);
     };
   
     i18n.on("languageChanged", handleLanguageChange);
@@ -181,7 +184,8 @@ const StadiumsPage = ({ navigation }) => {
     return () => {
       i18n.off("languageChanged", handleLanguageChange);
     };
-  }, [i18n.language]); 
+  }, [i18n.language]);
+  
   
   return (
     <>

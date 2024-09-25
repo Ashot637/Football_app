@@ -15,8 +15,7 @@ const Facilities = ({ facilities }) => {
             <View style={styles.icon}>
               <Image
                 source={{ uri: BASE_URL + item.img }}
-                width={32}
-                height={32}
+                style={{ width: 30, height: 30, resizeMode: "contain" }}
               />
             </View>
             <PrimaryText style={styles.facilitie}>{item.title}</PrimaryText>

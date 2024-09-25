@@ -297,28 +297,6 @@ const Navigation = () => {
           />
           <Stack.Screen name="success" component={SuccessBookingPage} />
           <Stack.Screen name="cancel" component={CancelBookingPage} />
-          
-        {/* <Stack.Screen
-          name="TermsAndConditions"
-          component={TermsAndConditions}
-          options={{ title: "Terms and Conditions" }}
-        />
-     <Stack.Screen
-          name="TermsAndConditions"
-          component={TermsAndConditionsPage}
-          options={{ title: "Terms and Conditions Page" }}
-    />
-
-  <Stack.Screen
-          name="PrivacyPolicy"
-          component={PrivacyPolicy}
-          options={{ title: "Privacy Policy" }}
-        />
-     <Stack.Screen
-          name="PrivacyPolicyPage"
-          component={PrivacyPolicyPage}
-          options={{ title: "Privacy Policy Page" }}
-    /> */}
         
         </Stack.Navigator>
       </NavigationContainer>

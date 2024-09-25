@@ -19,7 +19,7 @@ const StadiumDetails = ({ route, navigation }) => {
   const { id } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [stadium, setStadium] = useState([]);
-  const { t } = useTranslation();
+  const { t, i18n  } = useTranslation();
   useLayoutEffect(() => {
     onRefresh();
   }, [route]);
@@ -31,6 +31,43 @@ const StadiumDetails = ({ route, navigation }) => {
       setIsLoading(false);
     });
   }, [id]);
+
+  const getStadiumAddress = () => {
+    switch (i18n.language) {
+      case "am": 
+        return stadium.address_am;
+      case "ru": 
+        return stadium.address_ru;
+      case "en": 
+      default:
+        return stadium.address_en;
+    }
+  };
+
+  const getStadiumTitle = () => {
+    switch (i18n.language) {
+      case "am": 
+        return stadium.title_am;
+      case "ru": 
+        return stadium.title_ru;
+      case "en": 
+      default:
+        return stadium.title_en;
+    }
+  };
+
+
+  const getFacilityTitle = (item) => {
+    switch (i18n.language) {
+      case "am": 
+        return item.title_am;
+      case "ru": 
+        return item.title_ru;
+      case "en": 
+      default:
+        return item.title_en;
+    }
+  };
 
   return (
     <>
@@ -49,7 +86,8 @@ const StadiumDetails = ({ route, navigation }) => {
               marginBottom: 15,
             }}
           >
-            {stadium.title_am}
+            {/* {stadium.title_am} */}
+            {getStadiumTitle()}
           </Text>
           <LocationIcon width={25} height={25} />
           <Text
@@ -62,7 +100,9 @@ const StadiumDetails = ({ route, navigation }) => {
               textAlign: "center",
             }}
           >
-            {stadium.address_am}
+            {/* {stadium.address_am}*/}
+
+          {getStadiumAddress()} 
           </Text>
         </ImageBackground>
         {stadium?.facilities && (
@@ -94,8 +134,8 @@ const StadiumDetails = ({ route, navigation }) => {
                   <View
                     style={{
                       backgroundColor: "#031852",
-                      height: 50,
-                      width: 50,
+                      height: 45,
+                      width: 45,
                       borderRadius: 30,
                       justifyContent: "center",
                       alignItems: "center",
@@ -103,17 +143,18 @@ const StadiumDetails = ({ route, navigation }) => {
                   >
                     <Image
                       source={{ uri: BASE_URL + item.img }}
-                      width={35}
-                      height={35}
+                      style={{ width: 30, height: 30, resizeMode: "contain" }}
+                      
                     ></Image>
                   </View>
                   <Text
                     style={{
                       color: "white",
-                      fontSize: 20,
+                      fontSize: 16,
                     }}
                   >
-                    {item.title_am}
+                    {/* {item.title_en} */}
+                    {getFacilityTitle(item)} 
                   </Text>
                 </View>
               );

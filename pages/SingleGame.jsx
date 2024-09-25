@@ -153,7 +153,7 @@ const SingleGame = ({ route, navigation }) => {
                 <View style={styles.addressView}>
                   <Image source={locationIcon} width={24} height={24} />
                   <PrimaryText style={styles.addressText}>
-                    {game.stadion.address}
+                  {game.stadion.address}
                   </PrimaryText>
                 </View>
               </View>

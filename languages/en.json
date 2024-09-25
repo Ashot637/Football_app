@@ -7,7 +7,7 @@
   },
   "landing": {
     "title": "Discover all about football",
-    "desc": "Welcome to the ultimate football experience at Ballhola! Secure your spot on the field, connect with fellow players, and dive into the game. Ready to play? Let's start."
+    "desc": "Welcome to the ultimate football experience at BallHola! Secure your spot on the field, connect with fellow players, and dive into the game. Ready to play? Let's start."
   },
   "form": {
     "login": "Log in",
@@ -236,22 +236,22 @@
     
     "terms_and_conditions":{
       "title":"Terms and Conditions",
-      "p":"Welcome to Ballhola! These Terms and Conditions (\"Terms\") govern your use of our mobile application (\"Ballhola\" or the \"App\"). By downloading, installing, or using the App, you agree to comply with these Terms. If you do not agree with these Terms, please do not use the App.",
+      "p":"Welcome to BallHola! These Terms and Conditions (\"Terms\") govern your use of our mobile application (\"BallHola\" or the \"App\"). By downloading, installing, or using the App, you agree to comply with these Terms. If you do not agree with these Terms, please do not use the App.",
       "title2":"Use of the App",
-      "p1":"Eligibility: You must be at least 13 years old to use Ballhola. By using the App, you confirm that you meet this age requirement.",
+      "p1":"Eligibility: You must be at least 13 years old to use BallHola. By using the App, you confirm that you meet this age requirement.",
       "p2":"Account Registration: To access certain features, you may be required to create an account. You agree to provide accurate and up-to-date information and to maintain the security of your account.",
       "p3":"Prohibited Activities: You agree not to:",
       "p3-1":"1. Use the App for any illegal or unauthorized purpose.",
       "p3-2":"2. Interfere with the security or functionality of the App.",
       "p3-3":"3. Violate the rights of other users, including by engaging in abusive or harmful behavior.",
       "title3":"Intellectual Property",
-      "title3-item":"All content and materials within the App, including but not limited to text, graphics, logos, and software, are the property of Ballhola or its licensors. You are granted a limited, non-exclusive, and non-transferable license to use the App for personal, non-commercial purposes. Any unauthorized use of the App's content may result in termination of your access to the App.",
+      "title3-item":"All content and materials within the App, including but not limited to text, graphics, logos, and software, are the property of BallHola  or its licensors. You are granted a limited, non-exclusive, and non-transferable license to use the App for personal, non-commercial purposes. Any unauthorized use of the App's content may result in termination of your access to the App.",
       "title4":"User Content",
-      "title4-item":"If you submit content (such as comments, photos, or videos) through the App, you grant Ballhola a non-exclusive, worldwide, royalty-free license to use, modify, and distribute your content. You are responsible for the content you submit, and it must not violate any laws or third-party rights.",
+      "title4-item":"If you submit content (such as comments, photos, or videos) through the App, you grant BallHola  a non-exclusive, worldwide, royalty-free license to use, modify, and distribute your content. You are responsible for the content you submit, and it must not violate any laws or third-party rights.",
       "title5":"Termination",
       "title5-item":"We reserve the right to suspend or terminate your access to the App at any time, for any reason, including violation of these Terms. Upon termination, your rights to use the App will cease immediately.",
       "title6":"Limitation of Liability",
-      "title6-item":"To the maximum extent permitted by law, Ballhola and its affiliates will not be liable for any indirect, incidental, or consequential damages arising out of or related to your use of the App. Our total liability to you for any claims arising from the App will not exceed the amount you paid, if any, to use the App.",
+      "title6-item":"To the maximum extent permitted by law, BallHola  and its affiliates will not be liable for any indirect, incidental, or consequential damages arising out of or related to your use of the App. Our total liability to you for any claims arising from the App will not exceed the amount you paid, if any, to use the App.",
       "title7":"Disclaimer",
       "title7-item":"The App is provided on an \"as is\" and \"as available\" basis. We do not warrant that the App will be uninterrupted, error-free, or free from viruses. Your use of the App is at your own risk.",
       "title8":"Governing Law",
@@ -265,7 +265,7 @@
     },
    "privacy_policy":{
     "title":"Privacy Policy",
-    "p":"At Ballhola, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share your personal information when you use our mobile application (\"Ballhola\" or the \"App\"). By using the App, you agree to the collection and use of information in accordance with this policy.",
+    "p":"At BallHola, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share your personal information when you use our mobile application (\"BallHola\" or the \"App\"). By using the App, you agree to the collection and use of information in accordance with this policy.",
     "title2":"1․ Information We Collect",
     "title2_p":"We collect various types of information to provide and improve our services:",
     "p1":"Personal Information: When you register or interact with our App, we may collect personally identifiable information such as your name, email address, phone number, and location.",

@@ -7,7 +7,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { COLORS } from "../helpers/colors";
 
-import LogoImg from "../assets/images/Logo.svg";
+// import LogoImg from "../assets/images/Logo.svg";
+const BollHolaLogo = require('../assets/images/BollHola_logo.png');
+
 import NotificationIcon from "../assets/images/Notification.svg";
 import MessangerIcon from "../assets/images/Chat.svg";
 
@@ -59,7 +61,9 @@ const Header = () => {
             testID="home-page"
             onPress={() => navigation.navigate("home")}
           >
-            <LogoImg width={60} height={60} />
+            {/* <LogoImg width={60} height={60} /> */}
+            <Image source={BollHolaLogo} style={styles.logo} />
+
           </TouchableOpacity>
           <View style={styles.actions}>
             {/* <TouchableOpacity onPress={onOpenSearch}>
@@ -117,6 +121,8 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
+    width: 60, 
+    height: 60,
   },
   actions: {
     flexDirection: "row",

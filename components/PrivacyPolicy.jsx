@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
       color: "#fff",
       fontWeight: "600",
       fontSize: 16,
-      marginHorizontal:4
+      // marginHorizontal:4,
+      lineHeight: 24,
     },
   });
   
