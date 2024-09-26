@@ -9,7 +9,7 @@ import { COLORS } from "../helpers/colors";
 
 // import LogoImg from "../assets/images/Logo.svg";
 // const BollHolaLogo = require('../assets/images/bollHola_logo.png');
-import BollHolaLogo from "../assets/images/bollHola_logo.png";
+import BollHolaLogo from "../assets/images/BallHola.jpg";
 
 
 import NotificationIcon from "../assets/images/Notification.svg";
