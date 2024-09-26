@@ -8,7 +8,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { COLORS } from "../helpers/colors";
 
 // import LogoImg from "../assets/images/Logo.svg";
-const BollHolaLogo = require('../assets/images/BollHola_logo.png');
+// const BollHolaLogo = require('../assets/images/bollHola_logo.png');
+import BollHolaLogo from "../assets/images/bollHola_logo.png";
+
 
 import NotificationIcon from "../assets/images/Notification.svg";
 import MessangerIcon from "../assets/images/Chat.svg";
@@ -63,6 +65,7 @@ const Header = () => {
           >
             {/* <LogoImg width={60} height={60} /> */}
             <Image source={BollHolaLogo} style={styles.logo} />
+
 
           </TouchableOpacity>
           <View style={styles.actions}>
