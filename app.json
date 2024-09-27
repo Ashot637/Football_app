@@ -2,7 +2,7 @@
   "expo": {
     "name": "BallHola",
     "slug": "ballhola",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "orientation": "portrait",
     "icon": "./assets/images/icon1024.png",
     "owner": "ballhola",
@@ -18,7 +18,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tesvan.ballhola",
-      "buildNumber": "1.0.39",
+      "buildNumber": "1.0.41",
       "googleServicesFile": "./GoogleService-Info.plist",
       "runtimeVersion": {
         "policy": "appVersion"
@@ -36,7 +36,7 @@
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 38,
+      "versionCode": 40,
       "runtimeVersion": "1.0.0"
     },
     "web": {

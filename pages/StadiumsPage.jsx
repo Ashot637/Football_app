@@ -139,27 +139,10 @@ const StadiumsPage = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const [stadiums, setStadiums] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchStadiums = async () => {
-  //     // const { data } = await axios.get("/stadion/search");
-  //     const { data } = await axios.get(`/stadion/search?lang=${i18n.language}`);
-  //     setStadiums(data);
-  //   };
 
-  //   fetchStadiums();
+  ///stadion/search?lang=${i18n.language}
+  //stadion/search?language=${i18n.language}
 
-  //   const handleLanguageChange = () => {
-  //     fetchStadiums();
-  //   };
-
-  //   i18n.on("languageChanged", handleLanguageChange);
-
-  //   return () => {
-  //     i18n.off("languageChanged", handleLanguageChange);
-  //   };
-  // }, [i18n]);
-
-  
   useEffect(() => {
     const fetchStadiums = async () => {
       try {

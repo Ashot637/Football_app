@@ -22,7 +22,7 @@ instance.interceptors.request.use((config) => {
         Authorization: `Bearer ${accessToken}`,
       };
     }
-    const language = (await AsyncStorage.getItem("language")) || "en";
+    const language = (await AsyncStorage.getItem("language")) || "am";
     config.params = {
       ...config.params,
       language,
