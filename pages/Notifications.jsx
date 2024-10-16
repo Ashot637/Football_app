@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectNotification } from "../redux/notificationSlice/notificationSlice";
 
 import { useFocusEffect } from "@react-navigation/native";
+import i18n from '../languages/i18n';
+
 
 import { COLORS } from "../helpers/colors";
 import PrimaryText from "../components/PrimaryText";
@@ -22,11 +24,14 @@ const NotificationsPage = ({ navigation }) => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    axios.get("/notifications/getAll").then(({ data }) => {
+    axios.get(`/notifications/getAll?language=${i18n.language}`).then(({ data }) => {
       setNotifications(data);
       dispatch(changeNotificationsCount(0));
     });
   }, []);
+
+
+  
 
   // const { from } = useSelector(selectNotification);
 

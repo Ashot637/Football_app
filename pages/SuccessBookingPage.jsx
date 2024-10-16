@@ -20,7 +20,6 @@ const SuccessBookingPage = ({ route, navigation }) => {
   const { t } = useTranslation();
   const { user } = useSelector(selectAuth);
   const { game, confirmationNumber } = route.params;
-  // const endTime = addMinutes(new Date(game.startTime), game.duration || 60);
 
   return (
     <ImageBackground source={bgImg} style={styles.image}>

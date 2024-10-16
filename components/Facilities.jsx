@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   facilitie: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 16,
   },
 });
 
