@@ -234,6 +234,7 @@ import { BASE_URL } from "../../axios/axios";
 
 import likeImg from "../../assets/images/heart.png";
 import { useTranslation } from "react-i18next";
+import Hyperlink from 'react-native-hyperlink';
 
 let timer = null;
 const TIMEOUT = 250;
@@ -316,13 +317,13 @@ const SenderMessage = memo(
             >
             {/* {!isCurrentUser && <PrimaryText style={styles.username}>{t('chat.currentUser')}</PrimaryText>} */}
 
-             {/* <PrimaryText style={styles.username}>{data.user.name}</PrimaryText> */}
+             <PrimaryText style={styles.username}>{data.user.name}</PrimaryText>
              
-             {!isCurrentUser && (
+             {/* {!isCurrentUser && (
                 <PrimaryText style={styles.username}>
                   {data.user.name}  
                 </PrimaryText>
-              )}
+              )} */}
 
             {/* <PrimaryText style={styles.username}>
                 {isCurrentUser ? t('chat.currentUser') : data.user.name}
@@ -331,6 +332,10 @@ const SenderMessage = memo(
 
 
               <View style={styles.block}>
+              <Hyperlink
+                  linkDefault={true}
+                  onPress={(url) => Linking.openURL(url)}
+                >
                 <PrimaryText
                   style={[
                     styles.message,
@@ -340,6 +345,7 @@ const SenderMessage = memo(
                 >
                   {data.text}
                 </PrimaryText>
+                </Hyperlink>
                 <View
                   style={{
                     flexDirection: "row-reverse",

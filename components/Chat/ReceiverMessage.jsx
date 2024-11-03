@@ -6,6 +6,8 @@ import avatarImg from "../../assets/images/avatar.png";
 import { COLORS } from "../../helpers/colors";
 import { format } from "date-fns";
 import { BASE_URL } from "../../axios/axios";
+import Hyperlink from 'react-native-hyperlink';
+import { Linking } from 'react-native';
 
 import likeImg from "../../assets/images/heart.png";
 
@@ -66,6 +68,11 @@ const Message = memo(
                 </TouchableOpacity>
               </View>
             )}
+             {!isNextUserSame && (
+              <PrimaryText style={[styles.username]}>
+                {data.user.name}
+              </PrimaryText>
+            )}
             <TouchableOpacity
               onPress={onPress}
               onLongPress={(e) => {
@@ -73,7 +80,13 @@ const Message = memo(
               }}
             >
               <View style={[styles.block]}>
+              <Hyperlink
+                  onPress={(url) => {
+                    Linking.openURL(url);
+                  }}
+                >
                 <PrimaryText style={[styles.message]}>{data.text}</PrimaryText>
+                </Hyperlink>
                 <View
                   style={{
                     flexDirection: "row",
@@ -81,9 +94,9 @@ const Message = memo(
                     columnGap: 15,
                   }}
                 >
-                  <PrimaryText style={[styles.time]}>
+                  {/* <PrimaryText style={[styles.time]}>
                     {format(data.createdAt, "HH:mm")}
-                  </PrimaryText>
+                  </PrimaryText> */}
                   {!!data.likedUsers?.length && (
                     <View
                       style={{
@@ -101,11 +114,14 @@ const Message = memo(
                 </View>
               </View>
             </TouchableOpacity>
-            {!isNextUserSame && (
+             <PrimaryText style={[styles.time]}>
+                    {format(data.createdAt, "HH:mm")}
+                  </PrimaryText>
+            {/* {!isNextUserSame && (
               <PrimaryText style={[styles.username]}>
                 {data.user.name}
               </PrimaryText>
-            )}
+            )} */}
           </View>
         </View>
       </View>

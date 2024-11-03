@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Image,
@@ -22,6 +22,8 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import CrossIcon from "../assets/images/cross.svg";
 import Invitation from "../components/Invitation";
+// import { useTranslation } from "react-i18next";
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 const blocks = [

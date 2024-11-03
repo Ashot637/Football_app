@@ -8,10 +8,12 @@ import {
 } from "../redux/authSlice/authSlice";
 import { COLORS } from "../helpers/colors";
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import i18n from "../languages/i18n";
 
 import axios from "../axios/axios";
 import { format } from "date-fns";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 const Invitation = () => {
@@ -19,8 +21,49 @@ const Invitation = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuth);
+  const [invitations, setInvitations] = useState([]); 
+
+
+  useEffect(() => {
+    const fetchInvitations = async () => {
+      console.log("Fetching invitations..."); 
+      try {
+        const accessToken = await AsyncStorage.getItem("accessToken");
+        if (!accessToken) {
+          console.error("Access token is missing.");
+          return;
+        }
+        console.log("Access token retrieved:", accessToken); 
+        console.log("Language being sent to backend:", i18n.language);
+        const response = await axios.get(
+          `https://ballhola.app/service/api/v2/invitations/getAll`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log("Response data:", response.data); 
+        setInvitations(response.data);
+
+        if (response.data.length === 0) {
+          console.warn("No invitations found.");
+        }
+
+      } catch (error) {
+        console.error("Error fetching invitations:", error); 
+        if (error.response) {
+          console.error("Response data:", error.response.data); 
+        }
+      }
+    };
+  
+    fetchInvitations();
+  }, []);
 
   const onConfirm = () => {
+    console.log("Confirming invitation...");
+    console.log("Navigating with invitation data:", user.invitations[0]);
     navigation.navigate("main", {
       screen: "game",
       params: {
@@ -32,14 +75,18 @@ const Invitation = () => {
   };
 
   const onCancel = () => {
+    console.log("Cancelling invitation...");
+    console.log("Sending cancel request for invitation ID:", user.invitations[0].id);
     axios.post("/game/declineInvitation", { id: user.invitations[0].id });
     dispatch(deleteFirstInvitation());
   };
 
   useEffect(() => {
     if (user?.invitations) {
+      console.log("Processing invitation type and navigation...");
       if (user?.invitations[0]?.type === "GROUP") {
         if (user?.invitations[0]?.hasGroup) {
+           console.log("Navigating to group with ID:", user.invitations[0].groupId);
           navigation.navigate("group", {
             id: user.invitations[0].groupId,
           });

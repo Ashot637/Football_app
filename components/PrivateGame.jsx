@@ -34,6 +34,12 @@ const PrivateGame = ({ game, invitation, fromNotification }) => {
       const shareOptions = {
         message: BASE_URL + `ip?token=${token}`,
       };
+
+
+//       const shareOptions = {
+//   message: `${BASE_URL}ip?token=${token}&gameId=${game.id}`,
+// };
+
       await Share.share(shareOptions);
     } catch (error) {
       console.error("Error sharing:", error);
@@ -209,3 +215,6 @@ const PrivateGame = ({ game, invitation, fromNotification }) => {
 };
 
 export default PrivateGame;
+
+
+
