@@ -28,6 +28,11 @@ const GroupPage = ({ navigation, route }) => {
   useLayoutEffect(() => {
     setIsLoading(true);
     axios.get("/group/getOne/" + id).then(({ data }) => {
+      console.log("Group Data:", data);
+      console.log("Players:", data.Users);
+      console.log("Title:", data.title);
+      console.log("ID:", data.id);
+
       setGroup(data);
       setIsLoading(false);
     });

@@ -24,9 +24,13 @@ const NotificationsPage = ({ navigation }) => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    axios.get(`/notifications/getAll?language=${i18n.language}`).then(({ data }) => {
+    axios.get(`/notifications/getAll?language=${i18n.language}`)
+    .then(({ data }) => {
       setNotifications(data);
       dispatch(changeNotificationsCount(0));
+    })
+    .catch(error => {
+      console.error("Error fetching notifications:", error);
     });
   }, []);
 

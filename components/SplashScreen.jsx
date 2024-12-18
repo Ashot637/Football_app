@@ -2,6 +2,8 @@ import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
 import React from 'react';
 
 import splashIcon from '../assets/images/icon1024.png';
+// import splashIcon from '../assets/images/ballhola_logo.png';
+
 
 const SplashScreen = () => {
   return (

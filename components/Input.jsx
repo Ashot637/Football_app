@@ -1,7 +1,8 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import { COLORS } from "../helpers/colors";
-
+import PhEyeIcon from "../assets/images/ph_eye.png";
+import { useState } from "react";
 const Input = ({
   img,
   placeholder,
@@ -11,12 +12,14 @@ const Input = ({
   secureTextEntry,
   maxLength = 30,
   isPhoneNumber,
+  isPassword, 
   testId,
 }) => {
+  const [isSecure, setIsSecure] = useState(secureTextEntry);
   return (
     <View style={styles.inputView}>
       <View>{img}</View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center", flex: 1  }}>
         {isPhoneNumber && (
           <TextInput
             value="+374"
@@ -29,13 +32,18 @@ const Input = ({
           value={value}
           onChangeText={setValue}
           keyboardType={type}
-          style={styles.input}
-          secureTextEntry={secureTextEntry}
+          style={[styles.input,isPhoneNumber && { marginLeft: 5 }]}
+          secureTextEntry={isPassword ? isSecure : secureTextEntry}
           placeholder={placeholder}
           placeholderTextColor={COLORS.grey}
           selectionColor={"#fff"}
           maxLength={maxLength}
         />
+         {isPassword && (
+          <TouchableOpacity onPress={() => setIsSecure(!isSecure)}>
+            <Image source={PhEyeIcon} style={styles.iconSize} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -52,8 +60,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     columnGap: 15,
     flexDirection: "row",
+   
   },
   input: {
+    flex: 1,
     width: "100%",
     color: "#fff",
     fontWeight: "600",
@@ -62,6 +72,11 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
+  },
+  iconSize: {
+    width: 24,
+    height: 24,
+    marginRight: 15, 
   },
 });
 

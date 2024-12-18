@@ -44,9 +44,14 @@ const LoginPage = ({ navigation }) => {
     const expoPushToken = await AsyncStorage.getItem("expoPushToken");
     dispatch(
       fetchLogin({ password, phone: "374" + phone, expoPushToken })
-    ).then(() => {
-      setPhone("");
-      setPassword("");
+    ).then((response) => {
+      if (response.payload.success) {
+        setPhone("");
+        setPassword("");
+      }
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
     });
   };
 
@@ -86,6 +91,7 @@ const LoginPage = ({ navigation }) => {
             setValue={setPassword}
             img={<PasswordIcon />}
             placeholder={t("user.password")}
+            isPassword 
           />
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

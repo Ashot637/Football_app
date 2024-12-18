@@ -28,6 +28,7 @@
     "my_games": "My games",
     "my_groups": "My groups",
     "open_games": "Public games",
+    "team":"Team",
     "choose_date": "Choose date",
     "choose_variant": "Which variant?",
     "available_stadiums": "Available stadiums"
@@ -37,6 +38,12 @@
     "my": "My groups",
     "leave": "Leave from group",
     "delete": "Delete group"
+  },
+  "team":{
+    "create": "Create a team",
+    "my": "My team",
+    "leave": "Leave from team",
+    "delete": "Delete team"
   },
   "date": {
     "today": "Today",

@@ -113,7 +113,7 @@ const VerifyAccount = ({ navigation }) => {
         </View>
         <View style={styles.bottomTextView}>
           <PrimaryText style={styles.leftText} weight={600}>
-            {t("verify.didnt_receive_otp")}
+            {/* {t("verify.didnt_receive_otp")} */}
           </PrimaryText>
           <ResendCode />
         </View>

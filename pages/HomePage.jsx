@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import myGamesImg from "../assets/images/my-games2.png";
 import myGroupsImg from "../assets/images/my-groups2.png";
+import teamImg from "../assets/images/team.png"
 import openGamesImg from "../assets/images/public-games2.png";
 import stadiumsImg from "../assets/images/stadiums2.png";
 import { LinearGradient } from "expo-linear-gradient";
@@ -50,6 +51,16 @@ const blocks = [
     title: "common.stadiums",
     link: "stadiums_main",
     testId: "stadiums",
+  },
+  {
+    img: teamImg,
+    title: "home.team",
+    // link: "teams",
+    // link: "my-team",
+    link: "my_teams_teams",
+    testId: "create-team",
+
+   
   },
 ];
 
@@ -135,6 +146,31 @@ const HomePage = () => {
         {isOpenActions && (
           <View style={{ rowGap: 15, marginBottom: 13 }}>
             <TouchableOpacity
+              testID="create-group"
+              onPress={() => navigation.navigate("create-team")}
+            >
+              <LinearGradient
+                start={{ x: 0, y: 0.5 }}
+                end={{ x: 1, y: 0.5 }}
+                colors={["#0DDDD5", "#68F4E4"]}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 42,
+                  paddingHorizontal: 19,
+                  borderRadius: 40,
+                }}
+              >
+                <PrimaryText
+                  weight={600}
+                  style={{ color: "#0C2544", fontSize: 16 }}
+                >
+                  {t("team.create")}
+                </PrimaryText>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
               testID="create-game"
               onPress={() => navigation.navigate("create-game")}
             >
@@ -184,6 +220,7 @@ const HomePage = () => {
                 </PrimaryText>
               </LinearGradient>
             </TouchableOpacity>
+            
           </View>
         )}
         <LinearGradient
@@ -214,7 +251,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background_blue,
     paddingHorizontal: 30,
-    paddingTop: 44,
+    paddingTop: 20,
   },
   blocks: {
     flexWrap: "wrap",

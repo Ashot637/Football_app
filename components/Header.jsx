@@ -10,7 +10,7 @@ import { COLORS } from "../helpers/colors";
 // import LogoImg from "../assets/images/Logo.svg";
 // const BollHolaLogo = require('../assets/images/bollHola_logo.png');
 import BollHolaLogo from "../assets/images/BallHola.jpg";
-
+// import BollHolaLogo from "../assets/images/ballhola_logo.png";
 
 import NotificationIcon from "../assets/images/Notification.svg";
 import MessangerIcon from "../assets/images/Chat.svg";
@@ -65,8 +65,6 @@ const Header = () => {
           >
             {/* <LogoImg width={60} height={60} /> */}
             <Image source={BollHolaLogo} style={styles.logo} />
-
-
           </TouchableOpacity>
           <View style={styles.actions}>
             {/* <TouchableOpacity onPress={onOpenSearch}>
@@ -123,8 +121,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 48,
     height: 48,
-    borderRadius: 24,
-    width: 60, 
+    borderRadius: 30,
+    width: 60,
     height: 60,
   },
   actions: {

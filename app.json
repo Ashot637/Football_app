@@ -24,7 +24,10 @@
         "policy": "appVersion"
       },
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification"
+        ],
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       }
     },
@@ -40,7 +43,7 @@
       ],
       "googleServicesFile": "./google-services.json",
       "package": "com.tesvan.ballhola",
-      "versionCode": 40,
+      "versionCode": 43,
       "runtimeVersion": "1.0.0"
     },
     "web": {
@@ -87,4 +90,3 @@
   },
   "usesCleartextTraffic": true
 }
-

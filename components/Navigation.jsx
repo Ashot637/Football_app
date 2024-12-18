@@ -47,10 +47,15 @@ import VerifyPhone from "../pages/ForgotPassword/VerifyPhone";
 import NewPasswordPage from "../pages/ForgotPassword/NewPassword";
 import { BASE_URL } from "../axios/axios";
 import CreateGroupPage from "../pages/CreateGroupPage/CreateGroupPage";
+import CreateTeamPage from "../pages/CreateTeamPage/CreateTeamPage";
 import GroupPage from "../pages/GroupPage/GroupPage";
 import GroupsPage from "../pages/GroupPage/GroupsPage";
+import TeamPage from "../pages/TeamPage/TeamPage"
 import GroupGames from "../pages/GroupPage/GroupGames";
+import TeamPlayers from "../pages/TeamPage/TeamPlayers";
+import Statistics from "../pages/TeamPage/Statistics";
 import GroupPlayers from "../pages/GroupPage/GroupPlayers";
+import MyTeams from "../pages/TeamPage/MyTeams"
 import ShopPage from "../pages/ShopPage";
 import PersonalDetails from "../pages/PersonalDetails";
 import MyGamesPage from "../pages/MyGames/MyGamesPage";
@@ -60,6 +65,11 @@ import OpenGamesPage from "../pages/OpenGames/OpenGames";
 import MyGameDetails from "../pages/MyGameDetails";
 import TermsAndConditionsPage from "../pages/PPandTC/TermsAndConditionsPage"; 
 import PrivacyPolicyPage from "../pages/PPandTC/PrivacyPolicyPage";
+import AllTeams from "../pages/TeamPage/AllTeams";
+// import ThereIsNoTeam from "../pages/TeamPage/ThereIsNoTeam";
+import MyTeamsAndAllTeams from "../pages/TeamPage/MyTeamsAndAllTeams";
+import StoryGame from "../pages/TeamPage/StoryGame";
+// import InvitationTeam from "../pages/TeamPage/InvitationTeam";
 
 
 
@@ -90,18 +100,30 @@ const HomeStack = () => {
       <Tab.Screen name="game_details" component={MyGameDetails} />
       <Tab.Screen name="notifications" component={NotificationsPage} />
       <Tab.Screen name="groups" component={GroupsPage} />
+      <Tab.Screen name="team" component={TeamPage} />
+      <Tab.Screen name="my-team" component={MyTeams} />
+      {/* <Tab.Screen name="there_is_no_team" component={ThereIsNoTeam} /> */}
+      <Tab.Screen name="all_teams" component={AllTeams} />
       <Tab.Screen name="group" component={GroupPage} />
       <Tab.Screen name="create-game" component={CreateGamePage} />
       <Tab.Screen name="create-group" component={CreateGroupPage} />
+      <Tab.Screen name="create-team" component={CreateTeamPage} />
       <Tab.Screen name="group-matches" component={GroupGames} />
+      <Tab.Screen name="team-players" component={TeamPlayers} />
+      <Tab.Screen name="team-statistics" component={Statistics} />
       <Tab.Screen name="edit_game" component={EditGame} />
       <Tab.Screen name="group-players" component={GroupPlayers} />
+      <Tab.Screen name="story_game" component={StoryGame} />
       <Tab.Screen name="stadiums_main" component={StadiumsPage} />
       <Tab.Screen name="stadiums_search" component={StadiumsSearch} />
       <Tab.Screen name="stadium_details" component={StadiumDetails} />
       <Tab.Screen name="chats" component={Groups} />
       <Tab.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
       <Tab.Screen name="privacy_policy" component={PrivacyPolicyPage} />
+      <Tab.Screen name="my_teams_teams" component={MyTeamsAndAllTeams} />
+      {/* <Tab.Screen name="invitation-team" component={InvitationTeam} /> */}
+
+
 
 
     </Tab.Navigator>
@@ -168,6 +190,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
+      console.log("Attempting to register for push notifications...");
       if (Platform.OS === "android") {
         Notifications.setNotificationChannelAsync("default", {
           name: "default",
@@ -180,7 +203,8 @@ const Navigation = () => {
       if (Device.isDevice) {
         const { status: existingStatus } =
           await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
+          // console.log("Existing notification status:", existingStatus);
+          let finalStatus = existingStatus;
         if (existingStatus !== "granted") {
           const { status } = await Notifications.requestPermissionsAsync();
           finalStatus = status;
@@ -196,6 +220,7 @@ const Navigation = () => {
             projectId: Constants.expoConfig.extra.eas.projectId,
           })
         )?.data;
+        // console.log("Push token generated:", token);
         await AsyncStorage.setItem("expoPushToken", token);
       } else {
         alert("Must use physical device for Push Notifications");
@@ -205,10 +230,14 @@ const Navigation = () => {
     registerForPushNotificationsAsync();
     (async () => {
       const expoPushToken = await AsyncStorage.getItem("expoPushToken");
+      // console.log("Expo Push Token fetched from  AsyncStorage:", expoPushToken);
       dispatch(setExpoPushToken(expoPushToken));
+      // console.log("Expo Push Token dispatched to Redux:", expoPushToken);
       const { data } = await axios
         .get(BASE_URL + "ip")
         .catch((err) => console.log(err));
+
+      console.log("Fetched IP Data:", data);
       dispatch(fetchAuthMe({ expoPushToken, ip: data }));
     })();
   }, []);
@@ -280,6 +309,8 @@ const Navigation = () => {
           <Stack.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
         <Stack.Screen name="privacy_policy" component={PrivacyPolicyPage} />
         
+        
+        
           <Stack.Screen
             name="forgot-password-new-password"
             component={NewPasswordPage}
@@ -305,7 +336,6 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
 
 
 // import { useEffect, useState } from "react";
@@ -357,10 +387,16 @@ export default Navigation;
 // import NewPasswordPage from "../pages/ForgotPassword/NewPassword";
 // import { BASE_URL } from "../axios/axios";
 // import CreateGroupPage from "../pages/CreateGroupPage/CreateGroupPage";
+// import CreateTeamPage from "../pages/CreateTeamPage/CreateTeamPage";
 // import GroupPage from "../pages/GroupPage/GroupPage";
 // import GroupsPage from "../pages/GroupPage/GroupsPage";
+// import TeamsPage from "../pages/TeamPage/TeamsPage"
+// import TeamPage from "../pages/TeamPage/TeamPage"
 // import GroupGames from "../pages/GroupPage/GroupGames";
+// import TeamGames from "../pages/TeamPage/TeamGames";
+// import Statistics from "../pages/TeamPage/Statistics";
 // import GroupPlayers from "../pages/GroupPage/GroupPlayers";
+// import Teams from "../pages/TeamPage/Teams";
 // import ShopPage from "../pages/ShopPage";
 // import PersonalDetails from "../pages/PersonalDetails";
 // import MyGamesPage from "../pages/MyGames/MyGamesPage";
@@ -371,11 +407,8 @@ export default Navigation;
 // import TermsAndConditionsPage from "../pages/PPandTC/TermsAndConditionsPage"; 
 // import PrivacyPolicyPage from "../pages/PPandTC/PrivacyPolicyPage";
 
-
-// // import * as Linking from "expo-linking";
-// import { Linking } from "react-native";
-
 // import EditGame from "../pages/EditGame";
+
 // const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
 
@@ -399,12 +432,18 @@ export default Navigation;
 //       <Tab.Screen name="game_details" component={MyGameDetails} />
 //       <Tab.Screen name="notifications" component={NotificationsPage} />
 //       <Tab.Screen name="groups" component={GroupsPage} />
+//       <Tab.Screen name="teams" component={TeamsPage} />
+//       <Tab.Screen name="team" component={TeamPage} />
 //       <Tab.Screen name="group" component={GroupPage} />
 //       <Tab.Screen name="create-game" component={CreateGamePage} />
 //       <Tab.Screen name="create-group" component={CreateGroupPage} />
+//       <Tab.Screen name="create-team" component={CreateTeamPage} />
 //       <Tab.Screen name="group-matches" component={GroupGames} />
+//       <Tab.Screen name="team-matches" component={TeamGames} />
+//       <Tab.Screen name="team-statistics" component={Statistics} />
 //       <Tab.Screen name="edit_game" component={EditGame} />
 //       <Tab.Screen name="group-players" component={GroupPlayers} />
+//       <Tab.Screen name="all-temas" component={Teams} />
 //       <Tab.Screen name="stadiums_main" component={StadiumsPage} />
 //       <Tab.Screen name="stadiums_search" component={StadiumsSearch} />
 //       <Tab.Screen name="stadium_details" component={StadiumDetails} />
@@ -417,66 +456,13 @@ export default Navigation;
 //   );
 // };
 
-// const NavigateTo = () => {
-//   const navigation = useNavigation();
-//   const { user } = useSelector(selectAuth);
-
-//   useEffect(() => {
-//     const handleDynamicLink = async () => {
-//       const initialUrl = await Linking.getInitialURL();
-//       if (initialUrl) {
-//         const urlParts = initialUrl.split("?");
-
-//         const queryString = urlParts[1];
-
-//         const queryParams = queryString.split("&");
-
-//         const params = {};
-
-//         queryParams.forEach((param) => {
-//           const [key, value] = param.split("=");
-
-//           const decodedKey = decodeURIComponent(key);
-//           const decodedValue = decodeURIComponent(value);
-
-//           params[decodedKey] = decodedValue;
-//         });
-
-//         const page = params["page"];
-//         const id = params["id"];
-//         // const invitation = params["invitation"];
-
-//         navigation.replace(
-//           "main",
-//           { screen: page },
-//           {
-//             id,
-//             // invitation: invitation && JSON.parse(invitation),
-//           }
-//         );
-//       }
-//     };
-//     if (user) {
-//       handleDynamicLink();
-
-//       Linking.addEventListener?.("url", handleDynamicLink);
-//     }
-
-//     return () => {
-//       Linking.removeEventListener?.("url", handleDynamicLink);
-//     };
-//   }, [user]);
-
-//   return null;
-// };
-
 // const Navigation = () => {
 //   const dispatch = useDispatch();
 //   const { status, user } = useSelector(selectAuth);
-//   const [navigateTo, setNavigateTo] = useState(false);
 
 //   useEffect(() => {
 //     const registerForPushNotificationsAsync = async () => {
+//       console.log("Attempting to register for push notifications...");
 //       if (Platform.OS === "android") {
 //         Notifications.setNotificationChannelAsync("default", {
 //           name: "default",
@@ -489,78 +475,57 @@ export default Navigation;
 //       if (Device.isDevice) {
 //         const { status: existingStatus } =
 //           await Notifications.getPermissionsAsync();
+//         console.log("Existing notification status:", existingStatus);
 //         let finalStatus = existingStatus;
 //         if (existingStatus !== "granted") {
 //           const { status } = await Notifications.requestPermissionsAsync();
 //           finalStatus = status;
 //         }
 //         if (finalStatus !== "granted") {
-//           alert(
-//             "Please enable notifications permission to receive chat alerts."
-//           );
+//           alert("Please enable notifications permission to receive chat alerts.");
 //           return;
 //         }
-//         let token = (
-//           await Notifications.getExpoPushTokenAsync({
-//             projectId: Constants.expoConfig.extra.eas.projectId,
-//           })
-//         )?.data;
-//         await AsyncStorage.setItem("expoPushToken", token);
+
+       
+//         await AsyncStorage.removeItem("expoPushToken");
+
+//         // Generate a new Expo push token
+//         const { data: token } = await Notifications.getExpoPushTokenAsync({
+//           projectId: Constants.expoConfig.extra.eas.projectId,
+//         });
+//         console.log("Push token generated:", token);
+
+//         // Get the token stored in AsyncStorage
+//         const storedToken = await AsyncStorage.getItem("expoPushToken");
+
+//         // Only update if the token has changed
+//         if (storedToken !== token) {
+//           await AsyncStorage.setItem("expoPushToken", token);
+//           dispatch(setExpoPushToken(token)); // Dispatch to Redux
+//         }
 //       } else {
 //         alert("Must use physical device for Push Notifications");
 //       }
 //     };
 
+//     // Register for push notifications and fetch token if available
 //     registerForPushNotificationsAsync();
+
+//     // Get stored Expo push token and dispatch to Redux
 //     (async () => {
 //       const expoPushToken = await AsyncStorage.getItem("expoPushToken");
-//       dispatch(setExpoPushToken(expoPushToken));
-//       const { data } = await axios
-//         .get(BASE_URL + "ip")
-//         .catch((err) => console.log(err));
+//       console.log("Expo Push Token fetched from AsyncStorage:", expoPushToken);
+
+//       if (expoPushToken) {
+//         dispatch(setExpoPushToken(expoPushToken));
+//       }
+
+//       console.log("Expo Push Token dispatched to Redux:", expoPushToken);
+//       const { data } = await axios.get(BASE_URL + "ip").catch((err) => console.log(err));
+//       console.log("Fetched IP Data:", data);
 //       dispatch(fetchAuthMe({ expoPushToken, ip: data }));
 //     })();
-//   }, []);
-
-//   useEffect(() => {
-//     const handleDynamicLink = async () => {
-//       const initialUrl = await Linking.getInitialURL();
-//       console.log("====================================");
-//       console.log(initialUrl);
-//       console.log("====================================");
-//       if (initialUrl) {
-//         const urlParts = initialUrl.split("?");
-
-//         const queryString = urlParts[1];
-
-//         const queryParams = queryString.split("&");
-
-//         const params = {};
-
-//         queryParams.forEach((param) => {
-//           const [key, value] = param.split("=");
-
-//           const decodedKey = decodeURIComponent(key);
-//           const decodedValue = decodeURIComponent(value);
-
-//           params[decodedKey] = decodedValue;
-//         });
-
-//         const page = params["page"];
-
-//         setNavigateTo(page);
-//       }
-//     };
-//     if (user) {
-//       handleDynamicLink();
-
-//       Linking.addEventListener?.("url", handleDynamicLink);
-//     }
-
-//     return () => {
-//       Linking.removeEventListener?.("url", handleDynamicLink);
-//     };
-//   }, [user]);
+//   }, [dispatch]);
 
 //   useSocket(user);
 
@@ -569,47 +534,47 @@ export default Navigation;
 //   }
 
 //   return (
-//     <>
-//       <NavigationContainer>
-//         <Stack.Navigator
-//           initialRouteName={status === "success" ? "home" : "landing"}
-//           screenOptions={{
-//             headerShown: false,
-//             animation: "slide_from_right",
-//           }}
-//         >
-//           <Stack.Screen name="landing" component={LandingPage} />
-//           <Stack.Screen name="navigate-to" component={NavigateTo} />
-//           <Stack.Screen name="login" component={LoginPage} />
-//           <Stack.Screen name="signup" component={SignUpPage} />
-//           <Stack.Screen name="create-password" component={CreatePasswordPage} />
-//           <Stack.Screen name="verify" component={VerifyAccount} />
-//           <Stack.Screen name="forgot-password" component={ForgotPasswordPage} />
-//           <Stack.Screen name="forgot-password-phone" component={VerifyPhone} />
-//           <Stack.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
-//         <Stack.Screen name="privacy_policy" component={PrivacyPolicyPage} />
-        
-//           <Stack.Screen
-//             name="forgot-password-new-password"
-//             component={NewPasswordPage}
-//           />
+//   <>
+//   <NavigationContainer>
+//     <Stack.Navigator
+//       initialRouteName={status === "success" ? "home" : "landing"}
+//       screenOptions={{
+//         headerShown: false,
+//         animation: "slide_from_right",
+//       }}
+//     >
+//       <Stack.Screen name="landing" component={LandingPage} />
+//       {/* <Stack.Screen name="navigate-to" component={NavigateTo} /> */}
+//       <Stack.Screen name="login" component={LoginPage} />
+//       <Stack.Screen name="signup" component={SignUpPage} />
+//       <Stack.Screen name="create-password" component={CreatePasswordPage} />
+//       <Stack.Screen name="verify" component={VerifyAccount} />
+//       <Stack.Screen name="forgot-password" component={ForgotPasswordPage} />
+//       <Stack.Screen name="forgot-password-phone" component={VerifyPhone} />
+//       <Stack.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
+//     <Stack.Screen name="privacy_policy" component={PrivacyPolicyPage} />
+    
+//       <Stack.Screen
+//         name="forgot-password-new-password"
+//         component={NewPasswordPage}
+//       />
 
-//           {/* <Stack.Screen name="select" component={SelectSport} /> */}
-//           <Stack.Screen name="main" component={HomeStack} />
-//           <Stack.Screen
-//             name="chat"
-//             component={Chat}
-//             options={{
-//               headerShown: true,
-//               header: () => <Header />,
-//             }}
-//           />
-//           <Stack.Screen name="success" component={SuccessBookingPage} />
-//           <Stack.Screen name="cancel" component={CancelBookingPage} />
-        
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </>
+//       {/* <Stack.Screen name="select" component={SelectSport} /> */}
+//       <Stack.Screen name="main" component={HomeStack} />
+//       <Stack.Screen
+//         name="chat"
+//         component={Chat}
+//         options={{
+//           headerShown: true,
+//           header: () => <Header />,
+//         }}
+//       />
+//       <Stack.Screen name="success" component={SuccessBookingPage} />
+//       <Stack.Screen name="cancel" component={CancelBookingPage} />
+    
+//     </Stack.Navigator>
+//   </NavigationContainer>
+// </>
 //   );
 // };
 
