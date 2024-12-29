@@ -35,6 +35,14 @@ const InvitationNotification = ({ data }) => {
             fromNotification: { withGroup: true, notificationId: data.id },
           },
         });
+      } else if (data.type === "TEAM") {
+        navigation.navigate("main", {
+          screen: "team",
+          params: { 
+            id: data.teamId,
+            fromNotification: { notificationId: data.id },
+          },
+        });
       } else {
         navigation.navigate("main", {
           screen: "group",
@@ -61,7 +69,34 @@ const InvitationNotification = ({ data }) => {
           <Notification width={30} height={30} />
         </View>
         <View style={{ width: "85%" }}>
-          {data.type !== "GROUP" ? (
+        {data.type === "TEAM" ? (
+            <>
+              <PrimaryText
+                weight={600}
+                style={{ color: "white", fontSize: 18 }}
+              >
+                {t("invitation.team")}
+              </PrimaryText>
+              <PrimaryText style={styles.text}>
+                {t("invitation.team_info", { name: data.team.name })}
+              </PrimaryText>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <PrimaryText style={{ color: "#fff", marginTop: 10 }}>
+                  {format(data.createdAt, "dd.MM.yyyy")}
+                </PrimaryText>
+                <PrimaryText
+                  style={[styles.text, data.isNew && { color: "#0968CA" }]}
+                >
+                  {!data.isNew ? t("common.readed") : t("common.not_readed")}
+                </PrimaryText>
+              </View>
+            </>
+          ) : data.type !== "GROUP" ? (
             <>
               <PrimaryText
                 weight={600}

@@ -73,7 +73,6 @@ import StoryGame from "../pages/TeamPage/StoryGame";
 
 
 
-
 // import * as Linking from "expo-linking";
 
 import EditGame from "../pages/EditGame";
@@ -121,6 +120,8 @@ const HomeStack = () => {
       <Tab.Screen name="terms_and_conditions" component={TermsAndConditionsPage} />
       <Tab.Screen name="privacy_policy" component={PrivacyPolicyPage} />
       <Tab.Screen name="my_teams_teams" component={MyTeamsAndAllTeams} />
+
+
       {/* <Tab.Screen name="invitation-team" component={InvitationTeam} /> */}
 
 

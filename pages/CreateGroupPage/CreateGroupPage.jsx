@@ -20,6 +20,8 @@ const CreateGroupPage = ({ navigation, route }) => {
 
   const onSubmit = () => {
     axios.post("/group/create", { title }).then(({ data }) => {
+      console.log("Response from backend:", data);
+
       setTitle("");
       if (backUrl) {
         return navigation.navigate(backUrl, { groupId: data.id });

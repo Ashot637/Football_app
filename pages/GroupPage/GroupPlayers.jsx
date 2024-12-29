@@ -28,7 +28,7 @@ const GroupPlayers = ({ route }) => {
   const currentUser = players.find((player) => player.id === user?.id);
 
   const onShare = async () => {
-    try {
+    try { 
       const token = jwt.encode(
         { groupId: id, type: "GROUP" },
         "You never can guess this k3y"
